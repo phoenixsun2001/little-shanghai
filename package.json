@@ -1,0 +1,1 @@
+{"name":"little-shanghai","version":"1.0.0","private":true,"scripts":{"dev":"python3 -m http.server 4173 --directory dist","check":"node --check dist/app.js && node --check dist/city.js && node --check dist/flight.js"},"type":"module"}
