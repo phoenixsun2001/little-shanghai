@@ -1,0 +1,198 @@
+ACQUIRE segment 2026-10-21.0 bbox [120.8526123, 30.6777973, 122.2429167, 31.8746329]
+Error reading STAC index at https://stac.overturemaps.org/2026-10-21.0/collections.parquet: HTTP Error 403: Forbidden
+SCHEMA id: string
+names: struct<primary: string, common: map<string, string ('common')>, rules: list<element: struct<variant: (... 159 chars omitted)
+  child 0, primary: string
+  child 1, common: map<string, string ('common')>
+      child 0, common: struct<key: string not null, value: string> not null
+          child 0, key: string not null
+          child 1, value: string
+  child 2, rules: list<element: struct<variant: string, language: string, perspectives: struct<mode: string, countries (... 87 chars omitted)
+      child 0, element: struct<variant: string, language: string, perspectives: struct<mode: string, countries: list<element (... 72 chars omitted)
+          child 0, variant: string
+          child 1, language: string
+          child 2, perspectives: struct<mode: string, countries: list<element: string>>
+              child 0, mode: string
+              child 1, countries: list<element: string>
+                  child 0, element: string
+          child 3, value: string
+          child 4, between: list<element: double>
+              child 0, element: double
+          child 5, side: string
+subtype: string
+class: string
+subclass: string
+subclass_rules: list<element: struct<value: string, between: list<element: double>>>
+  child 0, element: struct<value: string, between: list<element: double>>
+      child 0, value: string
+      child 1, between: list<element: double>
+          child 0, element: double
+connectors: list<element: struct<connector_id: string, at: double>>
+  child 0, element: struct<connector_id: string, at: double>
+      child 0, connector_id: string
+      child 1, at: double
+road_surface: list<element: struct<value: string, between: list<element: double>>>
+  child 0, element: struct<value: string, between: list<element: double>>
+      child 0, value: string
+      child 1, between: list<element: double>
+          child 0, element: double
+road_flags: list<element: struct<values: list<element: string>, between: list<element: double>>>
+  child 0, element: struct<values: list<element: string>, between: list<element: double>>
+      child 0, values: list<element: string>
+          child 0, element: string
+      child 1, between: list<element: double>
+          child 0, element: double
+rail_flags: list<element: struct<values: list<element: string>, between: list<element: double>>>
+  child 0, element: struct<values: list<element: string>, between: list<element: double>>
+      child 0, values: list<element: string>
+          child 0, element: string
+      child 1, between: list<element: double>
+          child 0, element: double
+width_rules: list<element: struct<value: double, between: list<element: double>>>
+  child 0, element: struct<value: double, between: list<element: double>>
+      child 0, value: double
+      child 1, between: list<element: double>
+          child 0, element: double
+level_rules: list<element: struct<value: int32, between: list<element: double>>>
+  child 0, element: struct<value: int32, between: list<element: double>>
+      child 0, value: int32
+      child 1, between: list<element: double>
+          child 0, element: double
+access_restrictions: list<element: struct<access_type: string, when: struct<during: string, heading: string, using: list< (... 215 chars omitted)
+  child 0, element: struct<access_type: string, when: struct<during: string, heading: string, using: list<element: strin (... 200 chars omitted)
+      child 0, access_type: string
+      child 1, when: struct<during: string, heading: string, using: list<element: string>, recognized: list<element: stri (... 133 chars omitted)
+          child 0, during: string
+          child 1, heading: string
+          child 2, using: list<element: string>
+              child 0, element: string
+          child 3, recognized: list<element: string>
+              child 0, element: string
+          child 4, mode: list<element: string>
+              child 0, element: string
+          child 5, vehicle: list<element: struct<dimension: string, comparison: string, value: double, unit: string>>
+              child 0, element: struct<dimension: string, comparison: string, value: double, unit: string>
+                  child 0, dimension: string
+                  child 1, comparison: string
+                  child 2, value: double
+                  child 3, unit: string
+      child 2, between: list<element: double>
+          child 0, element: double
+speed_limits: list<element: struct<min_speed: struct<value: int32, unit: string>, max_speed: struct<value: int32,  (... 317 chars omitted)
+  child 0, element: struct<min_speed: struct<value: int32, unit: string>, max_speed: struct<value: int32, unit: string>, (... 302 chars omitted)
+      child 0, min_speed: struct<value: int32, unit: string>
+          child 0, value: int32
+          child 1, unit: string
+      child 1, max_speed: struct<value: int32, unit: string>
+          child 0, value: int32
+          child 1, unit: string
+      child 2, is_max_speed_variable: bool
+      child 3, when: struct<during: string, heading: string, using: list<element: string>, recognized: list<element: stri (... 133 chars omitted)
+          child 0, during: string
+          child 1, heading: string
+          child 2, using: list<element: string>
+              child 0, element: string
+          child 3, recognized: list<element: string>
+              child 0, element: string
+          child 4, mode: list<element: string>
+              child 0, element: string
+          child 5, vehicle: list<element: struct<dimension: string, comparison: string, value: double, unit: string>>
+              child 0, element: struct<dimension: string, comparison: string, value: double, unit: string>
+                  child 0, dimension: string
+                  child 1, comparison: string
+                  child 2, value: double
+                  child 3, unit: string
+      child 4, between: list<element: double>
+          child 0, element: double
+prohibited_transitions: list<element: struct<sequence: list<element: struct<connector_id: string, segment_id: string>>, fina (... 292 chars omitted)
+  child 0, element: struct<sequence: list<element: struct<connector_id: string, segment_id: string>>, final_heading: str (... 277 chars omitted)
+      child 0, sequence: list<element: struct<connector_id: string, segment_id: string>>
+          child 0, element: struct<connector_id: string, segment_id: string>
+              child 0, connector_id: string
+              child 1, segment_id: string
+      child 1, final_heading: string
+      child 2, when: struct<heading: string, during: string, using: list<element: string>, recognized: list<element: stri (... 133 chars omitted)
+          child 0, heading: string
+          child 1, during: string
+          child 2, using: list<element: string>
+              child 0, element: string
+          child 3, recognized: list<element: string>
+              child 0, element: string
+          child 4, mode: list<element: string>
+              child 0, element: string
+          child 5, vehicle: list<element: struct<dimension: string, comparison: string, value: double, unit: string>>
+              child 0, element: struct<dimension: string, comparison: string, value: double, unit: string>
+                  child 0, dimension: string
+                  child 1, comparison: string
+                  child 2, value: double
+                  child 3, unit: string
+      child 3, between: list<element: double>
+          child 0, element: double
+routes: list<element: struct<name: string, network: string, ref: string, symbol: string, wikidata: string, b (... 31 chars omitted)
+  child 0, element: struct<name: string, network: string, ref: string, symbol: string, wikidata: string, between: list<e (... 16 chars omitted)
+      child 0, name: string
+      child 1, network: string
+      child 2, ref: string
+      child 3, symbol: string
+      child 4, wikidata: string
+      child 5, between: list<element: double>
+          child 0, element: double
+destinations: list<element: struct<labels: list<element: struct<value: string, type: string>>, symbols: list<eleme (... 142 chars omitted)
+  child 0, element: struct<labels: list<element: struct<value: string, type: string>>, symbols: list<element: string>, f (... 127 chars omitted)
+      child 0, labels: list<element: struct<value: string, type: string>>
+          child 0, element: struct<value: string, type: string>
+              child 0, value: string
+              child 1, type: string
+      child 1, symbols: list<element: string>
+          child 0, element: string
+      child 2, from_connector_id: string
+      child 3, to_segment_id: string
+      child 4, to_connector_id: string
+      child 5, when: struct<heading: string>
+          child 0, heading: string
+      child 6, final_heading: string
+sources: list<element: struct<property: string, dataset: string, license: string, record_id: string, update_t (... 118 chars omitted)
+  child 0, element: struct<property: string, dataset: string, license: string, record_id: string, update_time: string, c (... 103 chars omitted)
+      child 0, property: string
+      child 1, dataset: string
+      child 2, license: string
+      child 3, record_id: string
+      child 4, update_time: string
+      child 5, confidence: double
+      child 6, between: list<element: double>
+          child 0, element: double
+      child 7, provider: string
+      child 8, resource: string
+      child 9, version: string
+geometry: binary
+  -- field metadata --
+  ARROW:extension:name: 'geoarrow.wkb'
+version: int32
+bbox: struct<xmin: double, xmax: double, ymin: double, ymax: double>
+  child 0, xmin: double
+  child 1, xmax: double
+  child 2, ymin: double
+  child 3, ymax: double
+-- schema metadata --
+geo: '{"version": "1.1.0", "primary_column": "geometry", "columns": {"geo' + 269
+schema_versions: '{"overture-schema-system": "2.0.0.post1+main.e6b120a", ' + 54
+{"type": "segment", "bbox_rows_seen": 2851, "municipality_rows_saved": 1, "elapsed_s": 62.6}
+{"type": "segment", "bbox_rows_seen": 7584, "municipality_rows_saved": 1776, "elapsed_s": 62.7}
+{"type": "segment", "bbox_rows_seen": 19959, "municipality_rows_saved": 9830, "elapsed_s": 62.8}
+{"type": "segment", "bbox_rows_seen": 42081, "municipality_rows_saved": 31952, "elapsed_s": 66.9}
+{"type": "segment", "bbox_rows_seen": 42082, "municipality_rows_saved": 31952, "elapsed_s": 66.9}
+{"type": "segment", "bbox_rows_seen": 57389, "municipality_rows_saved": 32125, "elapsed_s": 67.8}
+{"type": "segment", "bbox_rows_seen": 80743, "municipality_rows_saved": 49900, "elapsed_s": 68.0}
+{"type": "segment", "bbox_rows_seen": 82959, "municipality_rows_saved": 49902, "elapsed_s": 68.0}
+{"type": "segment", "bbox_rows_seen": 94136, "municipality_rows_saved": 50747, "elapsed_s": 68.1}
+{"type": "segment", "bbox_rows_seen": 113095, "municipality_rows_saved": 69706, "elapsed_s": 68.2}
+{"type": "segment", "bbox_rows_seen": 134634, "municipality_rows_saved": 91244, "elapsed_s": 68.3}
+{"type": "segment", "bbox_rows_seen": 151786, "municipality_rows_saved": 108396, "elapsed_s": 68.4}
+{"type": "segment", "bbox_rows_seen": 168742, "municipality_rows_saved": 125352, "elapsed_s": 68.8}
+{"type": "segment", "bbox_rows_seen": 190375, "municipality_rows_saved": 146985, "elapsed_s": 68.9}
+{"type": "segment", "bbox_rows_seen": 202150, "municipality_rows_saved": 158747, "elapsed_s": 69.0}
+{"type": "segment", "bbox_rows_seen": 226283, "municipality_rows_saved": 182880, "elapsed_s": 69.1}
+{"type": "segment", "bbox_rows_seen": 243186, "municipality_rows_saved": 199783, "elapsed_s": 69.2}
+{"type": "segment", "bbox_rows_seen": 256689, "municipality_rows_saved": 211484, "elapsed_s": 69.3}
+{"type": "segment", "bbox_rows_seen": 272502, "municipality_rows_saved": 219745, "elapsed_s": 69.4}
+DONE {"source": "Overture Maps", "release": "2026-10-21.0", "type": "segment", "source_uri": "s3://overturemaps-us-west-2/release/2026-10-21.0/theme=transportation/type=segment/", "bbox_wgs84": [120.8526123, 30.6777973, 122.2429167, 31.8746329], "selection": "geometry intersects union of 16 WGS84 Shanghai districts; original geometries retained", "bbox_rows": 272502, "municipality_rows": 219745, "bytes": 36536099, "sha256": "df10c05dff87e3c1d75ccad5b4bfe07b5bc2cdc17b04328cba2327f1e43aa24e", "elapsed_s": 70.7, "acquired_at_utc": "2026-10-27T02:42:47Z", "file": "segment-shanghai-2026-10-21.0.parquet"}

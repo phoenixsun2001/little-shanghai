@@ -30,3 +30,9 @@
 ## 第三方依赖
 
 本地打包 MapLibre GL JS 5.10.0 (BSD-3-Clause) 与 Three.js 0.180.0 (MIT)，许可证保留于 `dist/vendor/`。
+
+## 开放数据质量验证
+
+2026-10-27完成Overture全上海建筑与路网下载，对照Geofabrik OSM，在陆家嘴（浦东）、南京西路、新天地、虹桥交通枢纽＋商务区验证参考覆盖、相对几何差异和原生道路拓扑。查看[验证说明与复算方法](analysis/shanghai-open-data-qa/README.md)及[完整交互报告](analysis/shanghai-open-data-qa/report/上海开放地图质量验证.html)。原始大型数据保留在本机忽略目录。
+
+Microsoft官方当前索引没有上海下载分区；四区所有成功匹配建筑共享OSM上游，因此报告没有将源间一致率解释为真实世界完整率或独立测量精度。候选修正清单尚未自动覆盖线上地图。

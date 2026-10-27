@@ -1,0 +1,20 @@
+{
+  "source": "Overture Maps",
+  "release": "2026-10-21.0",
+  "type": "segment",
+  "source_uri": "s3://overturemaps-us-west-2/release/2026-10-21.0/theme=transportation/type=segment/",
+  "bbox_wgs84": [
+    120.8526123,
+    30.6777973,
+    122.2429167,
+    31.8746329
+  ],
+  "selection": "geometry intersects union of 16 WGS84 Shanghai districts; original geometries retained",
+  "bbox_rows": 272502,
+  "municipality_rows": 219745,
+  "bytes": 36536099,
+  "sha256": "df10c05dff87e3c1d75ccad5b4bfe07b5bc2cdc17b04328cba2327f1e43aa24e",
+  "elapsed_s": 70.7,
+  "acquired_at_utc": "2026-10-27T02:42:47Z",
+  "file": "segment-shanghai-2026-10-21.0.parquet"
+}

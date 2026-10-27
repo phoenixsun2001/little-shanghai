@@ -1,0 +1,285 @@
+{
+  "checks": [
+    {
+      "check": "陆家嘴 denominator reconciliation",
+      "result": "passed"
+    },
+    {
+      "check": "陆家嘴 pair row count",
+      "result": "passed"
+    },
+    {
+      "check": "陆家嘴 unique reference matching",
+      "result": "passed"
+    },
+    {
+      "check": "陆家嘴 unique target matching",
+      "result": "passed"
+    },
+    {
+      "check": "陆家嘴 coverage recomputation",
+      "result": "passed"
+    },
+    {
+      "check": "陆家嘴 median/P95 centroid recomputation",
+      "result": "passed"
+    },
+    {
+      "check": "陆家嘴 maximum geometry differences recomputation",
+      "result": "passed"
+    },
+    {
+      "check": "陆家嘴 independent sample IoU recomputation",
+      "result": "passed"
+    },
+    {
+      "check": "陆家嘴 zero independent matches treated unavailable",
+      "result": "passed"
+    },
+    {
+      "check": "南京西路 denominator reconciliation",
+      "result": "passed"
+    },
+    {
+      "check": "南京西路 pair row count",
+      "result": "passed"
+    },
+    {
+      "check": "南京西路 unique reference matching",
+      "result": "passed"
+    },
+    {
+      "check": "南京西路 unique target matching",
+      "result": "passed"
+    },
+    {
+      "check": "南京西路 coverage recomputation",
+      "result": "passed"
+    },
+    {
+      "check": "南京西路 median/P95 centroid recomputation",
+      "result": "passed"
+    },
+    {
+      "check": "南京西路 maximum geometry differences recomputation",
+      "result": "passed"
+    },
+    {
+      "check": "南京西路 independent sample IoU recomputation",
+      "result": "passed"
+    },
+    {
+      "check": "南京西路 zero independent matches treated unavailable",
+      "result": "passed"
+    },
+    {
+      "check": "新天地 denominator reconciliation",
+      "result": "passed"
+    },
+    {
+      "check": "新天地 pair row count",
+      "result": "passed"
+    },
+    {
+      "check": "新天地 unique reference matching",
+      "result": "passed"
+    },
+    {
+      "check": "新天地 unique target matching",
+      "result": "passed"
+    },
+    {
+      "check": "新天地 coverage recomputation",
+      "result": "passed"
+    },
+    {
+      "check": "新天地 median/P95 centroid recomputation",
+      "result": "passed"
+    },
+    {
+      "check": "新天地 maximum geometry differences recomputation",
+      "result": "passed"
+    },
+    {
+      "check": "新天地 independent sample IoU recomputation",
+      "result": "passed"
+    },
+    {
+      "check": "新天地 zero independent matches treated unavailable",
+      "result": "passed"
+    },
+    {
+      "check": "虹桥 denominator reconciliation",
+      "result": "passed"
+    },
+    {
+      "check": "虹桥 pair row count",
+      "result": "passed"
+    },
+    {
+      "check": "虹桥 unique reference matching",
+      "result": "passed"
+    },
+    {
+      "check": "虹桥 unique target matching",
+      "result": "passed"
+    },
+    {
+      "check": "虹桥 coverage recomputation",
+      "result": "passed"
+    },
+    {
+      "check": "虹桥 median/P95 centroid recomputation",
+      "result": "passed"
+    },
+    {
+      "check": "虹桥 maximum geometry differences recomputation",
+      "result": "passed"
+    },
+    {
+      "check": "虹桥 independent sample IoU recomputation",
+      "result": "passed"
+    },
+    {
+      "check": "虹桥 zero independent matches treated unavailable",
+      "result": "passed"
+    },
+    {
+      "check": "陆家嘴 Overture connectivity range",
+      "result": "passed"
+    },
+    {
+      "check": "陆家嘴 3m road coverage recomputation",
+      "result": "passed"
+    },
+    {
+      "check": "陆家嘴 5m road coverage recomputation",
+      "result": "passed"
+    },
+    {
+      "check": "陆家嘴 10m road coverage recomputation",
+      "result": "passed"
+    },
+    {
+      "check": "陆家嘴 buffer coverage monotonicity",
+      "result": "passed"
+    },
+    {
+      "check": "陆家嘴 Geofabrik connectivity range",
+      "result": "passed"
+    },
+    {
+      "check": "南京西路 Overture connectivity range",
+      "result": "passed"
+    },
+    {
+      "check": "南京西路 3m road coverage recomputation",
+      "result": "passed"
+    },
+    {
+      "check": "南京西路 5m road coverage recomputation",
+      "result": "passed"
+    },
+    {
+      "check": "南京西路 10m road coverage recomputation",
+      "result": "passed"
+    },
+    {
+      "check": "南京西路 buffer coverage monotonicity",
+      "result": "passed"
+    },
+    {
+      "check": "南京西路 Geofabrik connectivity range",
+      "result": "passed"
+    },
+    {
+      "check": "新天地 Overture connectivity range",
+      "result": "passed"
+    },
+    {
+      "check": "新天地 3m road coverage recomputation",
+      "result": "passed"
+    },
+    {
+      "check": "新天地 5m road coverage recomputation",
+      "result": "passed"
+    },
+    {
+      "check": "新天地 10m road coverage recomputation",
+      "result": "passed"
+    },
+    {
+      "check": "新天地 buffer coverage monotonicity",
+      "result": "passed"
+    },
+    {
+      "check": "新天地 Geofabrik connectivity range",
+      "result": "passed"
+    },
+    {
+      "check": "虹桥 Overture connectivity range",
+      "result": "passed"
+    },
+    {
+      "check": "虹桥 3m road coverage recomputation",
+      "result": "passed"
+    },
+    {
+      "check": "虹桥 5m road coverage recomputation",
+      "result": "passed"
+    },
+    {
+      "check": "虹桥 10m road coverage recomputation",
+      "result": "passed"
+    },
+    {
+      "check": "虹桥 buffer coverage monotonicity",
+      "result": "passed"
+    },
+    {
+      "check": "虹桥 Geofabrik connectivity range",
+      "result": "passed"
+    },
+    {
+      "check": "building saved row count",
+      "result": "passed"
+    },
+    {
+      "check": "building SHA256",
+      "result": "passed"
+    },
+    {
+      "check": "segment saved row count",
+      "result": "passed"
+    },
+    {
+      "check": "segment SHA256",
+      "result": "passed"
+    },
+    {
+      "check": "connector saved row count",
+      "result": "passed"
+    },
+    {
+      "check": "connector SHA256",
+      "result": "passed"
+    },
+    {
+      "check": "Geofabrik official MD5",
+      "result": "passed"
+    },
+    {
+      "check": "Microsoft missing coverage is not numeric completeness",
+      "result": "passed"
+    },
+    {
+      "check": "All unmatched candidates occur after principal OSM building snapshot",
+      "result": "passed"
+    },
+    {
+      "check": "Lujiazui boundary excludes the opposite bank",
+      "result": "passed"
+    }
+  ],
+  "passed": 70
+}

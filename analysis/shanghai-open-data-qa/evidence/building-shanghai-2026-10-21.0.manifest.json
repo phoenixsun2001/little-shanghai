@@ -1,0 +1,20 @@
+{
+  "source": "Overture Maps",
+  "release": "2026-10-21.0",
+  "type": "building",
+  "source_uri": "s3://overturemaps-us-west-2/release/2026-10-21.0/theme=buildings/type=building/",
+  "bbox_wgs84": [
+    120.8526123,
+    30.6777973,
+    122.2429167,
+    31.8746329
+  ],
+  "selection": "geometry intersects union of 16 WGS84 Shanghai districts; original geometries retained",
+  "bbox_rows": 2427702,
+  "municipality_rows": 1793830,
+  "bytes": 187976067,
+  "sha256": "022854b858a83cc6fa2c3b5b7f70db332d46f1697ced08ae5bbbf77f8f84b6b8",
+  "elapsed_s": 194.0,
+  "acquired_at_utc": "2026-10-27T02:44:28Z",
+  "file": "building-shanghai-2026-10-21.0.parquet"
+}

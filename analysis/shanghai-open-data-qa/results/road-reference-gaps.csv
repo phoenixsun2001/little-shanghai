@@ -1,0 +1,11 @@
+area,area_id,osm_id,class,uncovered_length_5m_m,name,access,status
+虹桥,hongqiao,w1360322877,service,859.3956208616102,,private,reference_difference_manual_review
+虹桥,hongqiao,w1018448358,service,793.8192760166867,,private,reference_difference_manual_review
+南京西路,nanjing-west,w900390006,secondary,441.26266495572673,昌平路,,reference_difference_manual_review
+虹桥,hongqiao,w1442179895,service,226.9523057813828,,,reference_difference_manual_review
+虹桥,hongqiao,w1442300125,service,223.9209776524701,,,reference_difference_manual_review
+虹桥,hongqiao,w1442300070,service,223.16819661631294,,,reference_difference_manual_review
+虹桥,hongqiao,w1442300093,service,221.362951236214,,,reference_difference_manual_review
+虹桥,hongqiao,w394668867,trunk,96.72550982008231,,,reference_difference_manual_review
+虹桥,hongqiao,w185031851,trunk,83.082034189906,,,reference_difference_manual_review
+虹桥,hongqiao,w1360322876,service,38.76765070734209,,private,reference_difference_manual_review

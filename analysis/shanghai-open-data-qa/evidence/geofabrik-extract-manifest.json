@@ -1,0 +1,19 @@
+{
+  "source": "Geofabrik OpenStreetMap China extract",
+  "source_url": "https://download.geofabrik.de/asia/china-latest.osm.pbf",
+  "header": {
+    "osmosis_replication_timestamp": "2026-10-25T21:21:21Z",
+    "osmosis_replication_sequence_number": "4950",
+    "generator": "osmium/1.16.0"
+  },
+  "acquired_pbf_bytes": 1615922210,
+  "source_md5": "6a67405cffcccbb8726985987165a243",
+  "buildings": 153856,
+  "roads": 212636,
+  "bounded_node_count": 3470278,
+  "incomplete_bbox_ways_skipped": 1219,
+  "incomplete_building_relations": 0,
+  "member_building_duplicates_removed": 1641,
+  "selection": "complete features intersecting Shanghai municipality; bounded node lookup bbox padded by 0.03 degrees",
+  "elapsed_s": 523.9
+}

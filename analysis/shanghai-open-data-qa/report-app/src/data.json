@@ -1,0 +1,822 @@
+{
+  "surface": "report",
+  "title": "上海开放地图：覆盖增补与质量验证",
+  "generatedAt": "2026-10-27T03:20:26Z",
+  "status": "complete",
+  "filters": [],
+  "exportPreferences": {
+    "selected": null,
+    "destinations": []
+  },
+  "queries": {
+    "building_results": {
+      "rows": [
+        {
+          "area": "陆家嘴",
+          "overture": 1667,
+          "osm": 1075,
+          "matched": 1075,
+          "unmatched": 0,
+          "reference_match_percent": 100.0,
+          "reference_area_percent": 99.99997009898027,
+          "eab": 592,
+          "shared_osm_matches": 1075,
+          "centroid_p95_m": 1.398195995654016e-09,
+          "centroid_max_m": 0.0011006159563710168,
+          "hausdorff_max_m": 12.658096054119271,
+          "boundary_p95_m": 9.604440692587592e-11,
+          "area_km2": 6.058494028332639,
+          "iou_median": 1.0,
+          "independent_matched_pairs": 0
+        },
+        {
+          "area": "南京西路",
+          "overture": 5831,
+          "osm": 3116,
+          "matched": 3112,
+          "unmatched": 4,
+          "reference_match_percent": 99.87163029525033,
+          "reference_area_percent": 99.96588033614067,
+          "eab": 2719,
+          "shared_osm_matches": 3112,
+          "centroid_p95_m": 1.3969838619232178e-09,
+          "centroid_max_m": 1.569043271502241,
+          "hausdorff_max_m": 1.5689560712234702,
+          "boundary_p95_m": 9.435060949134919e-11,
+          "area_km2": 8.205522839870918,
+          "iou_median": 1.0,
+          "independent_matched_pairs": 0
+        },
+        {
+          "area": "新天地",
+          "overture": 3067,
+          "osm": 1399,
+          "matched": 1398,
+          "unmatched": 1,
+          "reference_match_percent": 99.92852037169406,
+          "reference_area_percent": 99.97073768615107,
+          "eab": 1669,
+          "shared_osm_matches": 1398,
+          "centroid_p95_m": 1.3969838619232178e-09,
+          "centroid_max_m": 3.278285227792506e-09,
+          "hausdorff_max_m": 4.656612873077393e-10,
+          "boundary_p95_m": 9.442295663188134e-11,
+          "area_km2": 3.992261780780256,
+          "iou_median": 1.0,
+          "independent_matched_pairs": 0
+        },
+        {
+          "area": "虹桥",
+          "overture": 6945,
+          "osm": 737,
+          "matched": 737,
+          "unmatched": 0,
+          "reference_match_percent": 100.0,
+          "reference_area_percent": 99.99997456146285,
+          "eab": 6208,
+          "shared_osm_matches": 737,
+          "centroid_p95_m": 1.3969838619232178e-09,
+          "centroid_max_m": 0.0099799291661288,
+          "hausdorff_max_m": 0.03618171179503745,
+          "boundary_p95_m": 9.537403242993915e-11,
+          "area_km2": 28.526067196915978,
+          "iou_median": 1.0,
+          "independent_matched_pairs": 0
+        }
+      ],
+      "source": {
+        "provider": "Official public geospatial downloads",
+        "label": "建筑对照覆盖及几何差异",
+        "files": [
+          "results/building-metrics.json",
+          "results/building-matched-pairs.csv"
+        ],
+        "links": [
+          {
+            "label": "Overture 官方下载文档",
+            "url": "https://docs.overturemaps.org/getting-data/"
+          },
+          {
+            "label": "Geofabrik 中国数据",
+            "url": "https://download.geofabrik.de/asia/china.html"
+          },
+          {
+            "label": "Microsoft 官方数据与覆盖说明",
+            "url": "https://github.com/microsoft/GlobalMLBuildingFootprints"
+          },
+          {
+            "label": "东亚建筑数据原始记录",
+            "url": "https://doi.org/10.5281/zenodo.8174931"
+          }
+        ],
+        "evidenceFlow": [
+          {
+            "title": "固定源版本与空间范围",
+            "detail": "Overture 2026-10-21.0；Geofabrik OSM PBF 截至 2026-10-25T21:21:21Z；Microsoft 2026-08-13 全索引空间覆盖核查。先 bbox 查询，再按上海16区 WGS84 市界几何相交筛选。"
+          },
+          {
+            "title": "对照计算",
+            "detail": "scripts/metrics_buildings.py 与 scripts/metrics_roads.py；UTM51N 米制；建筑面积>=10m²，质心位于测试区内缩5m；IoU>=0.5 一对一匹配。道路原生ID建立无向图，测试区外80m提供连通上下文，区内缩30m开展断点/交叉检查。"
+          },
+          {
+            "title": "解释边界",
+            "detail": "OSM 是对照数据而非真值；几何匹配对子共享OSM上游。Microsoft上海无分区，完整率及误差N/A；未验证绝对位置精度、真实世界建筑完整率或车辆通行限制。"
+          }
+        ],
+        "metricDefinitions": [
+          {
+            "label": "OSM参考匹配覆盖率",
+            "definition": "OSM参考建筑中，与一条Overture建筑达成IoU>=0.5的一对一匹配的数量/有效OSM参考数量；不是现实世界完整率。",
+            "formula": "matched / osm * 100",
+            "componentIds": [
+              "building-counts",
+              "building-table",
+              "building-coverage"
+            ]
+          },
+          {
+            "label": "几何差异（米）",
+            "definition": "同一匹配对的质心距离、对称边界抽样距离与Hausdorff距离；共享OSM来源导致多数相同，不代表独立绝对精度。",
+            "componentIds": [
+              "geometry-table",
+              "geometry-maximum"
+            ]
+          }
+        ]
+      }
+    },
+    "road_results": {
+      "rows": [
+        {
+          "area": "陆家嘴",
+          "source": "Overture",
+          "road_km": 138.2698021802442,
+          "road_features": 1026,
+          "lcc_percent": 99.85585005859512,
+          "components": 3,
+          "deadends": 176,
+          "near_miss_candidates": 0,
+          "unconnected_crossings": 0,
+          "grade_excluded": 195,
+          "connector_offline": 0,
+          "missing_connectors": 0,
+          "ref_5m_percent": 100.0
+        },
+        {
+          "area": "陆家嘴",
+          "source": "Geofabrik",
+          "road_km": 138.2698021802442,
+          "road_features": 1020,
+          "lcc_percent": 99.85585005859512,
+          "components": 3,
+          "deadends": 176,
+          "near_miss_candidates": 0,
+          "unconnected_crossings": 0,
+          "grade_excluded": 195,
+          "connector_offline": 0,
+          "missing_connectors": 0,
+          "ref_5m_percent": null
+        },
+        {
+          "area": "南京西路",
+          "source": "Overture",
+          "road_km": 159.3989127297249,
+          "road_features": 1352,
+          "lcc_percent": 99.94477808100007,
+          "components": 2,
+          "deadends": 235,
+          "near_miss_candidates": 2,
+          "unconnected_crossings": 0,
+          "grade_excluded": 227,
+          "connector_offline": 0,
+          "missing_connectors": 0,
+          "ref_5m_percent": 99.7239688486343
+        },
+        {
+          "area": "南京西路",
+          "source": "Geofabrik",
+          "road_km": 159.85973422656977,
+          "road_features": 1193,
+          "lcc_percent": 99.9449372670984,
+          "components": 2,
+          "deadends": 235,
+          "near_miss_candidates": 2,
+          "unconnected_crossings": 0,
+          "grade_excluded": 227,
+          "connector_offline": 0,
+          "missing_connectors": 0,
+          "ref_5m_percent": null
+        },
+        {
+          "area": "新天地",
+          "source": "Overture",
+          "road_km": 86.19715554677188,
+          "road_features": 791,
+          "lcc_percent": 99.28655044454845,
+          "components": 7,
+          "deadends": 121,
+          "near_miss_candidates": 0,
+          "unconnected_crossings": 0,
+          "grade_excluded": 130,
+          "connector_offline": 0,
+          "missing_connectors": 0,
+          "ref_5m_percent": 100.0
+        },
+        {
+          "area": "新天地",
+          "source": "Geofabrik",
+          "road_km": 86.19715554677188,
+          "road_features": 701,
+          "lcc_percent": 99.28655044454847,
+          "components": 7,
+          "deadends": 121,
+          "near_miss_candidates": 0,
+          "unconnected_crossings": 0,
+          "grade_excluded": 130,
+          "connector_offline": 0,
+          "missing_connectors": 0,
+          "ref_5m_percent": null
+        },
+        {
+          "area": "虹桥",
+          "source": "Overture",
+          "road_km": 377.68155981789585,
+          "road_features": 1737,
+          "lcc_percent": 99.39697452431425,
+          "components": 10,
+          "deadends": 187,
+          "near_miss_candidates": 1,
+          "unconnected_crossings": 0,
+          "grade_excluded": 614,
+          "connector_offline": 0,
+          "missing_connectors": 0,
+          "ref_5m_percent": 99.26916431454956
+        },
+        {
+          "area": "虹桥",
+          "source": "Geofabrik",
+          "road_km": 380.4614188855355,
+          "road_features": 1870,
+          "lcc_percent": 99.45495601167735,
+          "components": 9,
+          "deadends": 177,
+          "near_miss_candidates": 1,
+          "unconnected_crossings": 0,
+          "grade_excluded": 618,
+          "connector_offline": 0,
+          "missing_connectors": 0,
+          "ref_5m_percent": null
+        }
+      ],
+      "source": {
+        "provider": "Official public geospatial downloads",
+        "label": "统一机动车范围后的原生路网拓扑",
+        "files": [
+          "results/road-metrics.json",
+          "results/road-audit-candidates.csv",
+          "scripts/metrics_roads.py"
+        ],
+        "links": [
+          {
+            "label": "Overture 官方下载文档",
+            "url": "https://docs.overturemaps.org/getting-data/"
+          },
+          {
+            "label": "Geofabrik 中国数据",
+            "url": "https://download.geofabrik.de/asia/china.html"
+          },
+          {
+            "label": "Microsoft 官方数据与覆盖说明",
+            "url": "https://github.com/microsoft/GlobalMLBuildingFootprints"
+          },
+          {
+            "label": "东亚建筑数据原始记录",
+            "url": "https://doi.org/10.5281/zenodo.8174931"
+          }
+        ],
+        "evidenceFlow": [
+          {
+            "title": "固定源版本与空间范围",
+            "detail": "Overture 2026-10-21.0；Geofabrik OSM PBF 截至 2026-10-25T21:21:21Z；Microsoft 2026-08-13 全索引空间覆盖核查。先 bbox 查询，再按上海16区 WGS84 市界几何相交筛选。"
+          },
+          {
+            "title": "对照计算",
+            "detail": "scripts/metrics_buildings.py 与 scripts/metrics_roads.py；UTM51N 米制；建筑面积>=10m²，质心位于测试区内缩5m；IoU>=0.5 一对一匹配。道路原生ID建立无向图，测试区外80m提供连通上下文，区内缩30m开展断点/交叉检查。"
+          },
+          {
+            "title": "解释边界",
+            "detail": "OSM 是对照数据而非真值；几何匹配对子共享OSM上游。Microsoft上海无分区，完整率及误差N/A；未验证绝对位置精度、真实世界建筑完整率或车辆通行限制。"
+          }
+        ],
+        "metricDefinitions": [
+          {
+            "label": "最大连通分量长度占比",
+            "definition": "测试框内原生无向道路图的最长连通分量所含道路长度/全部图道路长度。使用80m外部缓冲，不验证单行线、转向或通行权限。",
+            "componentIds": [
+              "road-connectivity",
+              "road-table"
+            ]
+          },
+          {
+            "label": "近接断点候选",
+            "definition": "区内距边界>30m的原生度1节点，在3m内存在另一同层道路且未共享原生连接ID；是待核查候选，不是已证实错误。",
+            "componentIds": [
+              "road-table",
+              "road-candidates"
+            ]
+          }
+        ]
+      }
+    },
+    "sources": {
+      "rows": [
+        {
+          "source": "Overture",
+          "type": "建筑",
+          "release": "2026-10-21.0",
+          "count": 1793830,
+          "sha256": "022854b858a83cc6fa2c3b5b7f70db332d46f1697ced08ae5bbbf77f8f84b6b8",
+          "size_mb": 187.976067
+        },
+        {
+          "source": "Overture",
+          "type": "交通线要素",
+          "release": "2026-10-21.0",
+          "count": 219745,
+          "sha256": "df10c05dff87e3c1d75ccad5b4bfe07b5bc2cdc17b04328cba2327f1e43aa24e",
+          "size_mb": 36.536099
+        },
+        {
+          "source": "Overture",
+          "type": "连接点",
+          "release": "2026-10-21.0",
+          "count": 241431,
+          "sha256": "2e38f8a14888dfa5bc8579b6cfc55404f7342a07748e8cecb31bd143df329a4e",
+          "size_mb": 14.048854
+        },
+        {
+          "source": "Geofabrik",
+          "type": "建筑",
+          "release": "2026-10-25T21:21:21Z",
+          "count": 153856,
+          "sha256": null,
+          "size_mb": null
+        },
+        {
+          "source": "Geofabrik",
+          "type": "highway线要素",
+          "release": "2026-10-25T21:21:21Z",
+          "count": 212636,
+          "sha256": null,
+          "size_mb": null
+        },
+        {
+          "source": "Microsoft",
+          "type": "上海相交下载分区",
+          "release": "2026-08-13 官方索引",
+          "count": 0,
+          "sha256": "de61b569b0c23c364d61173632d8c5487ea30bf20912c55b9fa1ab4a89d01148",
+          "size_mb": null
+        }
+      ],
+      "source": {
+        "provider": "Official public geospatial downloads",
+        "label": "下载范围与校验清单",
+        "files": [
+          "data/overture/*.manifest.json",
+          "evidence/geofabrik-extract-manifest.json",
+          "evidence/microsoft-coverage-audit.json"
+        ],
+        "links": [
+          {
+            "label": "Overture 官方下载文档",
+            "url": "https://docs.overturemaps.org/getting-data/"
+          },
+          {
+            "label": "Geofabrik 中国数据",
+            "url": "https://download.geofabrik.de/asia/china.html"
+          },
+          {
+            "label": "Microsoft 官方数据与覆盖说明",
+            "url": "https://github.com/microsoft/GlobalMLBuildingFootprints"
+          },
+          {
+            "label": "东亚建筑数据原始记录",
+            "url": "https://doi.org/10.5281/zenodo.8174931"
+          }
+        ],
+        "evidenceFlow": [
+          {
+            "title": "固定源版本与空间范围",
+            "detail": "Overture 2026-10-21.0；Geofabrik OSM PBF 截至 2026-10-25T21:21:21Z；Microsoft 2026-08-13 全索引空间覆盖核查。先 bbox 查询，再按上海16区 WGS84 市界几何相交筛选。"
+          },
+          {
+            "title": "对照计算",
+            "detail": "scripts/metrics_buildings.py 与 scripts/metrics_roads.py；UTM51N 米制；建筑面积>=10m²，质心位于测试区内缩5m；IoU>=0.5 一对一匹配。道路原生ID建立无向图，测试区外80m提供连通上下文，区内缩30m开展断点/交叉检查。"
+          },
+          {
+            "title": "解释边界",
+            "detail": "OSM 是对照数据而非真值；几何匹配对子共享OSM上游。Microsoft上海无分区，完整率及误差N/A；未验证绝对位置精度、真实世界建筑完整率或车辆通行限制。"
+          }
+        ],
+        "metricDefinitions": []
+      }
+    },
+    "source_composition": {
+      "rows": [
+        {
+          "source": "东亚建筑提取数据",
+          "count": 1641438
+        },
+        {
+          "source": "OpenStreetMap",
+          "count": 152392
+        }
+      ],
+      "source": {
+        "provider": "Official public geospatial downloads",
+        "label": "Overture上海建筑几何来源",
+        "files": [
+          "results/overture-global-profile.json"
+        ],
+        "links": [
+          {
+            "label": "Overture 官方下载文档",
+            "url": "https://docs.overturemaps.org/getting-data/"
+          },
+          {
+            "label": "Geofabrik 中国数据",
+            "url": "https://download.geofabrik.de/asia/china.html"
+          },
+          {
+            "label": "Microsoft 官方数据与覆盖说明",
+            "url": "https://github.com/microsoft/GlobalMLBuildingFootprints"
+          },
+          {
+            "label": "东亚建筑数据原始记录",
+            "url": "https://doi.org/10.5281/zenodo.8174931"
+          }
+        ],
+        "evidenceFlow": [
+          {
+            "title": "固定源版本与空间范围",
+            "detail": "Overture 2026-10-21.0；Geofabrik OSM PBF 截至 2026-10-25T21:21:21Z；Microsoft 2026-08-13 全索引空间覆盖核查。先 bbox 查询，再按上海16区 WGS84 市界几何相交筛选。"
+          },
+          {
+            "title": "对照计算",
+            "detail": "scripts/metrics_buildings.py 与 scripts/metrics_roads.py；UTM51N 米制；建筑面积>=10m²，质心位于测试区内缩5m；IoU>=0.5 一对一匹配。道路原生ID建立无向图，测试区外80m提供连通上下文，区内缩30m开展断点/交叉检查。"
+          },
+          {
+            "title": "解释边界",
+            "detail": "OSM 是对照数据而非真值；几何匹配对子共享OSM上游。Microsoft上海无分区，完整率及误差N/A；未验证绝对位置精度、真实世界建筑完整率或车辆通行限制。"
+          }
+        ],
+        "metricDefinitions": []
+      }
+    },
+    "building_candidates": {
+      "rows": [
+        {
+          "area": "南京西路",
+          "issue": "osm_reference_without_iou05_match",
+          "overture_id": "",
+          "osm_id": "w1566594236",
+          "iou": "0.49174903836943007",
+          "centroid_distance_m": ""
+        },
+        {
+          "area": "南京西路",
+          "issue": "osm_reference_without_iou05_match",
+          "overture_id": "",
+          "osm_id": "w1566594237",
+          "iou": "0",
+          "centroid_distance_m": ""
+        },
+        {
+          "area": "南京西路",
+          "issue": "osm_reference_without_iou05_match",
+          "overture_id": "",
+          "osm_id": "w1566594239",
+          "iou": "0",
+          "centroid_distance_m": ""
+        },
+        {
+          "area": "南京西路",
+          "issue": "osm_reference_without_iou05_match",
+          "overture_id": "",
+          "osm_id": "w1566594240",
+          "iou": "0.3740289828430441",
+          "centroid_distance_m": ""
+        },
+        {
+          "area": "新天地",
+          "issue": "osm_reference_without_iou05_match",
+          "overture_id": "",
+          "osm_id": "w1570583917",
+          "iou": "0.06922043661380868",
+          "centroid_distance_m": ""
+        }
+      ],
+      "source": {
+        "provider": "Official public geospatial downloads",
+        "label": "未达IoU0.5的5个参考对象",
+        "files": [
+          "results/building-audit-candidates.csv",
+          "results/building-candidate-osm-history.json"
+        ],
+        "links": [
+          {
+            "label": "Overture 官方下载文档",
+            "url": "https://docs.overturemaps.org/getting-data/"
+          },
+          {
+            "label": "Geofabrik 中国数据",
+            "url": "https://download.geofabrik.de/asia/china.html"
+          },
+          {
+            "label": "Microsoft 官方数据与覆盖说明",
+            "url": "https://github.com/microsoft/GlobalMLBuildingFootprints"
+          },
+          {
+            "label": "东亚建筑数据原始记录",
+            "url": "https://doi.org/10.5281/zenodo.8174931"
+          }
+        ],
+        "evidenceFlow": [
+          {
+            "title": "固定源版本与空间范围",
+            "detail": "Overture 2026-10-21.0；Geofabrik OSM PBF 截至 2026-10-25T21:21:21Z；Microsoft 2026-08-13 全索引空间覆盖核查。先 bbox 查询，再按上海16区 WGS84 市界几何相交筛选。"
+          },
+          {
+            "title": "对照计算",
+            "detail": "scripts/metrics_buildings.py 与 scripts/metrics_roads.py；UTM51N 米制；建筑面积>=10m²，质心位于测试区内缩5m；IoU>=0.5 一对一匹配。道路原生ID建立无向图，测试区外80m提供连通上下文，区内缩30m开展断点/交叉检查。"
+          },
+          {
+            "title": "解释边界",
+            "detail": "OSM 是对照数据而非真值；几何匹配对子共享OSM上游。Microsoft上海无分区，完整率及误差N/A；未验证绝对位置精度、真实世界建筑完整率或车辆通行限制。"
+          }
+        ],
+        "metricDefinitions": []
+      }
+    },
+    "road_candidates": {
+      "rows": [
+        {
+          "area": "南京西路",
+          "source": "Overture",
+          "issue": "interior_deadend_near_other_road_within_3m",
+          "feature_id": "1093a8e3-9506-4e45-bb81-1e50fb3ca050",
+          "other_id": "4b5dd526-17ec-4f1f-9ad1-fbb02528b5f2",
+          "distance_m": "1.7380893882844535",
+          "status": "candidate_manual_review"
+        },
+        {
+          "area": "南京西路",
+          "source": "Overture",
+          "issue": "interior_deadend_near_other_road_within_3m",
+          "feature_id": "2bfb34f0-b759-4d31-9d41-058debe29e70",
+          "other_id": "4b5dd526-17ec-4f1f-9ad1-fbb02528b5f2",
+          "distance_m": "1.5811949233333376",
+          "status": "candidate_manual_review"
+        },
+        {
+          "area": "南京西路",
+          "source": "Geofabrik",
+          "issue": "interior_deadend_near_other_road_within_3m",
+          "feature_id": "8941505988",
+          "other_id": "w39838919",
+          "distance_m": "1.7380893882844535",
+          "status": "candidate_manual_review"
+        },
+        {
+          "area": "南京西路",
+          "source": "Geofabrik",
+          "issue": "interior_deadend_near_other_road_within_3m",
+          "feature_id": "8941505989",
+          "other_id": "w39838919",
+          "distance_m": "1.5811949233333376",
+          "status": "candidate_manual_review"
+        },
+        {
+          "area": "虹桥",
+          "source": "Overture",
+          "issue": "interior_deadend_near_other_road_within_3m",
+          "feature_id": "9b3cd0db-d16f-48da-a1a8-7ddd35b00e49",
+          "other_id": "106d01d1-ef3c-461a-975e-76058fb8606d",
+          "distance_m": "0.0163045167729033",
+          "status": "candidate_manual_review"
+        },
+        {
+          "area": "虹桥",
+          "source": "Geofabrik",
+          "issue": "interior_deadend_near_other_road_within_3m",
+          "feature_id": "10270859651",
+          "other_id": "w1152690600",
+          "distance_m": "0.0163045167729033",
+          "status": "candidate_manual_review"
+        }
+      ],
+      "source": {
+        "provider": "Official public geospatial downloads",
+        "label": "3个空间近接点、两个数据源各有记录",
+        "files": [
+          "results/road-audit-candidates.csv",
+          "results/road-topology-candidates.geojson"
+        ],
+        "links": [
+          {
+            "label": "Overture 官方下载文档",
+            "url": "https://docs.overturemaps.org/getting-data/"
+          },
+          {
+            "label": "Geofabrik 中国数据",
+            "url": "https://download.geofabrik.de/asia/china.html"
+          },
+          {
+            "label": "Microsoft 官方数据与覆盖说明",
+            "url": "https://github.com/microsoft/GlobalMLBuildingFootprints"
+          },
+          {
+            "label": "东亚建筑数据原始记录",
+            "url": "https://doi.org/10.5281/zenodo.8174931"
+          }
+        ],
+        "evidenceFlow": [
+          {
+            "title": "固定源版本与空间范围",
+            "detail": "Overture 2026-10-21.0；Geofabrik OSM PBF 截至 2026-10-25T21:21:21Z；Microsoft 2026-08-13 全索引空间覆盖核查。先 bbox 查询，再按上海16区 WGS84 市界几何相交筛选。"
+          },
+          {
+            "title": "对照计算",
+            "detail": "scripts/metrics_buildings.py 与 scripts/metrics_roads.py；UTM51N 米制；建筑面积>=10m²，质心位于测试区内缩5m；IoU>=0.5 一对一匹配。道路原生ID建立无向图，测试区外80m提供连通上下文，区内缩30m开展断点/交叉检查。"
+          },
+          {
+            "title": "解释边界",
+            "detail": "OSM 是对照数据而非真值；几何匹配对子共享OSM上游。Microsoft上海无分区，完整率及误差N/A；未验证绝对位置精度、真实世界建筑完整率或车辆通行限制。"
+          }
+        ],
+        "metricDefinitions": []
+      }
+    },
+    "review_maps": {
+      "rows": [
+        {
+          "case_id": "building-w1566594236",
+          "area": "南京西路",
+          "type": "建筑参考差异",
+          "label": "南京西路 · w1566594236",
+          "source_id": "w1566594236",
+          "longitude": 121.44600500000186,
+          "latitude": 31.231506200021737,
+          "detail": "最高IoU 0.492，未达0.5。OSM首次制图/修改：2026-10-08 17:36:25+00:00，version=1。 仅列为参考差异，未据此认定真实漏建。",
+          "shapes_json": "[{\"id\":\"5ed84992-6c10-47d1-bf49-8c3f41d56a52\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M364.42,6.06 L300.32,33.43 L287.19,2.96 L294.12,0.00 L361.80,0.00 L364.42,6.06\"]},{\"id\":\"4370477c-a4d3-4ea9-8876-5546af93e7bb\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M391.44,62.85 L327.34,90.22 L314.21,59.75 L378.29,32.40 L391.44,62.85\"]},{\"id\":\"5dd99328-c4cf-47da-a22a-f5d7401caea0\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M413.25,17.59 L383.96,19.42 L383.43,11.05 L412.72,9.23 L413.25,17.59\"]},{\"id\":\"0106bead-f5e6-4c2c-a71e-79ae809fc2b3\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M407.86,30.82 L406.14,39.56 L391.60,36.67 L393.33,27.96 L407.86,30.82\"]},{\"id\":\"97cfab48-1fbf-4e5b-bc37-815c6416f622\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M411.17,106.15 L423.00,131.88 L370.15,155.93 L358.33,130.20 L411.17,106.15\"]},{\"id\":\"3e254253-84a6-4565-a5db-06dc903d4576\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M332.79,206.83 L344.48,202.38 L349.32,210.36 L349.24,210.38 L349.50,210.81 L341.08,213.46 L335.72,215.03 L332.79,206.83\"]},{\"id\":\"38fe74c8-d6fd-45a7-8394-9d5f8948a2d1\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M397.18,298.78 L405.10,319.20 L396.88,321.15 L397.18,298.78\"]},{\"id\":\"3e5c5ba1-e493-4eaa-951b-aff1d0518266\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M318.86,331.96 L338.73,325.25 L344.76,343.12 L324.91,349.83 L318.86,331.96\"]},{\"id\":\"b9aac945-16fd-458b-9afc-e87ee9313d56\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M301.16,277.34 L303.13,283.46 L284.69,283.23 L301.16,277.34\"]},{\"id\":\"5a2cbbbc-94dd-43e3-98c0-ff20a3b30415\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M271.48,350.40 L255.87,379.03 L237.64,369.11 L253.25,340.46 L271.48,350.40\"]},{\"id\":\"b4f9758d-706c-4463-82cb-531c12eed7e8\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M289.50,250.05 L348.79,223.48 L359.08,246.42 L299.77,273.02 L289.50,250.05\"]},{\"id\":\"53853dfa-3efd-480e-a06c-8a38ba97738c\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M286.12,228.81 L263.95,174.46 L298.88,160.20 L321.06,214.53 L286.12,228.81\"]},{\"id\":\"b33ebaa6-b21d-4372-bb4e-0376124f223a\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M224.87,161.03 L199.02,92.32 L231.22,80.33 L257.06,149.02 L224.87,161.03\"]},{\"id\":\"fe37df41-a716-4ad6-801e-21eff84d08d0\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M190.89,195.27 L168.03,205.77 L157.53,182.92 L180.39,172.42 L190.89,195.27\"]},{\"id\":\"1404ca67-d804-4bee-952f-b1cf6d6e17a1\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M50.28,362.19 L82.15,351.69 L87.66,368.22 L150.43,347.48 L145.89,333.85 L179.36,322.77 L197.09,375.97 L124.33,400.00 L62.92,400.00 L50.28,362.19\"]},{\"id\":\"36289383-e815-4e8f-8c8e-c621536061af\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M70.24,302.38 L100.11,291.78 L107.27,311.09 L77.39,322.13 L70.24,302.38\"]},{\"id\":\"d257a909-f825-45a5-90c6-caf15cf9a2e6\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M103.47,350.52 L98.88,352.28 L96.49,345.86 L127.32,334.81 L129.15,340.57 L126.47,341.47 L128.86,347.67 L105.49,356.49 L103.47,350.52\"]},{\"id\":\"ef2afd62-a7f3-4908-b02e-b332977759d8\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M147.56,199.56 L103.43,215.22 L97.11,197.54 L141.21,181.89 L147.56,199.56\"]},{\"id\":\"39851f10-af14-4a5b-b536-784e0cc5e181\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M70.29,178.19 L49.06,124.34 L113.33,101.34 L136.29,154.19 L70.29,178.19\",\"M108.92,147.95 L100.74,124.89 L74.24,134.16 L82.40,157.22 L108.92,147.95\"]},{\"id\":\"9a43d75b-468f-4966-b98e-08a0a6e2eb63\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M102.22,4.81 L100.44,0.00 L115.81,0.00 L102.22,4.81\"]},{\"id\":\"a93c89ea-9547-4481-8670-90ab19b1c8a6\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M181.43,8.66 L165.15,14.63 L159.97,0.00 L178.31,0.00 L181.43,8.66\"]},{\"id\":\"8953d8c1-795f-4b92-ac6e-06e46aff9428\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M232.64,53.01 L260.23,42.16 L264.28,52.13 L236.31,62.98 L232.64,53.01\"]},{\"id\":\"c837b77f-65f0-4417-9a95-e49501087eb8\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M252.11,28.65 L250.57,43.07 L216.18,56.29 L206.58,46.53 L188.14,0.00 L240.75,0.00 L252.11,28.65\"]},{\"id\":\"753ec596-add2-4823-8475-16710805f7ba\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M86.18,10.18 L55.98,22.57 L53.91,16.66 L36.66,23.63 L36.46,0.00 L90.23,0.00 L86.18,10.18\"]},{\"id\":\"e435dbd8-c422-478e-9f91-a02a20511152\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M45.37,77.43 L39.13,61.02 L28.78,65.22 L25.29,55.68 L30.27,53.69 L26.39,44.17 L61.27,30.91 L71.39,56.86 L66.21,58.85 L69.89,68.37 L45.37,77.43\"]},{\"id\":\"e65264d3-bc86-4eb3-b007-3e8c08e11765\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M22.43,56.24 L0.00,64.50 L0.00,0.00 L0.53,0.00 L22.43,56.24\"]},{\"id\":\"e157c87f-fbcd-418e-ae40-c29bcb6fc511\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M2.36,383.76 L0.00,384.57 L0.00,376.92 L2.36,383.76\"]},{\"id\":\"c88820a0-a366-4630-b12f-15d45905eb84\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M6.86,397.41 L7.74,400.00 L0.00,400.00 L0.00,399.76 L6.86,397.41\"]},{\"id\":\"a1f5c0ae-f2da-4c20-9c70-d7fd61ceee87\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M0.13,340.62 L0.00,340.66 L0.00,340.21 L0.13,340.62\"]},{\"id\":\"5f19392a-bf7f-42b4-a7c9-98afe32e71fa\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M4.54,122.14 L18.46,121.71 L0.00,128.11 L0.00,125.66 L4.54,122.14\"]},{\"id\":\"cd6b9de0-38ef-41d8-890d-53f00d65e431\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M7.21,214.15 L79.85,188.99 L90.90,220.52 L70.97,227.44 L74.19,236.60 L0.00,262.32 L0.00,193.54 L7.21,214.15\"]},{\"id\":\"3894101f-0905-486d-bc83-1d4b9644778b\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M35.70,131.24 L45.08,156.19 L31.01,161.42 L29.10,156.36 L0.00,167.17 L0.00,144.51 L35.70,131.24\"]},{\"id\":\"cf14d0f5-c102-4024-bc03-f02d2ec31484\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M48.85,101.36 L66.47,94.76 L69.03,102.07 L51.42,108.25 L48.85,101.36\"]},{\"id\":\"47a433b6-6bd8-4855-983e-f68214bf9f9a\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M48.51,260.70 L66.18,262.70 L65.51,268.59 L47.84,266.59 L48.51,260.70\"]},{\"id\":\"2dd418d5-1032-4c60-9e49-92ef3790302d\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M41.18,274.10 L65.64,345.76 L15.62,362.66 L0.00,316.96 L0.00,288.01 L41.18,274.10\"]},{\"id\":\"5ccf863f-5a95-4ac9-b4da-ebc5acc8bcd4\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M34.78,371.04 L42.25,368.15 L51.56,400.00 L43.08,400.00 L34.78,371.04\"]},{\"id\":\"c41fce78-7b08-4d88-b8cc-22e32481bb05\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M567.88,121.46 L586.64,112.14 L599.71,138.42 L580.94,147.74 L567.88,121.46\"]},{\"id\":\"69949e5b-5926-4026-a8e9-e86253423605\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M591.91,372.09 L580.68,331.71 L596.83,327.22 L600.00,338.63 L600.00,369.84 L591.91,372.09\"]},{\"id\":\"50d1bc51-0ef9-4471-b84a-defdcfadb9d1\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M576.10,379.46 L596.16,375.88 L598.81,390.51 L578.76,394.08 L576.10,379.46\"]},{\"id\":\"5d58e03f-1d77-4324-bf91-03078cc54d86\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M344.22,395.55 L418.83,352.14 L448.32,400.00 L346.96,400.00 L344.22,395.55\"]},{\"id\":\"95fe21f5-d61f-480e-bd1b-e6fc7b053113\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M499.27,279.92 L494.23,282.89 L488.47,285.16 L483.19,286.46 L477.67,287.05 L472.91,287.03 L468.40,286.52 L464.25,285.35 L459.96,283.54 L455.96,281.29 L452.47,278.64 L449.12,275.49 L446.37,272.35 L443.25,268.74 L440.55,264.62 L435.76,255.66 L472.97,239.17 L499.27,279.92\"]},{\"id\":\"c09438a1-e18c-4125-a6e2-aadfc6976ed5\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M478.58,365.14 L498.05,352.77 L509.27,370.47 L489.82,382.83 L478.58,365.14\"]},{\"id\":\"86385222-4147-4bbc-af09-636c8cd75eed\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M527.59,377.11 L514.52,341.71 L530.24,335.90 L543.33,371.30 L527.59,377.11\"]},{\"id\":\"565fa6ee-f7ff-4bdf-a6c6-a43564522409\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M509.32,265.61 L521.37,261.98 L522.58,265.99 L510.54,269.62 L509.32,265.61\"]},{\"id\":\"3e1b7706-1fd8-479f-b468-59815e9f934e\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M525.17,203.45 L540.57,240.81 L498.47,257.98 L483.07,220.62 L525.17,203.45\"]},{\"id\":\"3f30e97e-c52f-478c-a5d9-0eedd77a0867\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M541.96,207.02 L580.01,189.39 L590.57,212.22 L552.54,229.85 L541.96,207.02\"]},{\"id\":\"d6b85e6d-da76-4a0c-9b4e-6ee9403529bc\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M533.76,146.43 L523.42,118.97 L550.89,108.65 L561.21,136.11 L533.76,146.43\"]},{\"id\":\"898096f0-a6f9-4bb4-bf95-869c40299466\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M508.54,129.94 L518.10,153.55 L464.19,175.15 L454.64,151.53 L508.54,129.94\"]},{\"id\":\"b49f10a3-04b7-4b97-ab93-126f6ffbda2d\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M432.89,153.42 L450.68,186.46 L399.27,213.86 L381.48,180.79 L432.89,153.42\"]},{\"id\":\"b15a03c0-0d53-4bf5-922f-25fd589fa61d\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M420.90,8.72 L439.43,5.12 L440.21,9.24 L421.70,12.83 L420.90,8.72\"]},{\"id\":\"1ebd883b-eea9-4668-904e-302d132e7d2a\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M554.98,35.73 L412.40,90.31 L400.85,60.44 L543.44,5.85 L554.98,35.73\"]},{\"id\":\"fa999210-7337-4f79-843e-314a8868fe19\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M451.50,8.84 L446.76,0.00 L467.99,0.00 L451.50,8.84\"]},{\"id\":\"b28ae853-0ca6-4bd2-976e-a9586632f657\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M379.95,4.88 L377.95,0.00 L392.72,0.00 L379.95,4.88\"]},{\"id\":\"57b045bb-50f9-4090-9c5f-b50507d442af\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M578.48,77.57 L556.59,36.99 L575.02,27.03 L596.93,67.61 L578.48,77.57\"]},{\"id\":\"4ead4960-b061-4384-9b59-79444299dc7d\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M568.39,27.78 L561.06,10.00 L585.61,0.00 L600.00,0.00 L600.00,14.88 L568.39,27.78\"]},{\"id\":\"w437443893\",\"source\":\"Geofabrik\",\"target\":false,\"paths\":[\"M344.22,395.55 L418.83,352.14 L448.32,400.00 L346.96,400.00 L344.22,395.55\"]},{\"id\":\"w490437625\",\"source\":\"Geofabrik\",\"target\":false,\"paths\":[\"M50.28,362.19 L82.15,351.69 L87.66,368.22 L150.43,347.48 L145.89,333.85 L179.36,322.77 L197.09,375.97 L124.33,400.00 L62.92,400.00 L50.28,362.19\"]},{\"id\":\"w1154427267\",\"source\":\"Geofabrik\",\"target\":false,\"paths\":[\"M379.95,4.88 L377.95,0.00 L392.72,0.00 L379.95,4.88\"]},{\"id\":\"w1199470370\",\"source\":\"Geofabrik\",\"target\":false,\"paths\":[\"M472.97,239.17 L499.27,279.92 L494.23,282.89 L488.47,285.16 L483.19,286.46 L477.67,287.05 L472.91,287.03 L468.40,286.52 L464.25,285.35 L459.96,283.54 L455.96,281.29 L452.47,278.64 L449.12,275.49 L446.37,272.35 L443.25,268.74 L440.55,264.62 L435.76,255.66 L472.97,239.17\"]},{\"id\":\"w1199470371\",\"source\":\"Geofabrik\",\"target\":false,\"paths\":[\"M381.48,180.79 L432.89,153.42 L450.68,186.46 L399.27,213.86 L381.48,180.79\"]},{\"id\":\"w1199470372\",\"source\":\"Geofabrik\",\"target\":false,\"paths\":[\"M454.64,151.53 L508.54,129.94 L518.10,153.55 L464.19,175.15 L454.64,151.53\"]},{\"id\":\"w1199470374\",\"source\":\"Geofabrik\",\"target\":false,\"paths\":[\"M294.12,0.00 L361.80,0.00 L364.42,6.06 L300.32,33.43 L287.19,2.96 L294.12,0.00\"]},{\"id\":\"w1199470375\",\"source\":\"Geofabrik\",\"target\":false,\"paths\":[\"M378.29,32.40 L391.44,62.85 L327.34,90.22 L314.21,59.75 L378.29,32.40\"]},{\"id\":\"w1199470376\",\"source\":\"Geofabrik\",\"target\":false,\"paths\":[\"M358.33,130.20 L411.17,106.15 L423.00,131.88 L370.15,155.93 L358.33,130.20\"]},{\"id\":\"w1200049165\",\"source\":\"Geofabrik\",\"target\":false,\"paths\":[\"M22.43,56.24 L0.00,64.50 L0.00,0.00 L0.53,0.00 L22.43,56.24\"]},{\"id\":\"w1200049166\",\"source\":\"Geofabrik\",\"target\":false,\"paths\":[\"M35.70,131.24 L45.08,156.19 L31.01,161.42 L29.10,156.36 L0.00,167.17 L0.00,144.51 L35.70,131.24\"]},{\"id\":\"w1200049167\",\"source\":\"Geofabrik\",\"target\":false,\"paths\":[\"M15.62,362.66 L0.00,316.96 L0.00,288.01 L41.18,274.10 L65.64,345.76 L15.62,362.66\"]},{\"id\":\"w1200050718\",\"source\":\"Geofabrik\",\"target\":false,\"paths\":[\"M249.06,129.95 L255.27,146.44 L223.07,158.45 L197.23,89.75 L229.43,77.76 L249.06,129.95\"]},{\"id\":\"w1200050719\",\"source\":\"Geofabrik\",\"target\":false,\"paths\":[\"M90.90,220.52 L70.97,227.44 L74.19,236.60 L0.00,262.32 L0.00,193.54 L7.21,214.15 L79.85,188.99 L90.90,220.52\"]},{\"id\":\"w1200050720\",\"source\":\"Geofabrik\",\"target\":false,\"paths\":[\"M141.21,181.89 L147.56,199.56 L103.43,215.22 L97.11,197.54 L141.21,181.89\"]},{\"id\":\"w1200469370\",\"source\":\"Geofabrik\",\"target\":false,\"paths\":[\"M483.07,220.62 L525.17,203.45 L540.57,240.81 L498.47,257.98 L483.07,220.62\"]},{\"id\":\"w1200469371\",\"source\":\"Geofabrik\",\"target\":false,\"paths\":[\"M585.61,0.00 L600.00,0.00 L600.00,14.88 L568.39,27.78 L561.06,10.00 L585.61,0.00\"]},{\"id\":\"w1200469373\",\"source\":\"Geofabrik\",\"target\":false,\"paths\":[\"M543.44,5.85 L554.98,35.73 L412.40,90.31 L400.85,60.44 L543.44,5.85\"]},{\"id\":\"w1331510435\",\"source\":\"Geofabrik\",\"target\":false,\"paths\":[\"M252.11,28.65 L250.57,43.07 L216.18,56.29 L206.58,46.53 L188.14,0.00 L240.75,0.00 L252.11,28.65\"]},{\"id\":\"w1331510437\",\"source\":\"Geofabrik\",\"target\":false,\"paths\":[\"M86.18,10.18 L55.98,22.57 L53.91,16.66 L36.66,23.63 L36.46,0.00 L90.23,0.00 L86.18,10.18\"]},{\"id\":\"w1566594236\",\"source\":\"Geofabrik\",\"target\":true,\"paths\":[\"M309.83,176.01 L324.57,208.55 L290.17,223.99 L275.43,191.45 L309.83,176.01\"]},{\"id\":\"w1566594237\",\"source\":\"Geofabrik\",\"target\":false,\"paths\":[\"M271.60,77.64 L283.27,102.62 L264.24,111.42 L252.57,86.44 L271.60,77.64\"]},{\"id\":\"w1566594239\",\"source\":\"Geofabrik\",\"target\":false,\"paths\":[\"M288.80,135.74 L284.83,126.88 L301.19,119.64 L312.11,144.00 L255.22,169.21 L248.27,153.70 L288.80,135.74\"]},{\"id\":\"r18258254\",\"source\":\"Geofabrik\",\"target\":false,\"paths\":[\"M70.29,178.19 L49.06,124.34 L113.33,101.34 L136.29,154.19 L70.29,178.19\",\"M82.40,157.22 L108.92,147.95 L100.74,124.89 L74.24,134.16 L82.40,157.22\"]}]"
+        },
+        {
+          "case_id": "building-w1566594237",
+          "area": "南京西路",
+          "type": "建筑参考差异",
+          "label": "南京西路 · w1566594237",
+          "source_id": "w1566594237",
+          "longitude": 121.44582885001212,
+          "latitude": 31.23197980000488,
+          "detail": "最高IoU 0.000，未达0.5。OSM首次制图/修改：2026-10-08 17:36:25+00:00，version=1。 仅列为参考差异，未据此认定真实漏建。",
+          "shapes_json": "[{\"id\":\"29c51104-fa6c-44ce-8ab9-dc1432f3381d\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M317.18,0.65 L308.83,9.01 L297.76,17.19 L288.64,19.79 L280.90,15.95 L275.65,9.56 L272.59,0.00 L317.58,0.00 L317.18,0.65\"]},{\"id\":\"55b7b535-8032-46ee-b486-4f1385e775be\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M328.35,0.48 L317.98,8.49 L313.92,6.42 L323.22,0.00 L328.56,0.00 L328.35,0.48\"]},{\"id\":\"99200c22-2f53-497b-bdb8-1e60ca89f495\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M378.76,50.83 L313.09,81.77 L299.09,52.40 L364.77,21.43 L378.76,50.83\"]},{\"id\":\"5ed84992-6c10-47d1-bf49-8c3f41d56a52\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M396.50,111.53 L332.40,138.90 L319.27,108.43 L383.35,81.08 L396.50,111.53\"]},{\"id\":\"4370477c-a4d3-4ea9-8876-5546af93e7bb\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M423.52,168.32 L359.42,195.69 L346.29,165.22 L410.37,137.87 L423.52,168.32\"]},{\"id\":\"ccda9c6a-5892-4912-98b9-51b3d16f238f\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M389.80,3.23 L365.03,15.14 L357.04,0.81 L358.88,0.00 L388.45,0.00 L389.80,3.23\"]},{\"id\":\"5dd99328-c4cf-47da-a22a-f5d7401caea0\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M445.33,123.06 L416.04,124.89 L415.51,116.52 L444.80,114.69 L445.33,123.06\"]},{\"id\":\"0106bead-f5e6-4c2c-a71e-79ae809fc2b3\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M439.94,136.29 L438.22,145.02 L423.68,142.14 L425.41,133.42 L439.94,136.29\"]},{\"id\":\"97cfab48-1fbf-4e5b-bc37-815c6416f622\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M443.25,211.62 L455.08,237.35 L402.23,261.40 L390.41,235.66 L443.25,211.62\"]},{\"id\":\"3e254253-84a6-4565-a5db-06dc903d4576\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M364.87,312.29 L376.56,307.84 L381.40,315.83 L381.32,315.85 L381.58,316.27 L373.16,318.93 L367.80,320.49 L364.87,312.29\"]},{\"id\":\"b9aac945-16fd-458b-9afc-e87ee9313d56\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M333.24,382.80 L335.21,388.93 L316.77,388.69 L333.24,382.80\"]},{\"id\":\"b4f9758d-706c-4463-82cb-531c12eed7e8\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M321.58,355.52 L380.87,328.95 L391.16,351.89 L331.85,378.48 L321.58,355.52\"]},{\"id\":\"53853dfa-3efd-480e-a06c-8a38ba97738c\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M318.20,334.28 L296.03,279.93 L330.96,265.67 L353.14,320.00 L318.20,334.28\"]},{\"id\":\"b33ebaa6-b21d-4372-bb4e-0376124f223a\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M256.95,266.49 L231.10,197.79 L263.30,185.80 L289.14,254.48 L256.95,266.49\"]},{\"id\":\"fe37df41-a716-4ad6-801e-21eff84d08d0\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M222.97,300.74 L200.11,311.24 L189.61,288.38 L212.47,277.89 L222.97,300.74\"]},{\"id\":\"36289383-e815-4e8f-8c8e-c621536061af\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M132.19,397.25 L133.21,400.00 L124.44,400.00 L132.19,397.25\"]},{\"id\":\"ef2afd62-a7f3-4908-b02e-b332977759d8\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M179.64,305.03 L135.51,320.68 L129.19,303.01 L173.29,287.36 L179.64,305.03\"]},{\"id\":\"39851f10-af14-4a5b-b536-784e0cc5e181\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M102.37,283.65 L81.14,229.80 L145.41,206.81 L168.37,259.66 L102.37,283.65\",\"M141.00,253.42 L132.82,230.35 L106.32,239.63 L114.48,262.69 L141.00,253.42\"]},{\"id\":\"9a43d75b-468f-4966-b98e-08a0a6e2eb63\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M131.18,101.88 L163.16,90.38 L166.09,99.02 L134.30,110.28 L131.18,101.88\"]},{\"id\":\"9e3c7969-ac84-4f5a-bf22-92d19b6a8376\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M238.00,14.00 L168.39,47.03 L148.28,6.79 L161.75,0.00 L231.41,0.00 L238.00,14.00\"]},{\"id\":\"a93c89ea-9547-4481-8670-90ab19b1c8a6\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M197.23,120.10 L188.44,95.28 L184.41,96.82 L178.74,80.42 L198.66,72.91 L213.51,114.12 L197.23,120.10\"]},{\"id\":\"8953d8c1-795f-4b92-ac6e-06e46aff9428\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M264.72,158.48 L292.31,147.63 L296.36,157.60 L268.39,168.45 L264.72,158.48\"]},{\"id\":\"c837b77f-65f0-4417-9a95-e49501087eb8\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M238.66,152.00 L216.88,97.03 L218.24,84.43 L252.62,71.21 L262.40,79.18 L284.19,134.12 L282.65,148.53 L248.26,161.75 L238.66,152.00\"]},{\"id\":\"753ec596-add2-4823-8475-16710805f7ba\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M88.06,128.03 L85.99,122.13 L68.74,129.09 L68.53,104.54 L77.45,75.86 L86.75,57.28 L95.01,44.49 L126.62,29.55 L143.51,65.00 L137.20,67.99 L118.26,115.64 L88.06,128.03\"]},{\"id\":\"e435dbd8-c422-478e-9f91-a02a20511152\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M77.45,182.90 L71.21,166.49 L60.86,170.69 L57.37,161.15 L62.35,159.16 L58.47,149.64 L93.35,136.38 L103.47,162.33 L98.29,164.32 L101.97,173.84 L77.45,182.90\"]},{\"id\":\"e634a2c5-0290-467d-a632-f10325795e34\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M61.84,99.77 L50.22,58.98 L55.39,56.99 L53.56,51.67 L90.33,39.77 L92.52,46.41 L81.07,59.71 L72.65,76.31 L66.37,102.67 L61.84,99.77\"]},{\"id\":\"c489f142-48c4-4322-bddd-064bad9ed283\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M0.00,6.35 L0.00,0.00 L14.52,0.00 L0.00,6.35\"]},{\"id\":\"e65264d3-bc86-4eb3-b007-3e8c08e11765\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M19.07,70.67 L54.51,161.71 L0.00,181.77 L0.00,82.41 L19.07,70.67\"]},{\"id\":\"106958b6-11c2-4687-be5b-57556bc0c4fb\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M13.60,400.00 L6.69,400.00 L0.00,379.84 L0.00,359.30 L13.60,400.00\"]},{\"id\":\"a91b4377-05d9-498c-8760-a7b190298605\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M0.17,400.00 L0.00,400.00 L0.00,399.03 L0.17,400.00\"]},{\"id\":\"5f19392a-bf7f-42b4-a7c9-98afe32e71fa\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M36.62,227.60 L50.54,227.18 L26.39,235.55 L36.62,227.60\"]},{\"id\":\"cd6b9de0-38ef-41d8-890d-53f00d65e431\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M26.10,281.91 L39.29,319.62 L111.93,294.45 L122.98,325.99 L103.05,332.91 L106.27,342.07 L19.53,372.14 L0.00,316.34 L0.00,290.95 L26.10,281.91\"]},{\"id\":\"3894101f-0905-486d-bc83-1d4b9644778b\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M77.16,261.66 L63.09,266.89 L61.18,261.83 L26.03,274.88 L18.57,255.00 L67.78,236.71 L77.16,261.66\"]},{\"id\":\"cf14d0f5-c102-4024-bc03-f02d2ec31484\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M80.93,206.83 L98.55,200.23 L101.11,207.53 L83.50,213.72 L80.93,206.83\"]},{\"id\":\"47a433b6-6bd8-4855-983e-f68214bf9f9a\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M80.59,366.17 L98.26,368.17 L97.59,374.06 L79.92,372.06 L80.59,366.17\"]},{\"id\":\"2dd418d5-1032-4c60-9e49-92ef3790302d\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M23.21,396.47 L73.26,379.57 L80.23,400.00 L24.42,400.00 L23.21,396.47\"]},{\"id\":\"c41fce78-7b08-4d88-b8cc-22e32481bb05\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M599.96,226.92 L600.00,226.90 L600.00,227.01 L599.96,226.92\"]},{\"id\":\"95fe21f5-d61f-480e-bd1b-e6fc7b053113\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M531.35,385.39 L526.31,388.36 L520.55,390.63 L515.27,391.93 L509.75,392.52 L504.99,392.49 L500.48,391.99 L496.33,390.82 L492.04,389.01 L488.04,386.76 L484.55,384.11 L481.20,380.96 L478.45,377.82 L475.33,374.20 L472.63,370.09 L467.84,361.13 L505.05,344.64 L531.35,385.39\"]},{\"id\":\"565fa6ee-f7ff-4bdf-a6c6-a43564522409\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M541.40,371.07 L553.45,367.45 L554.66,371.46 L542.62,375.08 L541.40,371.07\"]},{\"id\":\"3e1b7706-1fd8-479f-b468-59815e9f934e\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M557.25,308.92 L572.65,346.28 L530.55,363.45 L515.15,326.09 L557.25,308.92\"]},{\"id\":\"3f30e97e-c52f-478c-a5d9-0eedd77a0867\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M584.62,335.32 L574.04,312.48 L600.00,300.46 L600.00,328.19 L584.62,335.32\"]},{\"id\":\"d6b85e6d-da76-4a0c-9b4e-6ee9403529bc\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M565.84,251.90 L555.50,224.44 L582.97,214.11 L593.29,241.58 L565.84,251.90\"]},{\"id\":\"898096f0-a6f9-4bb4-bf95-869c40299466\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M540.62,235.40 L550.18,259.02 L496.27,280.61 L486.72,257.00 L540.62,235.40\"]},{\"id\":\"b49f10a3-04b7-4b97-ab93-126f6ffbda2d\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M464.97,258.89 L482.76,291.93 L431.35,319.33 L413.56,286.26 L464.97,258.89\"]},{\"id\":\"b15a03c0-0d53-4bf5-922f-25fd589fa61d\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M452.98,114.19 L471.51,110.59 L472.29,114.70 L453.78,118.30 L452.98,114.19\"]},{\"id\":\"1ebd883b-eea9-4668-904e-302d132e7d2a\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M587.06,141.20 L444.48,195.78 L432.93,165.90 L575.52,111.32 L587.06,141.20\"]},{\"id\":\"fa999210-7337-4f79-843e-314a8868fe19\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M540.87,83.60 L483.58,114.31 L477.64,103.23 L534.93,72.52 L540.87,83.60\"]},{\"id\":\"b28ae853-0ca6-4bd2-976e-a9586632f657\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M450.88,95.49 L412.03,110.35 L402.36,86.78 L447.02,68.94 L449.73,74.38 L521.78,45.37 L533.45,73.03 L454.76,104.19 L450.88,95.49\"]},{\"id\":\"839a5375-f003-4374-8da3-952c19aae167\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M441.65,44.65 L401.09,60.64 L389.94,33.78 L429.33,17.97 L432.95,24.90 L489.20,1.99 L500.85,28.16 L444.22,50.42 L441.65,44.65\"]},{\"id\":\"fe796582-4690-4d39-a378-ed9154a9639a\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M419.13,5.26 L416.83,0.00 L431.28,0.00 L419.13,5.26\"]},{\"id\":\"24b9eee7-50b8-4115-ade3-795e97c9d9dc\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M543.96,5.62 L536.72,8.89 L539.30,14.55 L527.13,20.04 L524.56,14.37 L507.59,22.05 L498.90,3.01 L505.56,0.00 L541.40,0.00 L543.96,5.62\"]},{\"id\":\"50f590e4-2723-4f82-883f-a00c300c72fc\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M595.44,7.43 L558.42,22.63 L549.04,0.00 L592.36,0.00 L595.44,7.43\"]},{\"id\":\"060ff6f2-8ddf-4e73-8321-60b3f416ffe5\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M597.98,16.51 L600.00,15.69 L600.00,21.36 L597.98,16.51\"]},{\"id\":\"57b045bb-50f9-4090-9c5f-b50507d442af\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M588.66,142.46 L600.00,136.33 L600.00,163.47 L588.66,142.46\"]},{\"id\":\"4ead4960-b061-4384-9b59-79444299dc7d\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M593.14,115.47 L600.00,112.68 L600.00,132.10 L593.14,115.47\"]},{\"id\":\"w1154427262\",\"source\":\"Geofabrik\",\"target\":false,\"paths\":[\"M317.18,0.65 L308.83,9.01 L297.76,17.19 L288.64,19.79 L280.90,15.95 L275.65,9.56 L272.59,0.00 L317.58,0.00 L317.18,0.65\"]},{\"id\":\"w1154427266\",\"source\":\"Geofabrik\",\"target\":false,\"paths\":[\"M444.22,50.42 L441.65,44.65 L401.09,60.64 L389.94,33.78 L429.33,17.97 L432.95,24.90 L489.20,1.99 L500.85,28.16 L444.22,50.42\"]},{\"id\":\"w1154427267\",\"source\":\"Geofabrik\",\"target\":false,\"paths\":[\"M454.76,104.19 L450.88,95.49 L412.03,110.35 L402.36,86.78 L447.02,68.94 L449.73,74.38 L521.78,45.37 L533.45,73.03 L454.76,104.19\"]},{\"id\":\"w1199470370\",\"source\":\"Geofabrik\",\"target\":false,\"paths\":[\"M505.05,344.64 L531.35,385.39 L526.31,388.36 L520.55,390.63 L515.27,391.93 L509.75,392.52 L504.99,392.49 L500.48,391.99 L496.33,390.82 L492.04,389.01 L488.04,386.76 L484.55,384.11 L481.20,380.96 L478.45,377.82 L475.33,374.20 L472.63,370.09 L467.84,361.13 L505.05,344.64\"]},{\"id\":\"w1199470371\",\"source\":\"Geofabrik\",\"target\":false,\"paths\":[\"M413.56,286.26 L464.97,258.89 L482.76,291.93 L431.35,319.33 L413.56,286.26\"]},{\"id\":\"w1199470372\",\"source\":\"Geofabrik\",\"target\":false,\"paths\":[\"M486.72,257.00 L540.62,235.40 L550.18,259.02 L496.27,280.61 L486.72,257.00\"]},{\"id\":\"w1199470374\",\"source\":\"Geofabrik\",\"target\":false,\"paths\":[\"M383.35,81.08 L396.50,111.53 L332.40,138.90 L319.27,108.43 L383.35,81.08\"]},{\"id\":\"w1199470375\",\"source\":\"Geofabrik\",\"target\":false,\"paths\":[\"M410.37,137.87 L423.52,168.32 L359.42,195.69 L346.29,165.22 L410.37,137.87\"]},{\"id\":\"w1199470376\",\"source\":\"Geofabrik\",\"target\":false,\"paths\":[\"M390.41,235.66 L443.25,211.62 L455.08,237.35 L402.23,261.40 L390.41,235.66\"]},{\"id\":\"w1200049165\",\"source\":\"Geofabrik\",\"target\":false,\"paths\":[\"M19.07,70.67 L54.51,161.71 L0.00,181.77 L0.00,82.41 L19.07,70.67\"]},{\"id\":\"w1200049166\",\"source\":\"Geofabrik\",\"target\":false,\"paths\":[\"M67.78,236.71 L77.16,261.66 L63.09,266.89 L61.18,261.83 L26.03,274.88 L18.57,255.00 L67.78,236.71\"]},{\"id\":\"w1200049167\",\"source\":\"Geofabrik\",\"target\":false,\"paths\":[\"M23.21,396.47 L73.26,379.57 L80.23,400.00 L24.42,400.00 L23.21,396.47\"]},{\"id\":\"w1200050718\",\"source\":\"Geofabrik\",\"target\":false,\"paths\":[\"M281.14,235.41 L287.35,251.91 L255.15,263.92 L229.31,195.21 L261.51,183.23 L281.14,235.41\"]},{\"id\":\"w1200050719\",\"source\":\"Geofabrik\",\"target\":false,\"paths\":[\"M122.98,325.99 L103.05,332.91 L106.27,342.07 L19.53,372.14 L0.00,316.34 L0.00,290.95 L26.10,281.91 L39.29,319.62 L111.93,294.45 L122.98,325.99\"]},{\"id\":\"w1200050720\",\"source\":\"Geofabrik\",\"target\":false,\"paths\":[\"M173.29,287.36 L179.64,305.03 L135.51,320.68 L129.19,303.01 L173.29,287.36\"]},{\"id\":\"w1200469370\",\"source\":\"Geofabrik\",\"target\":false,\"paths\":[\"M515.15,326.09 L557.25,308.92 L572.65,346.28 L530.55,363.45 L515.15,326.09\"]},{\"id\":\"w1200469371\",\"source\":\"Geofabrik\",\"target\":false,\"paths\":[\"M600.00,112.68 L600.00,132.10 L593.14,115.47 L600.00,112.68\"]},{\"id\":\"w1200469373\",\"source\":\"Geofabrik\",\"target\":false,\"paths\":[\"M575.52,111.32 L587.06,141.20 L444.48,195.78 L432.93,165.90 L575.52,111.32\"]},{\"id\":\"w1200469374\",\"source\":\"Geofabrik\",\"target\":false,\"paths\":[\"M364.77,21.43 L378.76,50.83 L313.09,81.77 L299.09,52.40 L364.77,21.43\"]},{\"id\":\"w1200469375\",\"source\":\"Geofabrik\",\"target\":false,\"paths\":[\"M419.13,5.26 L416.83,0.00 L431.28,0.00 L419.13,5.26\"]},{\"id\":\"w1200469377\",\"source\":\"Geofabrik\",\"target\":false,\"paths\":[\"M595.44,7.43 L558.42,22.63 L549.04,0.00 L592.36,0.00 L595.44,7.43\"]},{\"id\":\"w1200469378\",\"source\":\"Geofabrik\",\"target\":false,\"paths\":[\"M505.56,0.00 L541.40,0.00 L543.96,5.62 L536.72,8.89 L539.30,14.55 L527.13,20.04 L524.56,14.37 L507.59,22.05 L498.90,3.01 L505.56,0.00\"]},{\"id\":\"w1331510435\",\"source\":\"Geofabrik\",\"target\":false,\"paths\":[\"M248.26,161.75 L238.66,152.00 L216.88,97.03 L218.24,84.43 L252.62,71.21 L262.40,79.18 L284.19,134.12 L282.65,148.53 L248.26,161.75\"]},{\"id\":\"w1331510436\",\"source\":\"Geofabrik\",\"target\":false,\"paths\":[\"M168.39,47.03 L148.28,6.79 L161.75,0.00 L231.41,0.00 L238.00,14.00 L168.39,47.03\"]},{\"id\":\"w1331510437\",\"source\":\"Geofabrik\",\"target\":false,\"paths\":[\"M118.26,115.64 L88.06,128.03 L85.99,122.13 L68.74,129.09 L68.53,104.54 L77.45,75.86 L86.75,57.28 L95.01,44.49 L126.62,29.55 L143.51,65.00 L137.20,67.99 L118.26,115.64\"]},{\"id\":\"w1566594236\",\"source\":\"Geofabrik\",\"target\":false,\"paths\":[\"M341.91,281.48 L356.65,314.02 L322.25,329.45 L307.51,296.92 L341.91,281.48\"]},{\"id\":\"w1566594237\",\"source\":\"Geofabrik\",\"target\":true,\"paths\":[\"M303.68,183.11 L315.35,208.09 L296.32,216.89 L284.65,191.91 L303.68,183.11\"]},{\"id\":\"w1566594239\",\"source\":\"Geofabrik\",\"target\":false,\"paths\":[\"M320.88,241.20 L316.91,232.35 L333.27,225.10 L344.19,249.47 L287.30,274.68 L280.35,259.17 L320.88,241.20\"]},{\"id\":\"r18258254\",\"source\":\"Geofabrik\",\"target\":false,\"paths\":[\"M102.37,283.65 L81.14,229.80 L145.41,206.81 L168.37,259.66 L102.37,283.65\",\"M114.48,262.69 L141.00,253.42 L132.82,230.35 L106.32,239.63 L114.48,262.69\"]}]"
+        },
+        {
+          "case_id": "building-w1566594239",
+          "area": "南京西路",
+          "type": "建筑参考差异",
+          "label": "南京西路 · w1566594239",
+          "source_id": "w1566594239",
+          "longitude": 121.44590798782082,
+          "latitude": 31.231749200468794,
+          "detail": "最高IoU 0.000，未达0.5。OSM首次制图/修改：2026-10-08 17:36:25+00:00，version=1。 仅列为参考差异，未据此认定真实漏建。",
+          "shapes_json": "[{\"id\":\"99200c22-2f53-497b-bdb8-1e60ca89f495\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M298.73,30.44 L284.74,1.06 L286.99,0.00 L363.34,0.00 L298.73,30.44\"]},{\"id\":\"5ed84992-6c10-47d1-bf49-8c3f41d56a52\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M382.15,60.20 L318.05,87.57 L304.91,57.09 L368.99,29.74 L382.15,60.20\"]},{\"id\":\"4370477c-a4d3-4ea9-8876-5546af93e7bb\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M409.17,116.99 L345.07,144.36 L331.93,113.88 L396.01,86.53 L409.17,116.99\"]},{\"id\":\"5dd99328-c4cf-47da-a22a-f5d7401caea0\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M430.97,71.73 L401.68,73.55 L401.15,65.19 L430.44,63.36 L430.97,71.73\"]},{\"id\":\"0106bead-f5e6-4c2c-a71e-79ae809fc2b3\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M425.58,84.95 L423.86,93.69 L409.33,90.80 L411.05,82.09 L425.58,84.95\"]},{\"id\":\"97cfab48-1fbf-4e5b-bc37-815c6416f622\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M428.89,160.28 L440.72,186.01 L387.87,210.06 L376.06,184.33 L428.89,160.28\"]},{\"id\":\"3e254253-84a6-4565-a5db-06dc903d4576\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M350.51,260.96 L362.20,256.51 L367.04,264.49 L366.97,264.51 L367.23,264.94 L358.80,267.59 L353.45,269.16 L350.51,260.96\"]},{\"id\":\"38fe74c8-d6fd-45a7-8394-9d5f8948a2d1\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M414.90,352.91 L422.83,373.33 L414.60,375.28 L414.90,352.91\"]},{\"id\":\"3e5c5ba1-e493-4eaa-951b-aff1d0518266\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M336.58,386.09 L356.45,379.38 L362.49,397.25 L354.35,400.00 L341.29,400.00 L336.58,386.09\"]},{\"id\":\"b9aac945-16fd-458b-9afc-e87ee9313d56\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M318.88,331.47 L320.86,337.59 L302.41,337.36 L318.88,331.47\"]},{\"id\":\"5a2cbbbc-94dd-43e3-98c0-ff20a3b30415\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M270.97,394.59 L280.89,400.00 L268.02,400.00 L270.97,394.59\"]},{\"id\":\"b4f9758d-706c-4463-82cb-531c12eed7e8\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M307.23,304.19 L366.51,277.61 L376.80,300.55 L317.50,327.15 L307.23,304.19\"]},{\"id\":\"53853dfa-3efd-480e-a06c-8a38ba97738c\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M303.85,282.94 L281.67,228.59 L316.61,214.34 L338.78,268.66 L303.85,282.94\"]},{\"id\":\"b33ebaa6-b21d-4372-bb4e-0376124f223a\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M242.59,215.16 L216.75,146.45 L248.95,134.47 L274.79,203.15 L242.59,215.16\"]},{\"id\":\"fe37df41-a716-4ad6-801e-21eff84d08d0\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M208.61,249.40 L185.75,259.90 L175.25,237.05 L198.11,226.55 L208.61,249.40\"]},{\"id\":\"1404ca67-d804-4bee-952f-b1cf6d6e17a1\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M163.62,387.98 L197.08,376.90 L204.78,400.00 L167.61,400.00 L163.62,387.98\"]},{\"id\":\"36289383-e815-4e8f-8c8e-c621536061af\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M87.96,356.51 L117.83,345.91 L124.99,365.22 L95.11,376.26 L87.96,356.51\"]},{\"id\":\"d257a909-f825-45a5-90c6-caf15cf9a2e6\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M114.21,399.99 L145.05,388.94 L146.87,394.71 L144.19,395.60 L145.89,400.00 L114.22,400.00 L114.21,399.99\"]},{\"id\":\"ef2afd62-a7f3-4908-b02e-b332977759d8\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M165.28,253.69 L121.16,269.35 L114.83,251.68 L158.93,236.02 L165.28,253.69\"]},{\"id\":\"39851f10-af14-4a5b-b536-784e0cc5e181\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M88.01,232.32 L66.78,178.47 L131.05,155.47 L154.01,208.32 L88.01,232.32\",\"M126.64,202.08 L118.47,179.02 L91.96,188.29 L100.12,211.36 L126.64,202.08\"]},{\"id\":\"9a43d75b-468f-4966-b98e-08a0a6e2eb63\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M116.83,50.54 L148.81,39.04 L151.73,47.68 L119.95,58.95 L116.83,50.54\"]},{\"id\":\"a93c89ea-9547-4481-8670-90ab19b1c8a6\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M182.88,68.77 L174.08,43.94 L170.06,45.48 L164.38,29.08 L184.30,21.58 L199.16,62.79 L182.88,68.77\"]},{\"id\":\"8953d8c1-795f-4b92-ac6e-06e46aff9428\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M250.36,107.15 L277.95,96.29 L282.00,106.26 L254.03,117.11 L250.36,107.15\"]},{\"id\":\"c837b77f-65f0-4417-9a95-e49501087eb8\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M224.31,100.66 L202.52,45.69 L203.88,33.10 L238.27,19.88 L248.04,27.84 L269.83,82.79 L268.29,97.20 L233.91,110.42 L224.31,100.66\"]},{\"id\":\"753ec596-add2-4823-8475-16710805f7ba\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M129.16,13.66 L122.85,16.66 L103.90,64.31 L73.70,76.70 L71.63,70.79 L54.38,77.76 L54.18,53.21 L63.10,24.53 L72.39,5.95 L76.23,0.00 L122.65,0.00 L129.16,13.66\"]},{\"id\":\"e435dbd8-c422-478e-9f91-a02a20511152\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M63.10,131.56 L56.85,115.16 L46.50,119.36 L43.02,109.82 L48.00,107.82 L44.11,98.30 L78.99,85.04 L89.11,111.00 L83.94,112.99 L87.61,122.51 L63.10,131.56\"]},{\"id\":\"e634a2c5-0290-467d-a632-f10325795e34\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M66.72,8.37 L58.29,24.97 L52.01,51.34 L47.48,48.43 L35.86,7.65 L41.03,5.66 L39.20,0.33 L40.23,0.00 L73.92,0.00 L66.72,8.37\"]},{\"id\":\"e65264d3-bc86-4eb3-b007-3e8c08e11765\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M4.71,19.34 L40.15,110.37 L0.00,125.15 L0.00,22.24 L4.71,19.34\"]},{\"id\":\"a1f5c0ae-f2da-4c20-9c70-d7fd61ceee87\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M1.63,383.42 L13.11,379.90 L17.85,394.75 L6.37,398.49 L1.63,383.42\"]},{\"id\":\"106958b6-11c2-4687-be5b-57556bc0c4fb\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M6.94,371.69 L0.62,373.67 L0.00,371.80 L0.00,350.93 L6.94,371.69\"]},{\"id\":\"5f19392a-bf7f-42b4-a7c9-98afe32e71fa\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M22.26,176.27 L36.18,175.84 L12.03,184.22 L22.26,176.27\"]},{\"id\":\"cd6b9de0-38ef-41d8-890d-53f00d65e431\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M11.74,230.58 L24.93,268.28 L97.58,243.12 L108.62,274.65 L88.69,281.58 L91.91,290.73 L5.18,320.80 L0.00,306.02 L0.00,234.65 L11.74,230.58\"]},{\"id\":\"3894101f-0905-486d-bc83-1d4b9644778b\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M62.81,210.32 L48.73,215.56 L46.82,210.50 L11.67,223.55 L4.21,203.66 L53.42,185.38 L62.81,210.32\"]},{\"id\":\"cf14d0f5-c102-4024-bc03-f02d2ec31484\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M66.57,155.49 L84.19,148.89 L86.76,156.20 L69.14,162.38 L66.57,155.49\"]},{\"id\":\"47a433b6-6bd8-4855-983e-f68214bf9f9a\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M66.23,314.83 L83.91,316.83 L83.23,322.72 L65.56,320.72 L66.23,314.83\"]},{\"id\":\"2dd418d5-1032-4c60-9e49-92ef3790302d\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M8.85,345.13 L58.90,328.23 L83.37,399.89 L83.03,400.00 L27.60,400.00 L8.85,345.13\"]},{\"id\":\"c41fce78-7b08-4d88-b8cc-22e32481bb05\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M598.67,201.87 L585.60,175.59 L600.00,168.44 L600.00,201.21 L598.67,201.87\"]},{\"id\":\"69949e5b-5926-4026-a8e9-e86253423605\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M598.40,385.85 L600.00,385.40 L600.00,391.58 L598.40,385.85\"]},{\"id\":\"95fe21f5-d61f-480e-bd1b-e6fc7b053113\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M516.99,334.06 L511.96,337.02 L506.19,339.29 L500.91,340.59 L495.40,341.18 L490.63,341.16 L486.13,340.65 L481.97,339.48 L477.69,337.67 L473.68,335.42 L470.19,332.78 L466.85,329.63 L464.09,326.48 L460.98,322.87 L458.27,318.75 L453.48,309.79 L490.70,293.31 L516.99,334.06\"]},{\"id\":\"86385222-4147-4bbc-af09-636c8cd75eed\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M532.24,395.85 L547.97,390.04 L551.65,400.00 L533.77,400.00 L532.24,395.85\"]},{\"id\":\"565fa6ee-f7ff-4bdf-a6c6-a43564522409\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M527.04,319.74 L539.10,316.12 L540.30,320.13 L528.26,323.75 L527.04,319.74\"]},{\"id\":\"3e1b7706-1fd8-479f-b468-59815e9f934e\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M542.89,257.59 L558.30,294.94 L516.19,312.11 L500.79,274.76 L542.89,257.59\"]},{\"id\":\"3f30e97e-c52f-478c-a5d9-0eedd77a0867\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M570.26,283.98 L559.69,261.15 L597.74,243.52 L600.00,248.42 L600.00,270.20 L570.26,283.98\"]},{\"id\":\"d6b85e6d-da76-4a0c-9b4e-6ee9403529bc\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M551.49,200.57 L541.15,173.10 L568.61,162.78 L578.94,190.24 L551.49,200.57\"]},{\"id\":\"898096f0-a6f9-4bb4-bf95-869c40299466\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M526.26,184.07 L535.82,207.68 L481.92,229.28 L472.36,205.66 L526.26,184.07\"]},{\"id\":\"b49f10a3-04b7-4b97-ab93-126f6ffbda2d\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M450.61,207.55 L468.40,240.60 L416.99,267.99 L399.20,234.92 L450.61,207.55\"]},{\"id\":\"b15a03c0-0d53-4bf5-922f-25fd589fa61d\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M438.62,62.85 L457.16,59.25 L457.94,63.37 L439.42,66.97 L438.62,62.85\"]},{\"id\":\"1ebd883b-eea9-4668-904e-302d132e7d2a\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M572.71,89.86 L430.12,144.44 L418.58,114.57 L561.16,59.98 L572.71,89.86\"]},{\"id\":\"fa999210-7337-4f79-843e-314a8868fe19\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M526.51,32.27 L469.22,62.97 L463.28,51.89 L520.57,21.19 L526.51,32.27\"]},{\"id\":\"b28ae853-0ca6-4bd2-976e-a9586632f657\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M519.09,21.70 L440.40,52.85 L436.52,44.15 L397.67,59.02 L388.00,35.44 L432.67,17.60 L435.37,23.05 L492.62,0.00 L509.94,0.00 L519.09,21.70\"]},{\"id\":\"839a5375-f003-4374-8da3-952c19aae167\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M386.73,9.30 L382.87,0.00 L410.33,0.00 L386.73,9.30\"]},{\"id\":\"57b045bb-50f9-4090-9c5f-b50507d442af\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M596.20,131.70 L574.31,91.12 L592.74,81.16 L600.00,94.60 L600.00,129.65 L596.20,131.70\"]},{\"id\":\"4ead4960-b061-4384-9b59-79444299dc7d\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M586.12,81.91 L578.78,64.14 L600.00,55.49 L600.00,76.25 L586.12,81.91\"]},{\"id\":\"w490437625\",\"source\":\"Geofabrik\",\"target\":false,\"paths\":[\"M163.62,387.98 L197.08,376.90 L204.78,400.00 L167.61,400.00 L163.62,387.98\"]},{\"id\":\"w1154427266\",\"source\":\"Geofabrik\",\"target\":false,\"paths\":[\"M386.73,9.30 L382.87,0.00 L410.33,0.00 L386.73,9.30\"]},{\"id\":\"w1154427267\",\"source\":\"Geofabrik\",\"target\":false,\"paths\":[\"M440.40,52.85 L436.52,44.15 L397.67,59.02 L388.00,35.44 L432.67,17.60 L435.37,23.05 L492.62,0.00 L509.94,0.00 L519.09,21.70 L440.40,52.85\"]},{\"id\":\"w1199470370\",\"source\":\"Geofabrik\",\"target\":false,\"paths\":[\"M490.70,293.31 L516.99,334.06 L511.96,337.02 L506.19,339.29 L500.91,340.59 L495.40,341.18 L490.63,341.16 L486.13,340.65 L481.97,339.48 L477.69,337.67 L473.68,335.42 L470.19,332.78 L466.85,329.63 L464.09,326.48 L460.98,322.87 L458.27,318.75 L453.48,309.79 L490.70,293.31\"]},{\"id\":\"w1199470371\",\"source\":\"Geofabrik\",\"target\":false,\"paths\":[\"M399.20,234.92 L450.61,207.55 L468.40,240.60 L416.99,267.99 L399.20,234.92\"]},{\"id\":\"w1199470372\",\"source\":\"Geofabrik\",\"target\":false,\"paths\":[\"M472.36,205.66 L526.26,184.07 L535.82,207.68 L481.92,229.28 L472.36,205.66\"]},{\"id\":\"w1199470374\",\"source\":\"Geofabrik\",\"target\":false,\"paths\":[\"M368.99,29.74 L382.15,60.20 L318.05,87.57 L304.91,57.09 L368.99,29.74\"]},{\"id\":\"w1199470375\",\"source\":\"Geofabrik\",\"target\":false,\"paths\":[\"M396.01,86.53 L409.17,116.99 L345.07,144.36 L331.93,113.88 L396.01,86.53\"]},{\"id\":\"w1199470376\",\"source\":\"Geofabrik\",\"target\":false,\"paths\":[\"M376.06,184.33 L428.89,160.28 L440.72,186.01 L387.87,210.06 L376.06,184.33\"]},{\"id\":\"w1200049165\",\"source\":\"Geofabrik\",\"target\":false,\"paths\":[\"M4.71,19.34 L40.15,110.37 L0.00,125.15 L0.00,22.24 L4.71,19.34\"]},{\"id\":\"w1200049166\",\"source\":\"Geofabrik\",\"target\":false,\"paths\":[\"M53.42,185.38 L62.81,210.32 L48.73,215.56 L46.82,210.50 L11.67,223.55 L4.21,203.66 L53.42,185.38\"]},{\"id\":\"w1200049167\",\"source\":\"Geofabrik\",\"target\":false,\"paths\":[\"M83.03,400.00 L27.60,400.00 L8.85,345.13 L58.90,328.23 L83.37,399.89 L83.03,400.00\"]},{\"id\":\"w1200050718\",\"source\":\"Geofabrik\",\"target\":false,\"paths\":[\"M266.79,184.08 L272.99,200.57 L240.80,212.58 L214.95,143.88 L247.15,131.89 L266.79,184.08\"]},{\"id\":\"w1200050719\",\"source\":\"Geofabrik\",\"target\":false,\"paths\":[\"M108.62,274.65 L88.69,281.58 L91.91,290.73 L5.18,320.80 L0.00,306.02 L0.00,234.65 L11.74,230.58 L24.93,268.28 L97.58,243.12 L108.62,274.65\"]},{\"id\":\"w1200050720\",\"source\":\"Geofabrik\",\"target\":false,\"paths\":[\"M158.93,236.02 L165.28,253.69 L121.16,269.35 L114.83,251.68 L158.93,236.02\"]},{\"id\":\"w1200469370\",\"source\":\"Geofabrik\",\"target\":false,\"paths\":[\"M500.79,274.76 L542.89,257.59 L558.30,294.94 L516.19,312.11 L500.79,274.76\"]},{\"id\":\"w1200469371\",\"source\":\"Geofabrik\",\"target\":false,\"paths\":[\"M600.00,55.49 L600.00,76.25 L586.12,81.91 L578.78,64.14 L600.00,55.49\"]},{\"id\":\"w1200469373\",\"source\":\"Geofabrik\",\"target\":false,\"paths\":[\"M561.16,59.98 L572.71,89.86 L430.12,144.44 L418.58,114.57 L561.16,59.98\"]},{\"id\":\"w1200469374\",\"source\":\"Geofabrik\",\"target\":false,\"paths\":[\"M286.99,0.00 L363.34,0.00 L298.73,30.44 L284.74,1.06 L286.99,0.00\"]},{\"id\":\"w1331510435\",\"source\":\"Geofabrik\",\"target\":false,\"paths\":[\"M233.91,110.42 L224.31,100.66 L202.52,45.69 L203.88,33.10 L238.27,19.88 L248.04,27.84 L269.83,82.79 L268.29,97.20 L233.91,110.42\"]},{\"id\":\"w1331510437\",\"source\":\"Geofabrik\",\"target\":false,\"paths\":[\"M103.90,64.31 L73.70,76.70 L71.63,70.79 L54.38,77.76 L54.18,53.21 L63.10,24.53 L72.39,5.95 L76.23,0.00 L122.65,0.00 L129.16,13.66 L122.85,16.66 L103.90,64.31\"]},{\"id\":\"w1566594236\",\"source\":\"Geofabrik\",\"target\":false,\"paths\":[\"M327.55,230.15 L342.30,262.68 L307.90,278.12 L293.15,245.58 L327.55,230.15\"]},{\"id\":\"w1566594237\",\"source\":\"Geofabrik\",\"target\":false,\"paths\":[\"M289.32,131.78 L300.99,156.75 L281.97,165.55 L270.29,140.58 L289.32,131.78\"]},{\"id\":\"w1566594239\",\"source\":\"Geofabrik\",\"target\":true,\"paths\":[\"M306.53,189.87 L302.56,181.01 L318.91,173.77 L329.83,198.14 L272.94,223.35 L266.00,207.84 L306.53,189.87\"]},{\"id\":\"r18258254\",\"source\":\"Geofabrik\",\"target\":false,\"paths\":[\"M88.01,232.32 L66.78,178.47 L131.05,155.47 L154.01,208.32 L88.01,232.32\",\"M100.12,211.36 L126.64,202.08 L118.47,179.02 L91.96,188.29 L100.12,211.36\"]}]"
+        },
+        {
+          "case_id": "building-w1566594240",
+          "area": "南京西路",
+          "type": "建筑参考差异",
+          "label": "南京西路 · w1566594240",
+          "source_id": "w1566594240",
+          "longitude": 121.44499646392681,
+          "latitude": 31.23369768157792,
+          "detail": "最高IoU 0.374，未达0.5。OSM首次制图/修改：2026-10-08 17:36:25+00:00，version=1。 仅列为参考差异，未据此认定真实漏建。",
+          "shapes_json": "[{\"id\":\"c8d0b0e4-31e2-43e2-b8da-0ce054034e79\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M3.50,132.03 L13.87,126.07 L40.44,174.23 L30.07,180.18 L3.50,132.03\"]},{\"id\":\"3648dccc-bbae-47c5-8e1c-1aab96301687\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M18.78,115.68 L26.29,110.59 L32.81,121.04 L25.31,125.66 L18.78,115.68\"]},{\"id\":\"7fdeee37-e13a-43c9-a94c-a4b0003605d4\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M45.51,20.13 L58.27,41.79 L0.00,76.08 L0.00,46.90 L45.51,20.13\"]},{\"id\":\"4532003d-831c-4b3b-acb2-5a43a602aca8\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M49.96,27.33 L42.88,14.46 L37.16,16.44 L33.42,9.78 L48.01,3.18 L52.48,11.16 L58.60,22.49 L49.96,27.33\"]},{\"id\":\"9c79b0c3-adf5-41c3-ad4f-0053f2caf677\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M32.30,128.40 L74.11,102.20 L100.49,143.88 L58.68,170.08 L32.30,128.40\"]},{\"id\":\"ea9708a9-f9d3-4cc1-b4a2-68cf655b2ac0\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M161.08,127.44 L164.63,124.69 L178.55,142.45 L141.08,171.57 L99.32,118.34 L133.25,91.99 L161.08,127.44\"]},{\"id\":\"cf4389d8-6bca-4dc1-ba36-eae938d50748\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M170.34,153.47 L171.93,148.39 L180.09,151.05 L178.50,155.71 L170.34,153.47\"]},{\"id\":\"b207645c-eca7-461e-b0dc-295070fe30ee\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M169.05,69.03 L167.88,60.01 L171.00,52.01 L175.88,45.05 L199.04,30.74 L261.90,108.19 L250.19,119.69 L252.50,121.90 L228.87,145.53 L175.60,79.86 L169.05,69.03\"]},{\"id\":\"8adb3499-5cc1-443e-ba0c-b5b554ab5fd9\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M259.50,48.49 L245.94,36.97 L257.47,23.42 L271.01,34.95 L259.50,48.49\"]},{\"id\":\"82b44d1c-9cf9-4e86-b8b7-f23be2bf17d5\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M307.48,12.84 L286.02,29.90 L262.00,0.00 L297.17,0.00 L307.48,12.84\"]},{\"id\":\"0c628a53-200d-4784-8345-f51e36bafbfb\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M265.90,16.03 L238.82,37.84 L222.49,17.77 L236.85,6.21 L237.02,3.73 L241.54,0.00 L252.88,0.00 L265.90,16.03\"]},{\"id\":\"c95eceab-beb6-4428-8d02-1bf07ae9d2e8\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M247.67,57.32 L236.11,66.83 L201.78,25.52 L213.33,16.02 L247.67,57.32\"]},{\"id\":\"6e9acedf-425a-40bd-ad5a-73259d0547d4\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M167.82,11.32 L164.85,7.46 L160.22,10.10 L155.83,11.79 L150.68,12.50 L144.92,12.59 L139.26,11.56 L134.70,9.43 L130.56,6.47 L127.62,3.15 L123.96,5.93 L119.39,0.00 L182.63,0.00 L167.82,11.32\"]},{\"id\":\"4108677c-3143-40c3-b943-b505066e90a6\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M312.65,0.56 L312.19,0.00 L313.35,0.00 L312.65,0.56\"]},{\"id\":\"83265932-1e6a-4e5c-acec-c03644f60b14\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M379.04,36.20 L367.25,45.17 L332.80,0.00 L351.44,0.00 L379.04,36.20\"]},{\"id\":\"2e47623b-009c-486b-92d2-e57b7456cdae\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M312.92,12.54 L324.89,3.82 L356.33,46.92 L344.36,55.67 L312.92,12.54\"]},{\"id\":\"5d57aa1c-e7c6-4ea1-ad98-3eb1338faf15\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M263.14,58.78 L292.42,36.64 L320.28,74.13 L291.20,96.25 L263.14,58.78\"]},{\"id\":\"7c13f444-2b81-4464-95ce-ae2cff6dad8b\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M293.37,104.24 L303.19,96.71 L315.73,113.14 L305.72,120.43 L293.37,104.24\"]},{\"id\":\"104551fa-1217-44c1-914c-41e0f4f23a75\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M315.65,115.00 L326.19,125.44 L315.75,135.98 L305.21,125.54 L315.65,115.00\"]},{\"id\":\"8684f373-1fc8-4926-9835-d003bb6ce5b3\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M343.62,158.08 L331.63,166.80 L319.40,150.04 L331.39,141.32 L343.62,158.08\"]},{\"id\":\"6fe7ca91-d4ea-4b7b-b184-555596bd33d0\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M340.54,112.71 L330.21,94.47 L348.43,84.13 L358.77,102.35 L340.54,112.71\"]},{\"id\":\"8259a324-90c1-4278-b418-8561881eb9bd\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M381.17,25.41 L394.30,14.95 L411.28,36.25 L398.16,46.71 L381.17,25.41\"]},{\"id\":\"57223120-d21a-435f-b167-05ff05d120ae\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M407.60,50.95 L415.53,65.72 L389.65,79.59 L381.74,64.80 L407.60,50.95\"]},{\"id\":\"758f4f97-8513-494f-b16f-01e7ac9e669d\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M376.73,19.03 L363.25,0.32 L363.70,0.00 L403.16,0.00 L376.73,19.03\"]},{\"id\":\"69870950-2771-4d8e-bc62-09ae15e4861e\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M418.78,32.88 L402.98,15.18 L420.01,0.00 L455.64,0.00 L418.78,32.88\"]},{\"id\":\"73aee143-ed97-45e0-b676-2898389677c0\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M392.40,87.34 L421.35,70.43 L438.28,99.39 L409.31,116.30 L392.40,87.34\"]},{\"id\":\"0ced0938-4974-4661-9191-0d3abdee2908\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M477.89,141.50 L450.62,161.00 L443.30,150.77 L383.63,193.46 L369.00,172.98 L418.44,137.62 L425.75,147.86 L444.52,134.44 L439.64,127.63 L458.39,114.22 L477.89,141.50\"]},{\"id\":\"a6d40efd-7674-4b00-a239-f61bcfaa49bf\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M504.30,155.55 L497.55,144.92 L504.64,140.43 L511.37,151.06 L504.30,155.55\"]},{\"id\":\"51449473-fb6d-460f-9081-bc858fcc82a2\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M494.42,134.19 L487.38,118.97 L506.38,110.17 L513.45,125.39 L494.42,134.19\"]},{\"id\":\"da19f887-dad8-4401-a9aa-611394f7886d\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M514.83,28.71 L461.05,52.23 L452.65,33.02 L506.43,9.52 L514.83,28.71\"]},{\"id\":\"9015acbd-d024-4143-aa15-5d681fa0867f\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M465.19,66.37 L514.23,47.93 L521.61,67.54 L472.58,86.01 L465.19,66.37\"]},{\"id\":\"199b219a-3616-481c-a35e-aa351257fde5\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M423.56,55.72 L441.68,45.20 L458.51,74.22 L440.38,84.74 L423.56,55.72\"]},{\"id\":\"23beca37-3db3-4e35-9130-30d31a5f52cf\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M550.32,15.02 L540.54,0.00 L573.36,0.00 L550.32,15.02\"]},{\"id\":\"fc2353fe-31b0-4052-8fa3-1c099955850c\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M557.92,47.68 L566.69,39.66 L578.68,52.80 L569.93,60.79 L557.92,47.68\"]},{\"id\":\"ee5e5b2d-6b34-4337-b97a-04bed02eca5a\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M553.79,24.80 L542.46,32.11 L522.73,0.00 L538.59,0.00 L553.79,24.80\"]},{\"id\":\"c1d4b083-da73-47be-bf5d-e5f344a33978\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M552.45,74.87 L527.74,35.94 L538.35,29.19 L563.07,68.15 L552.45,74.87\"]},{\"id\":\"e84c2be7-6e6a-487f-94ea-e5bd16e14ff5\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M533.11,99.55 L551.56,89.61 L559.51,104.35 L541.08,114.32 L533.11,99.55\"]},{\"id\":\"3ff3e72a-b234-45f0-a84d-75373427b37d\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M547.35,86.95 L532.14,94.06 L529.50,88.34 L544.69,81.26 L547.35,86.95\"]},{\"id\":\"9a6b670e-3256-4d23-b400-09daaca6ca2c\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M516.51,124.17 L509.81,108.80 L529.00,100.40 L535.72,115.77 L516.51,124.17\"]},{\"id\":\"ee52b150-a452-452a-a39b-3a311d346400\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M556.03,171.40 L516.89,186.40 L510.88,170.74 L550.02,155.73 L556.03,171.40\"]},{\"id\":\"6170cd64-7b19-4dbd-9590-cf2c94790ff9\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M564.21,147.75 L549.86,150.80 L547.68,140.55 L562.03,137.49 L564.21,147.75\"]},{\"id\":\"fe8e14ad-4bb3-4a42-b81d-83e70c994ac2\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M563.58,167.05 L558.20,155.69 L569.55,150.30 L574.95,161.67 L563.58,167.05\"]},{\"id\":\"068faab0-7494-4cc8-90c8-5b6fac2f0dce\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M596.99,132.33 L578.73,142.63 L566.38,120.72 L584.63,110.43 L596.99,132.33\"]},{\"id\":\"89f78de0-c962-45fb-b17e-fd80bb349993\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M598.86,82.11 L577.75,98.42 L565.06,82.01 L586.17,65.70 L598.86,82.11\"]},{\"id\":\"726f36ec-03c1-4f89-bf23-e08f0412c4f4\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M530.08,337.03 L517.57,310.47 L585.85,278.34 L598.36,304.91 L530.08,337.03\"]},{\"id\":\"2a9aa60c-38b1-4942-8c8f-41b999cf351f\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M496.04,269.90 L560.05,234.06 L574.38,259.67 L510.37,295.51 L496.04,269.90\"]},{\"id\":\"0d5baae6-2fef-433a-b6cc-5a70ba7a277f\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M437.84,223.36 L503.33,184.81 L514.87,204.08 L449.00,242.63 L437.84,223.36\"]},{\"id\":\"29c51104-fa6c-44ce-8ab9-dc1432f3381d\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M434.11,399.03 L428.86,392.64 L425.54,382.26 L424.20,371.51 L426.32,356.55 L432.70,342.16 L438.17,333.52 L447.06,324.78 L464.56,316.33 L476.19,320.93 L482.65,332.95 L485.07,345.18 L482.56,359.65 L477.49,372.21 L470.39,383.73 L462.04,392.09 L451.33,400.00 L436.06,400.00 L434.11,399.03\"]},{\"id\":\"55b7b535-8032-46ee-b486-4f1385e775be\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M467.13,389.50 L481.62,379.50 L494.36,347.11 L492.55,330.83 L496.62,332.90 L498.48,345.12 L481.56,383.56 L471.19,391.57 L467.13,389.50\"]},{\"id\":\"ccda9c6a-5892-4912-98b9-51b3d16f238f\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M510.25,383.89 L537.05,372.01 L543.01,386.31 L518.24,398.22 L510.25,383.89\"]},{\"id\":\"9e3c7969-ac84-4f5a-bf22-92d19b6a8376\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M301.49,389.87 L346.80,367.03 L356.72,365.99 L366.39,366.19 L373.80,369.16 L380.83,375.02 L391.21,397.08 L385.04,400.00 L306.55,400.00 L301.49,389.87\"]},{\"id\":\"f4cbdded-22a4-497b-9d46-44dc93a5afe2\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M372.56,285.15 L417.49,261.23 L420.27,266.55 L376.88,290.24 L372.56,285.15\"]},{\"id\":\"538f707f-b7c0-46c8-a29e-2f4b8c798405\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M426.04,250.75 L440.38,250.93 L430.05,256.91 L426.04,250.75\"]},{\"id\":\"745844e0-a017-4a77-8f15-b965bcbaa039\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M391.88,234.33 L404.94,260.61 L359.89,282.99 L346.82,256.73 L391.88,234.33\"]},{\"id\":\"a95ed23a-ca0b-435f-a7e6-232612d70a10\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M362.81,225.69 L350.03,206.49 L363.99,197.19 L376.75,216.40 L362.81,225.69\"]},{\"id\":\"6ded1ef0-531b-4c03-a5a8-5a59cc09c690\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M353.71,226.27 L342.04,230.97 L330.33,201.78 L342.00,197.08 L353.71,226.27\"]},{\"id\":\"62b2617f-f50c-4640-9067-2f1099303e80\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M360.80,190.76 L349.87,196.97 L338.48,176.92 L349.42,170.71 L360.80,190.76\"]},{\"id\":\"f8c7c22d-59b0-4f91-8c3b-64e99f898625\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M329.97,188.53 L320.91,180.87 L324.73,176.35 L333.79,184.00 L329.97,188.53\"]},{\"id\":\"c6c5fab4-3152-4654-b137-5e44931e5913\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M327.56,250.16 L343.39,258.30 L337.96,268.85 L322.15,260.73 L327.56,250.16\"]},{\"id\":\"91628610-1811-4a1a-b8e7-68bda4ab1857\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M289.46,195.15 L311.77,179.50 L322.60,194.95 L300.30,210.60 L289.46,195.15\"]},{\"id\":\"40ca360a-7cc9-4628-be0e-ce9ae739c10b\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M274.94,207.25 L285.68,197.02 L299.99,212.04 L289.27,222.26 L274.94,207.25\"]},{\"id\":\"369259d9-e1c8-4a28-b472-1c6519d29f79\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M282.95,190.58 L270.57,198.43 L264.96,189.59 L277.34,181.74 L282.95,190.58\"]},{\"id\":\"7946bf44-003e-42c5-ab5d-f265b9e5416c\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M259.60,174.90 L272.13,165.17 L280.92,176.47 L268.59,185.98 L259.60,174.90\"]},{\"id\":\"8c90b75f-35b7-496b-97e0-b2cb347ecb88\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M228.18,240.45 L242.09,226.94 L257.12,243.14 L243.20,256.43 L228.18,240.45\"]},{\"id\":\"8317b135-df59-49f0-b59f-f128627dbfab\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M208.78,237.98 L204.79,250.39 L201.76,249.48 L214.71,208.95 L218.32,210.07 L215.13,219.60 L225.19,222.71 L219.40,241.32 L208.78,237.98\"]},{\"id\":\"e2abdaf9-1d98-41ee-97bb-335d64ebee89\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M212.64,240.85 L229.09,247.65 L222.30,264.07 L205.86,257.30 L212.64,240.85\"]},{\"id\":\"251a3826-ffab-40e8-ab20-ebb1c22c72cc\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M185.58,299.28 L216.11,285.38 L243.91,346.42 L213.40,360.34 L185.58,299.28\"]},{\"id\":\"8aceeeab-00c2-45f5-a496-00820a986fa1\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M222.14,287.49 L268.11,262.30 L299.32,319.30 L253.37,344.47 L222.14,287.49\"]},{\"id\":\"c489f142-48c4-4322-bddd-064bad9ed283\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M177.39,355.99 L185.79,375.18 L147.37,391.98 L138.97,372.77 L177.39,355.99\"]},{\"id\":\"1c8b2392-89e1-4726-9b35-2f77a9aae0a9\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M123.31,394.08 L129.43,394.17 L129.35,400.00 L123.23,400.00 L123.31,394.08\"]},{\"id\":\"b6410952-f6c8-4e90-84d2-dce0c4757d19\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M129.34,301.68 L126.10,322.39 L113.66,320.44 L116.91,299.73 L129.34,301.68\"]},{\"id\":\"847ca7ec-2c8a-4ecf-8ec1-753badada6ad\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M159.77,343.70 L147.64,347.04 L146.54,342.99 L158.66,339.65 L159.77,343.70\"]},{\"id\":\"6c303d77-cf49-411a-aa64-9d92f04c8cd5\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M169.97,325.69 L160.73,330.66 L157.74,325.12 L166.98,320.15 L169.97,325.69\"]},{\"id\":\"ef77a64d-f452-4af4-bcdf-9bba30fcc9fc\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M168.60,263.20 L160.44,271.80 L156.13,267.73 L164.29,259.13 L168.60,263.20\"]},{\"id\":\"61974866-f601-4807-8bf8-e3bf7f2c2788\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M159.74,221.50 L164.63,210.68 L202.44,227.83 L192.65,249.42 L181.84,244.52 L186.74,233.72 L159.74,221.50\"]},{\"id\":\"7dcab2ad-32ae-49a6-b970-1b1e0cb9e669\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M152.68,205.59 L152.17,182.55 L156.34,182.45 L156.88,205.50 L152.68,205.59\"]},{\"id\":\"9677fab3-0b16-4095-9b30-05d3d321b361\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M75.66,187.50 L114.73,163.24 L126.23,181.56 L87.15,205.82 L75.66,187.50\"]},{\"id\":\"307f1d89-68aa-447d-ad11-27374b2d49db\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M79.14,350.29 L112.14,333.74 L120.66,351.05 L87.85,367.37 L79.14,350.29\"]},{\"id\":\"3d824402-9047-41b6-b0fa-3d9230b23cf9\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M104.68,316.63 L57.87,297.97 L69.93,267.69 L116.75,286.36 L104.68,316.63\"]},{\"id\":\"ddb15e37-a863-4df7-b1d3-779fa6659e1e\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M56.86,274.89 L65.45,246.52 L65.02,277.02 L56.86,274.89\"]},{\"id\":\"88aa5b53-0a26-4b88-a57d-67cc22e1535d\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M8.37,246.40 L19.72,265.48 L10.11,271.22 L3.60,260.35 L0.00,257.40 L0.00,242.02 L8.37,246.40\"]},{\"id\":\"04d6f3a2-58bf-4a9b-a9a6-c97bdbae12e3\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M17.35,276.82 L18.36,285.15 L10.04,286.16 L9.03,277.83 L17.35,276.82\"]},{\"id\":\"b69fed42-a788-4b42-9830-b2beda3dc021\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M28.29,394.43 L26.45,395.42 L14.56,373.26 L9.02,376.22 L0.00,359.39 L0.00,354.91 L22.15,343.03 L52.69,400.00 L31.28,400.00 L28.29,394.43\"]},{\"id\":\"aff1a1cb-f56c-4584-83c6-0248bb47b054\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M12.74,382.03 L0.00,390.80 L0.00,362.56 L12.74,382.03\"]},{\"id\":\"e55da75f-83a6-4f5e-a87f-351b85ca61be\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M2.52,397.52 L4.10,400.00 L0.00,400.00 L0.00,399.13 L2.52,397.52\"]},{\"id\":\"e268a862-df5a-451c-ae4b-de5cd2be0c7a\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M98.47,392.31 L120.39,376.12 L127.86,386.25 L109.24,400.00 L104.14,400.00 L98.47,392.31\"]},{\"id\":\"54d29ea5-9431-482c-af31-948f4905f913\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M1.14,213.10 L0.00,213.50 L0.00,209.84 L1.14,213.10\"]},{\"id\":\"fe796582-4690-4d39-a378-ed9154a9639a\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M572.34,388.34 L561.32,363.13 L600.00,346.37 L600.00,376.37 L572.34,388.34\"]},{\"id\":\"ca08e5df-6b14-4a56-91e3-2ffbab969ae0\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M597.75,242.10 L579.86,250.41 L568.93,227.08 L600.00,212.66 L600.00,246.89 L597.75,242.10\"]},{\"id\":\"b8a9b3bf-7c92-460c-b572-6fb9bfb7de38\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M589.98,170.55 L581.47,156.10 L600.00,145.20 L600.00,164.65 L589.98,170.55\"]},{\"id\":\"3225ecec-f363-46f1-9c39-a083dad71d54\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M589.75,105.53 L600.00,98.93 L600.00,121.46 L589.75,105.53\"]},{\"id\":\"7545f41f-f932-41fb-817f-a8d1ae63ad81\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M584.27,47.80 L574.98,33.83 L600.00,17.19 L600.00,37.34 L584.27,47.80\"]},{\"id\":\"w490436307\",\"source\":\"Geofabrik\",\"target\":false,\"paths\":[\"M600.00,212.66 L600.00,246.89 L597.75,242.10 L579.86,250.41 L568.93,227.08 L600.00,212.66\"]},{\"id\":\"w1154427262\",\"source\":\"Geofabrik\",\"target\":false,\"paths\":[\"M434.11,399.03 L428.86,392.64 L425.54,382.26 L424.20,371.51 L426.32,356.55 L432.70,342.16 L438.17,333.52 L447.06,324.78 L464.56,316.33 L476.19,320.93 L482.65,332.95 L485.07,345.18 L482.56,359.65 L477.49,372.21 L470.39,383.73 L462.04,392.09 L451.33,400.00 L436.06,400.00 L434.11,399.03\"]},{\"id\":\"w1200469375\",\"source\":\"Geofabrik\",\"target\":false,\"paths\":[\"M572.34,388.34 L561.32,363.13 L600.00,346.37 L600.00,376.37 L572.34,388.34\"]},{\"id\":\"w1331510436\",\"source\":\"Geofabrik\",\"target\":false,\"paths\":[\"M385.04,400.00 L306.55,400.00 L301.49,389.87 L346.80,367.03 L356.72,365.99 L366.39,366.19 L373.80,369.16 L380.83,375.02 L391.21,397.08 L385.04,400.00\"]},{\"id\":\"w1468628514\",\"source\":\"Geofabrik\",\"target\":false,\"paths\":[\"M58.68,170.08 L32.30,128.40 L74.11,102.20 L100.49,143.88 L58.68,170.08\"]},{\"id\":\"w1468628516\",\"source\":\"Geofabrik\",\"target\":false,\"paths\":[\"M87.15,205.82 L75.66,187.50 L114.73,163.24 L126.23,181.56 L87.15,205.82\"]},{\"id\":\"w1468628517\",\"source\":\"Geofabrik\",\"target\":false,\"paths\":[\"M133.25,91.99 L161.08,127.44 L164.63,124.69 L178.55,142.45 L141.08,171.57 L99.32,118.34 L133.25,91.99\"]},{\"id\":\"w1468628520\",\"source\":\"Geofabrik\",\"target\":false,\"paths\":[\"M167.82,11.32 L164.85,7.46 L160.22,10.10 L155.83,11.79 L150.68,12.50 L144.92,12.59 L139.26,11.56 L134.70,9.43 L130.56,6.47 L127.62,3.15 L123.96,5.93 L119.39,0.00 L182.63,0.00 L167.82,11.32\"]},{\"id\":\"w1468652303\",\"source\":\"Geofabrik\",\"target\":false,\"paths\":[\"M175.60,79.86 L169.05,69.03 L167.88,60.01 L171.00,52.01 L175.88,45.05 L199.04,30.74 L261.90,108.19 L250.19,119.69 L252.50,121.90 L228.87,145.53 L175.60,79.86\"]},{\"id\":\"w1468652306\",\"source\":\"Geofabrik\",\"target\":false,\"paths\":[\"M312.65,0.56 L312.19,0.00 L313.35,0.00 L312.65,0.56\"]},{\"id\":\"w1468652307\",\"source\":\"Geofabrik\",\"target\":false,\"paths\":[\"M238.82,37.84 L222.49,17.77 L236.85,6.21 L237.02,3.73 L241.54,0.00 L252.88,0.00 L265.90,16.03 L238.82,37.84\"]},{\"id\":\"w1468652308\",\"source\":\"Geofabrik\",\"target\":false,\"paths\":[\"M307.48,12.84 L286.02,29.90 L262.00,0.00 L297.17,0.00 L307.48,12.84\"]},{\"id\":\"w1468652309\",\"source\":\"Geofabrik\",\"target\":false,\"paths\":[\"M213.33,16.02 L247.67,57.32 L236.11,66.83 L201.78,25.52 L213.33,16.02\"]},{\"id\":\"w1566594240\",\"source\":\"Geofabrik\",\"target\":true,\"paths\":[\"M312.42,173.56 L327.81,196.75 L290.44,224.61 L269.81,206.36 L312.42,173.56\"]}]"
+        },
+        {
+          "case_id": "building-w1570583917",
+          "area": "新天地",
+          "type": "建筑参考差异",
+          "label": "新天地 · w1570583917",
+          "source_id": "w1570583917",
+          "longitude": 121.47048830630999,
+          "latitude": 31.213561288467698,
+          "detail": "最高IoU 0.069，未达0.5。OSM首次制图/修改：2026-10-22 06:32:17+00:00，version=1。 仅列为参考差异，未据此认定真实漏建。",
+          "shapes_json": "[{\"id\":\"0a113b38-6dbe-4a11-a681-eff836b0ad46\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M126.78,396.01 L142.76,396.94 L145.94,400.00 L113.77,400.00 L126.78,396.01\"]},{\"id\":\"c9a25330-678a-4409-bfa4-9cd73c52388f\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M6.57,391.15 L13.85,388.41 L14.96,391.27 L18.77,390.12 L21.89,398.50 L17.88,400.00 L9.35,400.00 L6.57,391.15\"]},{\"id\":\"56214429-fb00-43a2-8bbf-8c839f12e383\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M27.67,295.08 L32.81,306.55 L74.90,287.68 L78.32,295.34 L0.00,330.44 L0.00,307.47 L27.67,295.08\"]},{\"id\":\"4cf7fb0e-65a0-4e59-8c4c-ea1734b550c3\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M54.62,293.57 L44.20,294.62 L43.78,290.47 L54.20,289.39 L54.62,293.57\"]},{\"id\":\"e0b7c381-7b81-4270-b9b5-9cac5d6b48b6\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M11.17,215.00 L63.73,196.90 L68.85,212.81 L16.09,230.88 L11.17,215.00\"]},{\"id\":\"1717a07a-0db3-42dc-8f84-9f3348643392\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M18.65,50.31 L23.40,77.78 L0.00,81.79 L0.00,53.50 L18.65,50.31\"]},{\"id\":\"93f36287-0174-4da7-b76b-fdea56b34310\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M83.56,32.45 L88.86,57.07 L28.37,69.96 L23.06,45.36 L83.56,32.45\"]},{\"id\":\"fc29899a-eeee-44d7-b893-051c49a9ef15\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M84.12,65.08 L88.01,81.38 L0.00,99.94 L0.00,83.97 L84.12,65.08\"]},{\"id\":\"ce9dce54-2186-4f78-8e47-47e294a05cb5\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M100.76,98.92 L122.87,201.89 L82.51,210.45 L65.96,133.41 L0.00,147.42 L0.00,120.31 L100.76,98.92\"]},{\"id\":\"4efaa079-26ad-4a97-b4d4-664585bec1c7\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M106.66,71.06 L117.15,68.95 L122.67,97.92 L111.99,100.01 L106.66,71.06\"]},{\"id\":\"a5425072-ef98-4fa3-bbd3-905c2d63eabe\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M139.73,49.39 L172.63,43.66 L176.42,66.07 L155.86,69.90 L155.80,73.98 L145.52,75.90 L139.73,49.39\"]},{\"id\":\"eb35d058-b6d0-44d3-99eb-201e7cc4acb6\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M176.61,5.13 L169.65,0.00 L180.43,0.00 L176.61,5.13\"]},{\"id\":\"6143310d-6095-4457-8e0c-01ab375d6f6d\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M194.60,1.55 L199.37,0.84 L201.13,12.75 L145.31,20.87 L143.55,8.96 L167.42,5.50 L166.62,0.00 L194.37,0.00 L194.60,1.55\"]},{\"id\":\"acdde66c-1226-4795-9284-07b72d50431d\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M114.08,45.73 L95.08,49.77 L84.36,0.00 L104.23,0.00 L114.08,45.73\"]},{\"id\":\"d657b325-b8a0-4cab-ba66-ae0f93b68187\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M243.55,7.30 L269.51,1.72 L272.71,18.28 L246.75,23.89 L243.55,7.30\"]},{\"id\":\"2ab2a2f1-8993-497e-9f78-986ae3a36822\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M281.73,230.90 L282.47,232.62 L258.75,241.96 L256.72,237.32 L251.34,238.66 L253.59,242.88 L247.56,245.24 L248.41,246.71 L218.00,258.78 L215.04,252.61 L200.09,259.86 L185.46,229.46 L191.45,227.08 L190.66,225.40 L251.86,201.48 L255.22,206.76 L274.91,199.03 L287.65,228.56 L281.73,230.90\"]},{\"id\":\"463d4c1f-0916-4920-9e95-bd2930b8ad98\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M258.86,275.35 L248.06,270.46 L256.62,251.55 L267.41,256.44 L258.86,275.35\"]},{\"id\":\"fd9015ee-7141-4bbf-96db-28bc1ac946db\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M175.21,373.51 L195.65,368.85 L202.79,400.00 L181.28,400.00 L175.21,373.51\"]},{\"id\":\"643ae173-3d37-4a78-8bdc-99a7dc5ff789\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M123.24,243.87 L143.14,235.68 L156.46,279.61 L136.76,287.59 L123.24,243.87\"]},{\"id\":\"7a9e7543-4d1b-46cf-b137-f359a2e4aaf9\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M111.76,350.83 L103.99,346.49 L108.32,338.72 L116.10,343.07 L111.76,350.83\"]},{\"id\":\"4b652681-cba3-4ef7-9d84-8563b597fe2f\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M91.64,340.47 L98.21,346.46 L88.25,357.40 L81.68,351.42 L91.64,340.47\"]},{\"id\":\"e64af31b-436b-450a-989a-93854aaf3f77\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M434.38,316.49 L434.33,335.10 L414.34,335.09 L414.32,336.86 L413.69,327.12 L414.26,341.07 L392.00,341.08 L392.06,337.08 L372.45,337.08 L372.15,317.36 L397.08,317.11 L396.98,308.68 L413.35,308.73 L413.44,316.49 L434.38,316.49\"]},{\"id\":\"b55e1a89-e3b8-496a-93d3-10de0d410256\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M428.81,202.73 L418.75,224.21 L391.90,211.65 L394.42,206.29 L405.15,211.30 L412.69,195.19 L428.81,202.73\"]},{\"id\":\"c57db4bf-a2db-4461-9268-ae6353fb4754\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M422.41,283.33 L423.02,304.30 L349.70,306.41 L349.09,285.45 L376.31,284.67 L375.96,272.09 L394.81,271.56 L395.17,284.13 L422.41,283.33\"]},{\"id\":\"2233402a-6a21-4e62-a787-6af6874c1b66\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M340.07,248.80 L395.58,239.21 L399.51,251.46 L343.97,263.07 L340.07,248.80\"]},{\"id\":\"d46e7d81-e348-4007-ab59-62d57c9a6bfc\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M372.10,220.37 L381.20,215.18 L383.29,218.82 L374.18,224.02 L372.10,220.37\"]},{\"id\":\"7b83e592-6384-497b-898f-0c307a7f72fd\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M349.47,241.41 L341.20,222.14 L360.45,213.87 L368.74,233.12 L349.47,241.41\"]},{\"id\":\"052fc534-4c8d-4eae-afda-34bdbdb69c9f\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M326.89,207.07 L326.05,215.39 L301.02,212.89 L301.86,204.55 L326.89,207.07\"]},{\"id\":\"6866f829-7a4f-4acd-9146-041d8f054456\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M306.36,396.08 L387.11,351.52 L399.27,373.55 L351.34,400.00 L308.52,400.00 L306.36,396.08\"]},{\"id\":\"c59beda5-e51d-46c6-b907-1c12eb025904\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M314.32,299.60 L325.42,323.86 L236.81,363.59 L227.02,341.32 L241.94,334.50 L236.94,323.70 L253.41,316.43 L257.12,324.15 L282.18,313.01 L279.03,306.19 L295.70,298.70 L299.02,306.64 L314.32,299.60\"]},{\"id\":\"7f474efc-9104-4d0e-8985-0e5c468bfe54\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M292.58,249.83 L293.96,277.03 L281.39,277.68 L280.01,250.45 L292.58,249.83\"]},{\"id\":\"5ffde9d6-0ef9-4d44-a508-f55ef5be4f40\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M171.19,132.25 L157.07,73.14 L295.71,40.04 L299.60,56.35 L352.61,43.71 L350.66,35.55 L405.71,22.41 L408.63,34.64 L402.51,36.11 L404.45,44.25 L412.62,42.30 L419.43,70.85 L364.38,83.99 L366.32,92.15 L339.82,98.48 L338.36,92.37 L305.74,100.14 L313.53,132.75 L264.60,144.45 L261.19,130.17 L216.34,140.88 L219.25,153.11 L180.52,162.36 L174.68,137.88 L188.96,134.49 L187.50,128.37 L171.19,132.25\"]},{\"id\":\"9b2a6fd0-ec96-454a-939f-ed0f088fb409\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M342.07,25.30 L297.73,40.63 L288.95,13.70 L328.58,0.00 L333.83,0.00 L342.07,25.30\"]},{\"id\":\"42008c36-34d9-44fb-a96a-4aeaf91fe497\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M281.82,6.01 L280.17,0.00 L301.93,0.00 L281.82,6.01\"]},{\"id\":\"818398b4-6599-4841-b771-a440edb4025f\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M357.66,13.09 L394.67,7.38 L396.50,23.68 L361.52,31.42 L357.66,13.09\"]},{\"id\":\"776adfe3-f4dd-479f-95bd-a893730f7711\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M394.46,88.75 L397.36,96.62 L346.24,115.51 L343.34,107.64 L394.46,88.75\"]},{\"id\":\"f543f5de-0653-4d9b-bf2e-130b7fbf4580\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M541.97,178.11 L539.88,189.79 L534.04,188.76 L536.13,177.08 L541.97,178.11\"]},{\"id\":\"3392af91-0c99-4bd4-b6c1-efb4a7db9b17\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M474.03,4.13 L473.03,0.00 L484.40,0.00 L474.03,4.13\"]},{\"id\":\"7fb4cc94-3899-4385-9656-f3728d81d124\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M477.38,58.10 L472.04,37.67 L568.55,0.00 L600.00,0.00 L600.00,8.68 L477.38,58.10\"]},{\"id\":\"3bfb70a0-ad5a-4e16-bed2-1b49920dc197\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M550.53,350.05 L520.28,356.24 L490.30,158.99 L522.05,154.84 L550.53,350.05\"]},{\"id\":\"4a434d3b-d13d-4af0-8d0b-1d3eb8c11bdb\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M486.95,240.39 L493.26,237.44 L497.16,246.05 L490.26,248.77 L486.95,240.39\"]},{\"id\":\"b25af08c-fa96-4dc2-b944-720ce24ce5a4\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M455.97,377.50 L455.46,364.95 L472.22,364.27 L472.73,376.83 L455.97,377.50\"]},{\"id\":\"3fd3e0ba-ebd5-4a64-9bd5-9b97e9f1f966\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M511.68,386.32 L528.84,384.61 L529.68,393.00 L512.35,394.74 L511.68,386.32\"]},{\"id\":\"f1e4c5c5-410a-436c-93d6-8ea16f16bcb7\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M582.88,372.67 L576.72,335.78 L571.88,306.73 L562.60,233.67 L553.81,180.20 L564.43,151.21 L600.00,138.24 L600.00,367.56 L582.88,372.67\"]},{\"id\":\"3207b6b1-a137-4c1a-a10a-57092e00796e\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M539.31,126.10 L532.46,103.61 L600.00,79.20 L600.00,104.25 L539.31,126.10\"]},{\"id\":\"w859488613\",\"source\":\"Geofabrik\",\"target\":false,\"paths\":[\"M84.36,0.00 L104.23,0.00 L114.08,45.73 L95.08,49.77 L84.36,0.00\"]},{\"id\":\"w859488614\",\"source\":\"Geofabrik\",\"target\":false,\"paths\":[\"M23.06,45.36 L83.56,32.45 L88.86,57.07 L28.37,69.96 L23.06,45.36\"]},{\"id\":\"w859488615\",\"source\":\"Geofabrik\",\"target\":false,\"paths\":[\"M18.65,50.31 L23.40,77.78 L0.00,81.79 L0.00,53.50 L18.65,50.31\"]},{\"id\":\"w1058562700\",\"source\":\"Geofabrik\",\"target\":false,\"paths\":[\"M564.43,151.21 L600.00,138.24 L600.00,367.56 L582.88,372.67 L576.72,335.78 L571.88,306.73 L562.60,233.67 L553.81,180.20 L564.43,151.21\"]},{\"id\":\"w1058562701\",\"source\":\"Geofabrik\",\"target\":false,\"paths\":[\"M522.05,154.84 L550.53,350.05 L520.28,356.24 L490.30,158.99 L522.05,154.84\"]},{\"id\":\"w1058562702\",\"source\":\"Geofabrik\",\"target\":false,\"paths\":[\"M539.31,126.10 L532.46,103.61 L600.00,79.20 L600.00,104.25 L539.31,126.10\"]},{\"id\":\"w1058562704\",\"source\":\"Geofabrik\",\"target\":false,\"paths\":[\"M568.55,0.00 L600.00,0.00 L600.00,8.68 L477.38,58.10 L472.04,37.67 L568.55,0.00\"]},{\"id\":\"w1058562705\",\"source\":\"Geofabrik\",\"target\":false,\"paths\":[\"M474.03,4.13 L473.03,0.00 L484.40,0.00 L474.03,4.13\"]},{\"id\":\"w1233759509\",\"source\":\"Geofabrik\",\"target\":false,\"paths\":[\"M100.76,98.92 L122.87,201.89 L82.51,210.45 L65.96,133.41 L0.00,147.42 L0.00,120.31 L100.76,98.92\"]},{\"id\":\"w1331504963\",\"source\":\"Geofabrik\",\"target\":false,\"paths\":[\"M169.65,0.00 L180.43,0.00 L176.61,5.13 L169.65,0.00\"]},{\"id\":\"w1331504964\",\"source\":\"Geofabrik\",\"target\":false,\"paths\":[\"M194.60,1.55 L199.37,0.84 L201.13,12.75 L145.31,20.87 L143.55,8.96 L167.42,5.50 L166.62,0.00 L194.37,0.00 L194.60,1.55\"]},{\"id\":\"w1570583917\",\"source\":\"Geofabrik\",\"target\":true,\"paths\":[\"M313.82,180.43 L323.54,205.38 L284.34,218.92 L277.14,195.27 L313.82,180.43\"]}]"
+        },
+        {
+          "case_id": "geometry-r12871465",
+          "area": "陆家嘴",
+          "type": "建筑几何差异",
+          "label": "陆家嘴 · 最大边界差异 r12871465",
+          "source_id": "r12871465",
+          "longitude": 121.50775705140116,
+          "latitude": 31.239797459653524,
+          "detail": "匹配IoU 0.999970；质心差异 0.001 m；Hausdorff边界差异 12.658 m。共享OSM来源，相对几何差异不代表绝对精度。",
+          "shapes_json": "[{\"id\":\"6fe9f1de-56ef-4c81-b39b-f5005ec032ce\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M599.34,283.88 L600.00,283.68 L600.00,285.99 L599.34,283.88\"]},{\"id\":\"88a70a55-bf86-48f4-bfda-bb9fa915dedc\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M585.93,257.40 L579.02,235.16 L600.00,228.70 L600.00,253.07 L585.93,257.40\"]},{\"id\":\"f9369314-e454-4985-b256-bbaf1d7e9488\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M566.05,209.35 L559.13,187.10 L600.00,174.53 L600.00,198.91 L566.05,209.35\"]},{\"id\":\"23c9f9b2-645c-4612-bf23-e7a645710f8f\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M543.61,148.49 L537.06,127.47 L600.00,108.11 L600.00,131.13 L543.61,148.49\"]},{\"id\":\"4f6f0de0-9a70-4adf-84d6-349ca7370784\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M523.45,96.49 L516.72,98.55 L512.13,82.92 L518.88,81.08 L517.22,75.72 L600.00,52.13 L600.00,74.59 L523.45,96.49\"]},{\"id\":\"79c02b67-3e5b-4e71-bd9b-609c8d212b1c\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M508.33,52.23 L502.85,33.92 L600.00,5.95 L600.00,26.20 L508.33,52.23\"]},{\"id\":\"9aa7913a-6194-429e-b969-fafff14aefeb\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M506.74,195.62 L502.10,184.87 L509.43,181.71 L513.88,193.37 L512.49,195.99 L506.74,195.62\"]},{\"id\":\"e3c8c729-e46b-497e-abf6-76078f794c21\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M546.22,157.35 L555.09,154.01 L561.19,170.13 L552.12,173.22 L546.22,157.35\"]},{\"id\":\"a181c48a-0757-4120-961e-21870976ddfe\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M391.25,240.96 L479.90,209.83 L486.32,231.04 L397.86,261.96 L391.25,240.96\"]},{\"id\":\"12d5bd23-457e-42ae-85bb-464dfe8579af\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M404.72,292.72 L415.52,288.76 L427.73,321.19 L417.12,325.37 L404.72,292.72\"]},{\"id\":\"f4d2b46a-1606-40a5-b7f8-202a52fad4f3\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M414.47,338.41 L326.77,385.57 L316.34,366.36 L404.02,319.18 L414.47,338.41\"]},{\"id\":\"e727d076-fda2-46a9-a3b5-7f59cfab371d\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M430.39,366.86 L440.84,386.09 L414.96,400.00 L368.78,400.00 L430.39,366.86\"]},{\"id\":\"0be36775-286c-48d8-9402-52a90a98fa77\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M457.96,297.76 L442.29,294.49 L446.48,283.28 L455.28,284.82 L466.88,278.01 L471.61,267.25 L470.55,261.25 L485.18,257.17 L483.98,275.76 L473.97,291.48 L457.96,297.76\"]},{\"id\":\"4fe061fe-5c76-46f9-9286-dcbae501e074\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M473.22,313.22 L456.80,313.06 L446.61,308.89 L450.84,298.77 L459.02,300.88 L471.33,301.00 L479.60,297.03 L483.83,286.91 L483.94,278.77 L498.36,274.84 L498.27,280.94 L506.44,283.07 L506.33,291.21 L498.14,291.12 L493.91,299.20 L485.61,307.24 L473.22,313.22\"]},{\"id\":\"3ea17bfd-6655-446e-8a0b-dc3eb47aa613\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M545.35,296.28 L529.52,301.81 L515.73,262.22 L531.56,256.71 L545.35,296.28\"]},{\"id\":\"0aac7977-94a8-43af-bd68-6968c23db020\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M573.03,345.01 L462.58,391.75 L453.99,371.63 L564.44,324.89 L573.03,345.01\"]},{\"id\":\"97331b0b-0409-45b0-8595-e734284bde87\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M586.61,376.17 L595.20,396.29 L586.42,400.00 L530.30,400.00 L586.61,376.17\"]},{\"id\":\"5d92dc45-5546-4b3e-aeff-7760d3339c3c\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M300.71,373.66 L311.16,392.90 L297.94,400.00 L251.72,400.00 L300.71,373.66\"]},{\"id\":\"405870a6-d88c-4bb8-8b50-6083f6632cce\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M301.06,328.39 L307.42,325.66 L310.59,333.29 L304.02,336.01 L301.06,328.39\"]},{\"id\":\"ff0fedd9-2e1a-4ddf-be6d-315e64950d41\",\"source\":\"Overture\",\"target\":true,\"paths\":[\"M254.16,295.36 L183.34,323.61 L151.28,264.17 L124.29,176.77 L209.69,148.64 L216.91,174.32 L255.38,162.89 L254.26,158.33 L286.79,134.76 L324.81,118.60 L361.74,109.85 L396.49,107.86 L414.41,107.50 L415.59,113.10 L454.51,100.59 L462.09,124.53 L486.99,203.74 L249.50,277.58 L232.46,223.34 L254.16,295.36\",\"M224.62,198.44 L220.22,184.77 L232.46,223.34 L224.62,198.44\"]},{\"id\":\"81cf82a7-0daf-44df-b67e-b0096d2f935a\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M88.04,174.27 L86.11,185.95 L80.26,184.98 L82.21,173.30 L88.04,174.27\"]},{\"id\":\"177d111b-dc47-4865-aa03-2f2de80e6d68\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M33.04,319.40 L73.07,383.00 L40.80,400.00 L0.00,400.00 L0.00,300.64 L33.04,319.40\"]},{\"id\":\"72948221-8351-49ce-ab27-6e4f8001e88c\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M0.88,4.10 L0.00,4.60 L0.00,2.56 L0.88,4.10\"]},{\"id\":\"6ff22bd8-d0f4-4bf3-9977-4a17a1259084\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M151.78,16.14 L110.23,28.69 L59.50,0.00 L146.84,0.00 L151.78,16.14\"]},{\"id\":\"w164972442\",\"source\":\"Geofabrik\",\"target\":false,\"paths\":[\"M59.50,0.00 L146.84,0.00 L151.78,16.14 L110.23,28.69 L59.50,0.00\"]},{\"id\":\"w957008754\",\"source\":\"Geofabrik\",\"target\":false,\"paths\":[\"M300.71,373.66 L311.16,392.90 L297.94,400.00 L251.72,400.00 L300.71,373.66\"]},{\"id\":\"w957008755\",\"source\":\"Geofabrik\",\"target\":false,\"paths\":[\"M404.02,319.18 L414.47,338.41 L326.77,385.57 L316.34,366.36 L404.02,319.18\"]},{\"id\":\"w957008757\",\"source\":\"Geofabrik\",\"target\":false,\"paths\":[\"M430.39,366.86 L440.84,386.09 L414.96,400.00 L368.78,400.00 L430.39,366.86\"]},{\"id\":\"w957008774\",\"source\":\"Geofabrik\",\"target\":false,\"paths\":[\"M564.44,324.89 L573.03,345.01 L462.58,391.75 L453.99,371.63 L564.44,324.89\"]},{\"id\":\"w957008775\",\"source\":\"Geofabrik\",\"target\":false,\"paths\":[\"M586.61,376.17 L595.20,396.29 L586.42,400.00 L530.30,400.00 L586.61,376.17\"]},{\"id\":\"w957019630\",\"source\":\"Geofabrik\",\"target\":false,\"paths\":[\"M599.34,283.88 L600.00,283.68 L600.00,285.99 L599.34,283.88\"]},{\"id\":\"w957019634\",\"source\":\"Geofabrik\",\"target\":false,\"paths\":[\"M585.93,257.40 L579.02,235.16 L600.00,228.70 L600.00,253.07 L585.93,257.40\"]},{\"id\":\"w957019636\",\"source\":\"Geofabrik\",\"target\":false,\"paths\":[\"M566.05,209.35 L559.13,187.10 L600.00,174.53 L600.00,198.91 L566.05,209.35\"]},{\"id\":\"w957019640\",\"source\":\"Geofabrik\",\"target\":false,\"paths\":[\"M543.61,148.49 L537.06,127.47 L600.00,108.11 L600.00,131.13 L543.61,148.49\"]},{\"id\":\"r5496035\",\"source\":\"Geofabrik\",\"target\":false,\"paths\":[\"M33.04,319.40 L73.07,383.00 L40.80,400.00 L0.00,400.00 L0.00,300.64 L33.04,319.40\"]},{\"id\":\"r12871465\",\"source\":\"Geofabrik\",\"target\":true,\"paths\":[\"M151.28,264.17 L124.29,176.77 L209.69,148.64 L216.91,174.32 L255.38,162.89 L254.26,158.33 L286.79,134.76 L324.81,118.60 L361.74,109.85 L396.49,107.86 L414.41,107.50 L415.59,113.10 L454.51,100.59 L462.09,124.53 L486.99,203.74 L249.50,277.58 L232.46,223.34 L254.16,295.36 L183.34,323.61 L151.28,264.17\"]}]"
+        },
+        {
+          "case_id": "geometry-w1200050718",
+          "area": "南京西路",
+          "type": "建筑几何差异",
+          "label": "南京西路 · 最大边界差异 w1200050718",
+          "source_id": "w1200050718",
+          "longitude": 121.44561189732308,
+          "latitude": 31.23187086758679,
+          "detail": "匹配IoU 0.881577；质心差异 1.569 m；Hausdorff边界差异 1.569 m。共享OSM来源，相对几何差异不代表绝对精度。",
+          "shapes_json": "[{\"id\":\"99200c22-2f53-497b-bdb8-1e60ca89f495\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M420.43,27.27 L354.76,58.21 L340.76,28.83 L401.91,0.00 L407.46,0.00 L420.43,27.27\"]},{\"id\":\"5ed84992-6c10-47d1-bf49-8c3f41d56a52\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M438.17,87.96 L374.07,115.33 L360.94,84.86 L425.02,57.51 L438.17,87.96\"]},{\"id\":\"4370477c-a4d3-4ea9-8876-5546af93e7bb\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M465.19,144.75 L401.09,172.12 L387.95,141.65 L452.04,114.30 L465.19,144.75\"]},{\"id\":\"5dd99328-c4cf-47da-a22a-f5d7401caea0\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M487.00,99.49 L457.71,101.32 L457.18,92.95 L486.47,91.12 L487.00,99.49\"]},{\"id\":\"0106bead-f5e6-4c2c-a71e-79ae809fc2b3\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M481.61,112.72 L479.89,121.45 L465.35,118.57 L467.08,109.86 L481.61,112.72\"]},{\"id\":\"97cfab48-1fbf-4e5b-bc37-815c6416f622\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M484.92,188.05 L496.75,213.78 L443.90,237.83 L432.08,212.10 L484.92,188.05\"]},{\"id\":\"3e254253-84a6-4565-a5db-06dc903d4576\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M406.54,288.72 L418.23,284.28 L423.07,292.26 L422.99,292.28 L423.25,292.71 L414.83,295.36 L409.47,296.93 L406.54,288.72\"]},{\"id\":\"38fe74c8-d6fd-45a7-8394-9d5f8948a2d1\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M470.93,380.68 L478.43,400.00 L470.67,400.00 L470.93,380.68\"]},{\"id\":\"b9aac945-16fd-458b-9afc-e87ee9313d56\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M374.91,359.24 L376.88,365.36 L358.44,365.12 L374.91,359.24\"]},{\"id\":\"b4f9758d-706c-4463-82cb-531c12eed7e8\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M363.25,331.95 L422.54,305.38 L432.83,328.32 L373.52,354.91 L363.25,331.95\"]},{\"id\":\"53853dfa-3efd-480e-a06c-8a38ba97738c\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M359.87,310.71 L337.70,256.36 L372.63,242.10 L394.81,296.43 L359.87,310.71\"]},{\"id\":\"b33ebaa6-b21d-4372-bb4e-0376124f223a\",\"source\":\"Overture\",\"target\":true,\"paths\":[\"M298.62,242.92 L272.77,174.22 L304.97,162.23 L330.81,230.92 L298.62,242.92\"]},{\"id\":\"fe37df41-a716-4ad6-801e-21eff84d08d0\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M264.64,277.17 L241.78,287.67 L231.28,264.82 L254.14,254.32 L264.64,277.17\"]},{\"id\":\"36289383-e815-4e8f-8c8e-c621536061af\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M143.98,384.28 L173.86,373.68 L181.02,392.98 L162.03,400.00 L149.68,400.00 L143.98,384.28\"]},{\"id\":\"ef2afd62-a7f3-4908-b02e-b332977759d8\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M221.30,281.46 L177.18,297.12 L170.86,279.44 L214.96,263.79 L221.30,281.46\"]},{\"id\":\"39851f10-af14-4a5b-b536-784e0cc5e181\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M144.04,260.08 L122.81,206.24 L187.08,183.24 L210.03,236.09 L144.04,260.08\",\"M182.67,229.85 L174.49,206.79 L147.99,216.06 L156.15,239.12 L182.67,229.85\"]},{\"id\":\"9a43d75b-468f-4966-b98e-08a0a6e2eb63\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M172.85,78.31 L204.83,66.81 L207.76,75.45 L175.97,86.71 L172.85,78.31\"]},{\"id\":\"9e3c7969-ac84-4f5a-bf22-92d19b6a8376\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M210.05,23.46 L198.33,0.00 L259.50,0.00 L210.05,23.46\"]},{\"id\":\"a93c89ea-9547-4481-8670-90ab19b1c8a6\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M238.90,96.53 L230.11,71.71 L226.08,73.25 L220.41,56.85 L240.33,49.35 L255.18,90.55 L238.90,96.53\"]},{\"id\":\"8953d8c1-795f-4b92-ac6e-06e46aff9428\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M306.38,134.91 L333.97,124.06 L338.03,134.03 L310.06,144.88 L306.38,134.91\"]},{\"id\":\"c837b77f-65f0-4417-9a95-e49501087eb8\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M280.33,128.43 L258.55,73.46 L259.91,60.86 L294.29,47.64 L304.07,55.61 L325.86,110.55 L324.32,124.97 L289.93,138.19 L280.33,128.43\"]},{\"id\":\"753ec596-add2-4823-8475-16710805f7ba\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M129.73,104.47 L127.66,98.56 L110.41,105.52 L110.20,80.97 L119.12,52.30 L128.42,33.71 L136.68,20.92 L168.29,5.98 L185.18,41.43 L178.87,44.42 L159.93,92.07 L129.73,104.47\"]},{\"id\":\"e435dbd8-c422-478e-9f91-a02a20511152\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M119.12,159.33 L112.88,142.92 L102.53,147.12 L99.04,137.58 L104.02,135.59 L100.14,126.07 L135.02,112.81 L145.14,138.76 L139.96,140.75 L143.64,150.27 L119.12,159.33\"]},{\"id\":\"e634a2c5-0290-467d-a632-f10325795e34\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M103.51,76.20 L91.89,35.41 L97.06,33.43 L95.23,28.10 L132.00,16.20 L134.19,22.84 L122.74,36.14 L114.32,52.74 L108.04,79.10 L103.51,76.20\"]},{\"id\":\"e65264d3-bc86-4eb3-b007-3e8c08e11765\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M60.74,47.11 L96.18,138.14 L27.59,163.38 L0.00,85.99 L0.00,84.49 L60.74,47.11\"]},{\"id\":\"f369bc6c-d69e-4455-9792-1a8a8b883bd3\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M7.89,191.56 L11.40,203.62 L0.00,206.95 L0.00,193.86 L7.89,191.56\"]},{\"id\":\"21b5a45a-e519-4c3a-a832-14092f25e2fb\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M4.37,315.99 L14.42,347.84 L0.00,352.35 L0.00,317.36 L4.37,315.99\"]},{\"id\":\"4df77598-2d87-4904-b306-a278409a1657\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M11.01,380.97 L17.55,400.00 L0.00,400.00 L0.00,384.67 L11.01,380.97\"]},{\"id\":\"106958b6-11c2-4687-be5b-57556bc0c4fb\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M31.42,325.38 L37.55,323.40 L62.96,399.46 L61.23,400.00 L56.17,400.00 L31.42,325.38\"]},{\"id\":\"a91b4377-05d9-498c-8760-a7b190298605\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M38.29,380.44 L32.52,347.41 L36.65,346.69 L42.41,379.72 L38.29,380.44\"]},{\"id\":\"1b1979fc-a852-476f-8747-223665441119\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M31.77,241.47 L41.17,248.70 L37.54,253.40 L28.16,246.17 L31.77,241.47\"]},{\"id\":\"5f19392a-bf7f-42b4-a7c9-98afe32e71fa\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M78.29,204.03 L92.21,203.61 L68.06,211.98 L78.29,204.03\"]},{\"id\":\"cd6b9de0-38ef-41d8-890d-53f00d65e431\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M144.72,309.34 L147.94,318.50 L61.20,348.57 L33.74,270.13 L67.77,258.35 L80.96,296.05 L153.60,270.89 L164.65,302.42 L144.72,309.34\"]},{\"id\":\"3894101f-0905-486d-bc83-1d4b9644778b\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M118.83,238.09 L104.75,243.32 L102.84,238.26 L67.70,251.32 L60.24,231.43 L109.45,213.14 L118.83,238.09\"]},{\"id\":\"cf14d0f5-c102-4024-bc03-f02d2ec31484\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M122.60,183.26 L140.22,176.66 L142.78,183.97 L125.17,190.15 L122.60,183.26\"]},{\"id\":\"47a433b6-6bd8-4855-983e-f68214bf9f9a\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M122.26,342.60 L139.93,344.60 L139.26,350.49 L121.59,348.49 L122.26,342.60\"]},{\"id\":\"2dd418d5-1032-4c60-9e49-92ef3790302d\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M64.88,372.90 L114.92,356.00 L129.95,400.00 L74.14,400.00 L64.88,372.90\"]},{\"id\":\"95fe21f5-d61f-480e-bd1b-e6fc7b053113\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M573.02,361.82 L567.98,364.79 L562.22,367.06 L556.94,368.36 L551.42,368.95 L546.66,368.92 L542.15,368.42 L537.99,367.25 L533.71,365.44 L529.71,363.19 L526.22,360.54 L522.87,357.39 L520.11,354.25 L517.00,350.64 L514.30,346.52 L509.51,337.56 L546.72,321.07 L573.02,361.82\"]},{\"id\":\"565fa6ee-f7ff-4bdf-a6c6-a43564522409\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M583.07,347.51 L595.12,343.88 L596.32,347.89 L584.29,351.51 L583.07,347.51\"]},{\"id\":\"3e1b7706-1fd8-479f-b468-59815e9f934e\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M572.22,339.88 L556.82,302.52 L598.92,285.35 L600.00,287.98 L600.00,328.55 L572.22,339.88\"]},{\"id\":\"d6b85e6d-da76-4a0c-9b4e-6ee9403529bc\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M597.17,200.87 L600.00,199.81 L600.00,208.38 L597.17,200.87\"]},{\"id\":\"898096f0-a6f9-4bb4-bf95-869c40299466\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M582.29,211.83 L591.85,235.45 L537.94,257.04 L528.39,233.43 L582.29,211.83\"]},{\"id\":\"b49f10a3-04b7-4b97-ab93-126f6ffbda2d\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M506.64,235.32 L524.43,268.36 L473.02,295.76 L455.23,262.69 L506.64,235.32\"]},{\"id\":\"b15a03c0-0d53-4bf5-922f-25fd589fa61d\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M494.65,90.62 L513.18,87.02 L513.96,91.13 L495.45,94.73 L494.65,90.62\"]},{\"id\":\"1ebd883b-eea9-4668-904e-302d132e7d2a\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M486.15,172.21 L474.60,142.34 L600.00,94.33 L600.00,128.63 L486.15,172.21\"]},{\"id\":\"fa999210-7337-4f79-843e-314a8868fe19\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M582.54,60.03 L525.25,90.74 L519.31,79.66 L576.60,48.95 L582.54,60.03\"]},{\"id\":\"b28ae853-0ca6-4bd2-976e-a9586632f657\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M492.55,71.92 L453.70,86.78 L444.03,63.21 L488.69,45.37 L491.40,50.82 L563.45,21.80 L575.12,49.46 L496.43,80.62 L492.55,71.92\"]},{\"id\":\"839a5375-f003-4374-8da3-952c19aae167\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M542.52,4.59 L485.89,26.86 L483.32,21.08 L442.76,37.07 L431.61,10.22 L457.06,0.00 L473.93,0.00 L474.62,1.33 L477.89,0.00 L540.48,0.00 L542.52,4.59\"]},{\"id\":\"w1154427266\",\"source\":\"Geofabrik\",\"target\":false,\"paths\":[\"M542.52,4.59 L485.89,26.86 L483.32,21.08 L442.76,37.07 L431.61,10.22 L457.06,0.00 L473.93,0.00 L474.62,1.33 L477.89,0.00 L540.48,0.00 L542.52,4.59\"]},{\"id\":\"w1154427267\",\"source\":\"Geofabrik\",\"target\":false,\"paths\":[\"M496.43,80.62 L492.55,71.92 L453.70,86.78 L444.03,63.21 L488.69,45.37 L491.40,50.82 L563.45,21.80 L575.12,49.46 L496.43,80.62\"]},{\"id\":\"w1199470370\",\"source\":\"Geofabrik\",\"target\":false,\"paths\":[\"M546.72,321.07 L573.02,361.82 L567.98,364.79 L562.22,367.06 L556.94,368.36 L551.42,368.95 L546.66,368.92 L542.15,368.42 L537.99,367.25 L533.71,365.44 L529.71,363.19 L526.22,360.54 L522.87,357.39 L520.11,354.25 L517.00,350.64 L514.30,346.52 L509.51,337.56 L546.72,321.07\"]},{\"id\":\"w1199470371\",\"source\":\"Geofabrik\",\"target\":false,\"paths\":[\"M455.23,262.69 L506.64,235.32 L524.43,268.36 L473.02,295.76 L455.23,262.69\"]},{\"id\":\"w1199470372\",\"source\":\"Geofabrik\",\"target\":false,\"paths\":[\"M528.39,233.43 L582.29,211.83 L591.85,235.45 L537.94,257.04 L528.39,233.43\"]},{\"id\":\"w1199470374\",\"source\":\"Geofabrik\",\"target\":false,\"paths\":[\"M425.02,57.51 L438.17,87.96 L374.07,115.33 L360.94,84.86 L425.02,57.51\"]},{\"id\":\"w1199470375\",\"source\":\"Geofabrik\",\"target\":false,\"paths\":[\"M452.04,114.30 L465.19,144.75 L401.09,172.12 L387.95,141.65 L452.04,114.30\"]},{\"id\":\"w1199470376\",\"source\":\"Geofabrik\",\"target\":false,\"paths\":[\"M432.08,212.10 L484.92,188.05 L496.75,213.78 L443.90,237.83 L432.08,212.10\"]},{\"id\":\"w1200049165\",\"source\":\"Geofabrik\",\"target\":false,\"paths\":[\"M60.74,47.11 L96.18,138.14 L27.59,163.38 L0.00,85.99 L0.00,84.49 L60.74,47.11\"]},{\"id\":\"w1200049166\",\"source\":\"Geofabrik\",\"target\":false,\"paths\":[\"M109.45,213.14 L118.83,238.09 L104.75,243.32 L102.84,238.26 L67.70,251.32 L60.24,231.43 L109.45,213.14\"]},{\"id\":\"w1200049167\",\"source\":\"Geofabrik\",\"target\":false,\"paths\":[\"M64.88,372.90 L114.92,356.00 L129.95,400.00 L74.14,400.00 L64.88,372.90\"]},{\"id\":\"w1200050718\",\"source\":\"Geofabrik\",\"target\":true,\"paths\":[\"M322.81,211.84 L329.02,228.34 L296.82,240.35 L270.98,171.65 L303.18,159.66 L322.81,211.84\"]},{\"id\":\"w1200050719\",\"source\":\"Geofabrik\",\"target\":false,\"paths\":[\"M164.65,302.42 L144.72,309.34 L147.94,318.50 L61.20,348.57 L33.74,270.13 L67.77,258.35 L80.96,296.05 L153.60,270.89 L164.65,302.42\"]},{\"id\":\"w1200050720\",\"source\":\"Geofabrik\",\"target\":false,\"paths\":[\"M214.96,263.79 L221.30,281.46 L177.18,297.12 L170.86,279.44 L214.96,263.79\"]},{\"id\":\"w1200469370\",\"source\":\"Geofabrik\",\"target\":false,\"paths\":[\"M572.22,339.88 L556.82,302.52 L598.92,285.35 L600.00,287.98 L600.00,328.55 L572.22,339.88\"]},{\"id\":\"w1200469373\",\"source\":\"Geofabrik\",\"target\":false,\"paths\":[\"M600.00,94.33 L600.00,128.63 L486.15,172.21 L474.60,142.34 L600.00,94.33\"]},{\"id\":\"w1200469374\",\"source\":\"Geofabrik\",\"target\":false,\"paths\":[\"M401.91,0.00 L407.46,0.00 L420.43,27.27 L354.76,58.21 L340.76,28.83 L401.91,0.00\"]},{\"id\":\"w1201227881\",\"source\":\"Geofabrik\",\"target\":false,\"paths\":[\"M4.37,315.99 L14.42,347.84 L0.00,352.35 L0.00,317.36 L4.37,315.99\"]},{\"id\":\"w1331510435\",\"source\":\"Geofabrik\",\"target\":false,\"paths\":[\"M289.93,138.19 L280.33,128.43 L258.55,73.46 L259.91,60.86 L294.29,47.64 L304.07,55.61 L325.86,110.55 L324.32,124.97 L289.93,138.19\"]},{\"id\":\"w1331510436\",\"source\":\"Geofabrik\",\"target\":false,\"paths\":[\"M210.05,23.46 L198.33,0.00 L259.50,0.00 L210.05,23.46\"]},{\"id\":\"w1331510437\",\"source\":\"Geofabrik\",\"target\":false,\"paths\":[\"M159.93,92.07 L129.73,104.47 L127.66,98.56 L110.41,105.52 L110.20,80.97 L119.12,52.30 L128.42,33.71 L136.68,20.92 L168.29,5.98 L185.18,41.43 L178.87,44.42 L159.93,92.07\"]},{\"id\":\"w1566594236\",\"source\":\"Geofabrik\",\"target\":false,\"paths\":[\"M383.58,257.91 L398.32,290.45 L363.92,305.89 L349.18,273.35 L383.58,257.91\"]},{\"id\":\"w1566594237\",\"source\":\"Geofabrik\",\"target\":false,\"paths\":[\"M345.35,159.54 L357.02,184.52 L337.99,193.32 L326.32,168.34 L345.35,159.54\"]},{\"id\":\"w1566594239\",\"source\":\"Geofabrik\",\"target\":false,\"paths\":[\"M362.55,217.64 L358.58,208.78 L374.94,201.53 L385.86,225.90 L328.97,251.11 L322.02,235.60 L362.55,217.64\"]},{\"id\":\"r18258254\",\"source\":\"Geofabrik\",\"target\":false,\"paths\":[\"M144.04,260.08 L122.81,206.24 L187.08,183.24 L210.03,236.09 L144.04,260.08\",\"M156.15,239.12 L182.67,229.85 L174.49,206.79 L147.99,216.06 L156.15,239.12\"]}]"
+        },
+        {
+          "case_id": "road-1",
+          "area": "南京西路",
+          "type": "道路近接候选",
+          "label": "南京西路 · 道路近接点 1",
+          "source_id": "1093a8e3-9506-4e45-bb81-1e50fb3ca050",
+          "longitude": 121.46413530000001,
+          "latitude": 31.236309900000002,
+          "detail": "原生度1节点距另一同层道路 1.738 m；两个数据源均出现，需核查入口、门禁、真实通行及层级，不能自动吸附。",
+          "shapes_json": "[{\"id\":\"27e7bb8b-f451-4233-be9a-0b7d0c78f32c\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M0.00,304.37 L13.50,300.43 L14.00,205.05 L0.00,200.64\"]},{\"id\":\"419fa6bf-ba59-4deb-9d2e-453feaa75147\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M0.00,65.77 L152.49,8.41 L174.10,0.00\"]},{\"id\":\"85a0113e-b608-414e-a73c-22591878d3e8\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M14.00,205.05 L91.62,180.54\"]},{\"id\":\"4b5dd526-17ec-4f1f-9ad1-fbb02528b5f2\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M202.25,0.00 L291.44,189.50 L295.14,197.67 L316.71,245.49 L384.15,394.90 L386.59,400.00\"]},{\"id\":\"e5d3c937-1ca8-4ca7-9b73-6578e47fd2b6\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M295.14,197.67 L300.00,200.00\"]},{\"id\":\"e0b5300f-3d24-416b-9be6-2c37053288f3\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M318.10,240.90 L316.71,245.49\"]},{\"id\":\"49b20cfb-a16b-4564-a542-d2dc68de4747\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M291.44,189.50 L371.32,150.28 L402.14,134.39 L509.62,86.30 L474.23,3.17 L472.50,0.00\"]},{\"id\":\"fbd66cde-024d-4b74-a4f6-5be4f5143609\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M396.16,400.00 L398.42,399.11 L509.84,359.40 L531.68,355.00 L545.67,352.20 L600.00,335.68\"]},{\"id\":\"70f9518b-8679-47dc-852d-17dafc1f4805\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M531.68,355.00 L552.36,400.00\"]},{\"id\":\"w39838919\",\"source\":\"Geofabrik\",\"target\":false,\"paths\":[\"M202.25,0.00 L291.44,189.50 L295.14,197.67 L316.71,245.49 L384.15,394.90 L386.59,400.00\"]},{\"id\":\"w387381528\",\"source\":\"Geofabrik\",\"target\":false,\"paths\":[\"M531.68,355.00 L552.36,400.00\"]},{\"id\":\"w450616345\",\"source\":\"Geofabrik\",\"target\":false,\"paths\":[\"M0.00,65.77 L152.49,8.41 L174.10,0.00\"]},{\"id\":\"w481367936\",\"source\":\"Geofabrik\",\"target\":false,\"paths\":[\"M291.44,189.50 L371.32,150.28 L402.14,134.39 L509.62,86.30 L474.23,3.17 L472.50,0.00\"]},{\"id\":\"w966464268\",\"source\":\"Geofabrik\",\"target\":false,\"paths\":[\"M295.14,197.67 L300.00,200.00\"]},{\"id\":\"w966464269\",\"source\":\"Geofabrik\",\"target\":false,\"paths\":[\"M318.10,240.90 L316.71,245.49\"]},{\"id\":\"w1214520065\",\"source\":\"Geofabrik\",\"target\":false,\"paths\":[\"M396.16,400.00 L398.42,399.11 L509.84,359.40 L531.68,355.00 L545.67,352.20 L600.00,335.68\"]},{\"id\":\"w1289768781\",\"source\":\"Geofabrik\",\"target\":false,\"paths\":[\"M0.00,304.37 L13.50,300.43 L14.00,205.05 L0.00,200.64\"]},{\"id\":\"w1289768782\",\"source\":\"Geofabrik\",\"target\":false,\"paths\":[\"M14.00,205.05 L91.62,180.54\"]}]"
+        },
+        {
+          "case_id": "road-2",
+          "area": "南京西路",
+          "type": "道路近接候选",
+          "label": "南京西路 · 道路近接点 2",
+          "source_id": "2bfb34f0-b759-4d31-9d41-058debe29e70",
+          "longitude": 121.46423330000002,
+          "latitude": 31.236126599999995,
+          "detail": "原生度1节点距另一同层道路 1.581 m；两个数据源均出现，需核查入口、门禁、真实通行及层级，不能自动吸附。",
+          "shapes_json": "[{\"id\":\"419fa6bf-ba59-4deb-9d2e-453feaa75147\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M0.00,18.06 L48.01,0.00\"]},{\"id\":\"8b88e6fb-18b7-4402-8bb8-cd67b34d5c7d\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M266.08,400.00 L329.46,378.89\"]},{\"id\":\"85a0113e-b608-414e-a73c-22591878d3e8\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M0.00,162.86 L73.52,139.64\"]},{\"id\":\"4b5dd526-17ec-4f1f-9ad1-fbb02528b5f2\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M203.39,0.00 L273.34,148.61 L277.03,156.77 L298.60,204.59 L366.05,354.01 L369.99,362.27\"]},{\"id\":\"e5d3c937-1ca8-4ca7-9b73-6578e47fd2b6\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M277.03,156.77 L281.90,159.10\"]},{\"id\":\"e0b5300f-3d24-416b-9be6-2c37053288f3\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M300.00,200.00 L298.60,204.59\"]},{\"id\":\"49b20cfb-a16b-4564-a542-d2dc68de4747\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M273.34,148.61 L353.22,109.38 L384.04,93.49 L491.51,45.41 L472.19,0.00\"]},{\"id\":\"571a2099-33ac-44a4-94d4-78a9ccf65e25\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M329.46,378.89 L369.99,362.27\"]},{\"id\":\"43d167a8-90e3-40bf-bc60-c1cf6ec08b9b\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M329.46,378.89 L337.41,400.00\"]},{\"id\":\"fbd66cde-024d-4b74-a4f6-5be4f5143609\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M369.99,362.27 L380.32,358.22 L491.74,318.50 L513.58,314.10 L527.56,311.30 L600.00,289.28\"]},{\"id\":\"70f9518b-8679-47dc-852d-17dafc1f4805\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M513.58,314.10 L536.10,363.13 L532.06,396.14 L533.77,400.00\"]},{\"id\":\"w39838854\",\"source\":\"Geofabrik\",\"target\":false,\"paths\":[\"M329.46,378.89 L337.41,400.00\"]},{\"id\":\"w39838919\",\"source\":\"Geofabrik\",\"target\":false,\"paths\":[\"M203.39,0.00 L273.34,148.61 L277.03,156.77 L298.60,204.59 L366.05,354.01 L369.99,362.27\"]},{\"id\":\"w387381528\",\"source\":\"Geofabrik\",\"target\":false,\"paths\":[\"M513.58,314.10 L536.10,363.13 L532.06,396.14 L533.77,400.00\"]},{\"id\":\"w450616345\",\"source\":\"Geofabrik\",\"target\":false,\"paths\":[\"M0.00,18.06 L48.01,0.00\"]},{\"id\":\"w481367936\",\"source\":\"Geofabrik\",\"target\":false,\"paths\":[\"M273.34,148.61 L353.22,109.38 L384.04,93.49 L491.51,45.41 L472.19,0.00\"]},{\"id\":\"w966464268\",\"source\":\"Geofabrik\",\"target\":false,\"paths\":[\"M277.03,156.77 L281.90,159.10\"]},{\"id\":\"w966464269\",\"source\":\"Geofabrik\",\"target\":false,\"paths\":[\"M300.00,200.00 L298.60,204.59\"]},{\"id\":\"w1214520065\",\"source\":\"Geofabrik\",\"target\":false,\"paths\":[\"M266.08,400.00 L329.46,378.89 L369.99,362.27 L380.32,358.22 L491.74,318.50 L513.58,314.10 L527.56,311.30 L600.00,289.28\"]},{\"id\":\"w1289768782\",\"source\":\"Geofabrik\",\"target\":false,\"paths\":[\"M0.00,162.86 L73.52,139.64\"]}]"
+        },
+        {
+          "case_id": "road-3",
+          "area": "虹桥",
+          "type": "道路近接候选",
+          "label": "虹桥 · 道路近接点 3",
+          "source_id": "9b3cd0db-d16f-48da-a1a8-7ddd35b00e49",
+          "longitude": 121.29901340000002,
+          "latitude": 31.182707299999993,
+          "detail": "原生度1节点距另一同层道路 0.016 m；两个数据源均出现，需核查入口、门禁、真实通行及层级，不能自动吸附。",
+          "shapes_json": "[{\"id\":\"7dc639a5-b4d2-437b-bd37-e5defa72df9c\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M213.09,66.63 L175.29,0.00\"]},{\"id\":\"ef15e35c-23dc-4400-8276-972359722df4\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M28.82,0.00 L229.55,302.08\"]},{\"id\":\"add3d59c-34c8-46cb-8c5d-9311c65f7e08\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M17.01,400.00 L107.00,366.23 L229.55,302.08\"]},{\"id\":\"8585d46f-50a2-42fa-b120-2f18d9840184\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M164.90,0.00 L213.09,66.63\"]},{\"id\":\"a4178e1c-cc7a-4ebb-96ac-3aa1067762a0\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M213.09,66.63 L299.37,198.97\"]},{\"id\":\"2829983b-66cb-490b-85ca-02d532ab27e4\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M299.37,198.97 L300.00,200.00\"]},{\"id\":\"62c05e41-2f93-49da-a82c-317025549e0a\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M600.00,31.84 L582.79,31.29 L507.70,59.67 L455.91,102.63 L416.45,141.74 L299.37,198.97\"]},{\"id\":\"106d01d1-ef3c-461a-975e-76058fb8606d\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M299.37,198.97 L371.15,309.09 L411.94,371.67 L430.41,400.00\"]},{\"id\":\"a251aa5e-b067-4615-b20d-e83649f270fd\",\"source\":\"Overture\",\"target\":false,\"paths\":[\"M213.09,66.63 L309.01,0.00\"]},{\"id\":\"w294787683\",\"source\":\"Geofabrik\",\"target\":false,\"paths\":[\"M213.09,66.63 L309.01,0.00\"]},{\"id\":\"w321092756\",\"source\":\"Geofabrik\",\"target\":false,\"paths\":[\"M17.01,400.00 L107.00,366.23 L229.55,302.08\"]},{\"id\":\"w321092759\",\"source\":\"Geofabrik\",\"target\":false,\"paths\":[\"M28.82,0.00 L229.55,302.08\"]},{\"id\":\"w340412779\",\"source\":\"Geofabrik\",\"target\":false,\"paths\":[\"M164.90,0.00 L213.09,66.63\"]},{\"id\":\"w340412780\",\"source\":\"Geofabrik\",\"target\":false,\"paths\":[\"M213.09,66.63 L175.29,0.00\"]},{\"id\":\"w1123061652\",\"source\":\"Geofabrik\",\"target\":false,\"paths\":[\"M600.00,31.84 L582.79,31.29 L507.70,59.67 L455.91,102.63 L416.45,141.74 L299.37,198.97 L300.00,200.00\"]},{\"id\":\"w1152690600\",\"source\":\"Geofabrik\",\"target\":false,\"paths\":[\"M213.09,66.63 L299.37,198.97 L371.15,309.09\"]},{\"id\":\"w1152690601\",\"source\":\"Geofabrik\",\"target\":false,\"paths\":[\"M371.15,309.09 L411.94,371.67\"]},{\"id\":\"w1227641594\",\"source\":\"Geofabrik\",\"target\":false,\"paths\":[\"M411.94,371.67 L430.41,400.00\"]}]"
+        }
+      ],
+      "source": {
+        "provider": "Official public geospatial downloads",
+        "label": "5个建筑参考差异、2个最大几何差异及3个道路近接点",
+        "files": [
+          "results/building-matched-pairs.csv",
+          "results/building-candidate-osm-history.json",
+          "results/road-topology-candidates.geojson",
+          "results/review-map-rows.json"
+        ],
+        "links": [
+          {
+            "label": "Overture 官方下载文档",
+            "url": "https://docs.overturemaps.org/getting-data/"
+          },
+          {
+            "label": "Geofabrik 中国数据",
+            "url": "https://download.geofabrik.de/asia/china.html"
+          },
+          {
+            "label": "Microsoft 官方数据与覆盖说明",
+            "url": "https://github.com/microsoft/GlobalMLBuildingFootprints"
+          },
+          {
+            "label": "东亚建筑数据原始记录",
+            "url": "https://doi.org/10.5281/zenodo.8174931"
+          }
+        ],
+        "evidenceFlow": [
+          {
+            "title": "固定源版本与空间范围",
+            "detail": "Overture 2026-10-21.0；Geofabrik OSM PBF 截至 2026-10-25T21:21:21Z；Microsoft 2026-08-13 全索引空间覆盖核查。先 bbox 查询，再按上海16区 WGS84 市界几何相交筛选。"
+          },
+          {
+            "title": "对照计算",
+            "detail": "scripts/metrics_buildings.py 与 scripts/metrics_roads.py；UTM51N 米制；建筑面积>=10m²，质心位于测试区内缩5m；IoU>=0.5 一对一匹配。道路原生ID建立无向图，测试区外80m提供连通上下文，区内缩30m开展断点/交叉检查。"
+          },
+          {
+            "title": "解释边界",
+            "detail": "OSM 是对照数据而非真值；几何匹配对子共享OSM上游。Microsoft上海无分区，完整率及误差N/A；未验证绝对位置精度、真实世界建筑完整率或车辆通行限制。"
+          }
+        ],
+        "metricDefinitions": []
+      },
+      "payloadColumn": "shapes_json"
+    }
+  },
+  "id": "report:dfa04f05-1e32-4f47-a0d6-978f8730c18e",
+  "buildStatus": "complete"
+}

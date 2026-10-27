@@ -1,0 +1,246 @@
+[
+  {
+    "area_id": "lujiazui",
+    "area": "陆家嘴",
+    "bbox": [
+      121.483,
+      31.225,
+      121.518,
+      31.252
+    ],
+    "area_km2": 6.058494028332639,
+    "overture_raw": {
+      "raw_core": 1667,
+      "invalid_core": 0,
+      "small_core": 0,
+      "nonpolygon_core": 0
+    },
+    "osm_raw": {
+      "raw_core": 1075,
+      "invalid_core": 0,
+      "small_core": 0,
+      "nonpolygon_core": 0
+    },
+    "overture_buildings": 1667,
+    "osm_reference_buildings": 1075,
+    "osm_ref_matched": 1075,
+    "osm_ref_unmatched": 0,
+    "reference_match_rate": 1.0,
+    "reference_area_coverage": 0.9999997009898027,
+    "reference_area_m2": 1064961.8408224226,
+    "reference_area_covered_m2": 1064961.5223879726,
+    "overture_supported_by_osm": 1075,
+    "iou_median": 1.0,
+    "iou_p05": 0.9999999999999996,
+    "centroid_median_m": 4.656612873077393e-10,
+    "centroid_p95_m": 1.398195995654016e-09,
+    "centroid_max_m": 0.0011006159563710168,
+    "hausdorff_max_m": 12.658096054119271,
+    "boundary_max_m": 0.28431258974775353,
+    "relative_difference_above_1mm_pairs": 1,
+    "hausdorff_median_m": 1.1641532182693481e-10,
+    "hausdorff_p95_m": 4.656612873077393e-10,
+    "boundary_distance_median_m": 8.118638283406228e-11,
+    "boundary_distance_p95_m": 9.604440692587592e-11,
+    "shared_osm_matches": 1075,
+    "non_osm_source_matches": 0,
+    "non_osm_iou_median": null,
+    "non_osm_centroid_median_m": null,
+    "non_osm_centroid_p95_m": null,
+    "non_osm_boundary_p95_m": null,
+    "sensitivity_iou_match_rate": {
+      "0.25": 1.0,
+      "0.5": 1.0,
+      "0.75": 1.0
+    },
+    "overture_geometry_source_features": {
+      "OpenStreetMap": 1075,
+      "doi:10.5281/zenodo.8174931": 592
+    },
+    "absolute_completeness": null,
+    "absolute_horizontal_accuracy": null
+  },
+  {
+    "area_id": "nanjing-west",
+    "area": "南京西路",
+    "bbox": [
+      121.437,
+      31.22,
+      121.474,
+      31.241
+    ],
+    "area_km2": 8.205522839870918,
+    "overture_raw": {
+      "raw_core": 5831,
+      "invalid_core": 0,
+      "small_core": 0,
+      "nonpolygon_core": 0
+    },
+    "osm_raw": {
+      "raw_core": 3116,
+      "invalid_core": 0,
+      "small_core": 0,
+      "nonpolygon_core": 0
+    },
+    "overture_buildings": 5831,
+    "osm_reference_buildings": 3116,
+    "osm_ref_matched": 3112,
+    "osm_ref_unmatched": 4,
+    "reference_match_rate": 0.9987163029525032,
+    "reference_area_coverage": 0.9996588033614068,
+    "reference_area_m2": 1973713.3254180609,
+    "reference_area_covered_m2": 1973039.9010658816,
+    "overture_supported_by_osm": 3112,
+    "iou_median": 1.0,
+    "iou_p05": 0.9999999999999997,
+    "centroid_median_m": 4.656612873077393e-10,
+    "centroid_p95_m": 1.3969838619232178e-09,
+    "centroid_max_m": 1.569043271502241,
+    "hausdorff_max_m": 1.5689560712234702,
+    "boundary_max_m": 0.7579153690668599,
+    "relative_difference_above_1mm_pairs": 1,
+    "hausdorff_median_m": 1.1641532182693481e-10,
+    "hausdorff_p95_m": 1.1641532182693481e-10,
+    "boundary_distance_median_m": 7.61740061458976e-11,
+    "boundary_distance_p95_m": 9.435060949134919e-11,
+    "shared_osm_matches": 3112,
+    "non_osm_source_matches": 0,
+    "non_osm_iou_median": null,
+    "non_osm_centroid_median_m": null,
+    "non_osm_centroid_p95_m": null,
+    "non_osm_boundary_p95_m": null,
+    "sensitivity_iou_match_rate": {
+      "0.25": 0.9993581514762516,
+      "0.5": 0.9987163029525032,
+      "0.75": 0.9987163029525032
+    },
+    "overture_geometry_source_features": {
+      "OpenStreetMap": 3112,
+      "doi:10.5281/zenodo.8174931": 2719
+    },
+    "absolute_completeness": null,
+    "absolute_horizontal_accuracy": null
+  },
+  {
+    "area_id": "xintiandi",
+    "area": "新天地",
+    "bbox": [
+      121.463,
+      31.211,
+      121.484,
+      31.229
+    ],
+    "area_km2": 3.992261780780256,
+    "overture_raw": {
+      "raw_core": 3068,
+      "invalid_core": 0,
+      "small_core": 1,
+      "nonpolygon_core": 0
+    },
+    "osm_raw": {
+      "raw_core": 1399,
+      "invalid_core": 0,
+      "small_core": 0,
+      "nonpolygon_core": 0
+    },
+    "overture_buildings": 3067,
+    "osm_reference_buildings": 1399,
+    "osm_ref_matched": 1398,
+    "osm_ref_unmatched": 1,
+    "reference_match_rate": 0.9992852037169406,
+    "reference_area_coverage": 0.9997073768615107,
+    "reference_area_m2": 820804.9654818294,
+    "reference_area_covered_m2": 820564.7789567425,
+    "overture_supported_by_osm": 1398,
+    "iou_median": 1.0,
+    "iou_p05": 0.9999999999999997,
+    "centroid_median_m": 4.656612873077393e-10,
+    "centroid_p95_m": 1.3969838619232178e-09,
+    "centroid_max_m": 3.278285227792506e-09,
+    "hausdorff_max_m": 4.656612873077393e-10,
+    "boundary_max_m": 1.0510999400994065e-10,
+    "relative_difference_above_1mm_pairs": 0,
+    "hausdorff_median_m": 5.820766091346741e-11,
+    "hausdorff_p95_m": 4.656612873077393e-10,
+    "boundary_distance_median_m": 7.312248274782164e-11,
+    "boundary_distance_p95_m": 9.442295663188134e-11,
+    "shared_osm_matches": 1398,
+    "non_osm_source_matches": 0,
+    "non_osm_iou_median": null,
+    "non_osm_centroid_median_m": null,
+    "non_osm_centroid_p95_m": null,
+    "non_osm_boundary_p95_m": null,
+    "sensitivity_iou_match_rate": {
+      "0.25": 0.9992852037169406,
+      "0.5": 0.9992852037169406,
+      "0.75": 0.9992852037169406
+    },
+    "overture_geometry_source_features": {
+      "doi:10.5281/zenodo.8174931": 1669,
+      "OpenStreetMap": 1398
+    },
+    "absolute_completeness": null,
+    "absolute_horizontal_accuracy": null
+  },
+  {
+    "area_id": "hongqiao",
+    "area": "虹桥",
+    "bbox": [
+      121.285,
+      31.175,
+      121.345,
+      31.22
+    ],
+    "area_km2": 28.526067196915978,
+    "overture_raw": {
+      "raw_core": 6945,
+      "invalid_core": 0,
+      "small_core": 0,
+      "nonpolygon_core": 0
+    },
+    "osm_raw": {
+      "raw_core": 737,
+      "invalid_core": 0,
+      "small_core": 0,
+      "nonpolygon_core": 0
+    },
+    "overture_buildings": 6945,
+    "osm_reference_buildings": 737,
+    "osm_ref_matched": 737,
+    "osm_ref_unmatched": 0,
+    "reference_match_rate": 1.0,
+    "reference_area_coverage": 0.9999997456146285,
+    "reference_area_m2": 2430870.1571131703,
+    "reference_area_covered_m2": 2430869.5387353622,
+    "overture_supported_by_osm": 737,
+    "iou_median": 1.0,
+    "iou_p05": 0.9999999999999997,
+    "centroid_median_m": 4.656612873077393e-10,
+    "centroid_p95_m": 1.3969838619232178e-09,
+    "centroid_max_m": 0.0099799291661288,
+    "hausdorff_max_m": 0.03618171179503745,
+    "boundary_max_m": 0.0031158591169012494,
+    "relative_difference_above_1mm_pairs": 9,
+    "hausdorff_median_m": 5.820766091346741e-11,
+    "hausdorff_p95_m": 4.656612873077393e-10,
+    "boundary_distance_median_m": 7.98999343493498e-11,
+    "boundary_distance_p95_m": 9.537403242993915e-11,
+    "shared_osm_matches": 737,
+    "non_osm_source_matches": 0,
+    "non_osm_iou_median": null,
+    "non_osm_centroid_median_m": null,
+    "non_osm_centroid_p95_m": null,
+    "non_osm_boundary_p95_m": null,
+    "sensitivity_iou_match_rate": {
+      "0.25": 1.0,
+      "0.5": 1.0,
+      "0.75": 1.0
+    },
+    "overture_geometry_source_features": {
+      "doi:10.5281/zenodo.8174931": 6208,
+      "OpenStreetMap": 737
+    },
+    "absolute_completeness": null,
+    "absolute_horizontal_accuracy": null
+  }
+]

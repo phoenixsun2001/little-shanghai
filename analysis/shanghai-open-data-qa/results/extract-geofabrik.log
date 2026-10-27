@@ -1,0 +1,29 @@
+HEADER {'osmosis_replication_timestamp': '2026-10-25T21:21:21Z', 'osmosis_replication_sequence_number': '4950', 'generator': 'osmium/1.16.0'}
+nodes 10000000 retained 336171 elapsed 16
+nodes 20000000 retained 531524 elapsed 29
+nodes 30000000 retained 849642 elapsed 43
+nodes 40000000 retained 963838 elapsed 57
+nodes 50000000 retained 1089102 elapsed 71
+nodes 60000000 retained 1228581 elapsed 85
+nodes 70000000 retained 1308013 elapsed 99
+nodes 80000000 retained 1362278 elapsed 113
+nodes 90000000 retained 1556667 elapsed 127
+nodes 100000000 retained 1654805 elapsed 140
+nodes 110000000 retained 1703473 elapsed 154
+nodes 120000000 retained 1806793 elapsed 168
+nodes 130000000 retained 2011733 elapsed 182
+nodes 140000000 retained 2167308 elapsed 196
+nodes 150000000 retained 2219788 elapsed 210
+nodes 160000000 retained 2371214 elapsed 224
+nodes 170000000 retained 2486441 elapsed 238
+nodes 180000000 retained 2597455 elapsed 252
+nodes 190000000 retained 2899437 elapsed 266
+nodes 200000000 retained 3108590 elapsed 280
+nodes 210000000 retained 3209811 elapsed 294
+nodes 220000000 retained 3298548 elapsed 308
+nodes 230000000 retained 3377470 elapsed 321
+nodes 240000000 retained 3430269 elapsed 335
+Parsed China file. Buildings 153017 roads 212636 candidate building relations 892
+buildings-shanghai 153856 bytes 13766123
+roads-shanghai 212636 bytes 29918719
+DONE {"source": "Geofabrik OpenStreetMap China extract", "source_url": "https://download.geofabrik.de/asia/china-latest.osm.pbf", "header": {"osmosis_replication_timestamp": "2026-10-25T21:21:21Z", "osmosis_replication_sequence_number": "4950", "generator": "osmium/1.16.0"}, "acquired_pbf_bytes": 1615922210, "source_md5": "6a67405cffcccbb8726985987165a243", "buildings": 153856, "roads": 212636, "bounded_node_count": 3470278, "incomplete_bbox_ways_skipped": 1219, "incomplete_building_relations": 0, "member_building_duplicates_removed": 1641, "selection": "complete features intersecting Shanghai municipality; bounded node lookup bbox padded by 0.03 degrees", "elapsed_s": 523.9}

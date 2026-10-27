@@ -1,0 +1,15 @@
+{
+  "source": "Microsoft GlobalMLBuildingFootprints",
+  "index": "https://bfppub.blob.core.windows.net/%24web/2026-08-13/dataset-links.csv",
+  "index_rows": 30340,
+  "index_sha256": "de61b569b0c23c364d61173632d8c5487ea30bf20912c55b9fa1ab4a89d01148",
+  "shanghai_bbox": [
+    120.8526123,
+    30.6777973,
+    122.2429167,
+    31.8746329
+  ],
+  "intersecting_partitions": [],
+  "status": "not_covered_in_official_index",
+  "not_a_zero_completeness_measurement": true
+}

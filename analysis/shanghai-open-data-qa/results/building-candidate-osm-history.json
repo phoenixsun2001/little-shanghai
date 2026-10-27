@@ -1,0 +1,42 @@
+[
+  {
+    "osm_id": "w1566594236",
+    "version": 1,
+    "last_modified_utc": "2026-10-08 17:36:25+00:00",
+    "tags": {
+      "building": "residential"
+    }
+  },
+  {
+    "osm_id": "w1566594237",
+    "version": 1,
+    "last_modified_utc": "2026-10-08 17:36:25+00:00",
+    "tags": {
+      "building": "yes"
+    }
+  },
+  {
+    "osm_id": "w1566594239",
+    "version": 1,
+    "last_modified_utc": "2026-10-08 17:36:25+00:00",
+    "tags": {
+      "building": "yes"
+    }
+  },
+  {
+    "osm_id": "w1566594240",
+    "version": 1,
+    "last_modified_utc": "2026-10-08 17:36:25+00:00",
+    "tags": {
+      "building": "residential"
+    }
+  },
+  {
+    "osm_id": "w1570583917",
+    "version": 1,
+    "last_modified_utc": "2026-10-22 06:32:17+00:00",
+    "tags": {
+      "building": "yes"
+    }
+  }
+]

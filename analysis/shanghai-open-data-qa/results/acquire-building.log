@@ -1,0 +1,167 @@
+ACQUIRE building 2026-10-21.0 bbox [120.8526123, 30.6777973, 122.2429167, 31.8746329]
+Error reading STAC index at https://stac.overturemaps.org/2026-10-21.0/collections.parquet: HTTP Error 403: Forbidden
+SCHEMA id: string
+names: struct<primary: string, common: map<string, string ('common')>, rules: list<element: struct<variant: (... 159 chars omitted)
+  child 0, primary: string
+  child 1, common: map<string, string ('common')>
+      child 0, common: struct<key: string not null, value: string> not null
+          child 0, key: string not null
+          child 1, value: string
+  child 2, rules: list<element: struct<variant: string, language: string, perspectives: struct<mode: string, countries (... 87 chars omitted)
+      child 0, element: struct<variant: string, language: string, perspectives: struct<mode: string, countries: list<element (... 72 chars omitted)
+          child 0, variant: string
+          child 1, language: string
+          child 2, perspectives: struct<mode: string, countries: list<element: string>>
+              child 0, mode: string
+              child 1, countries: list<element: string>
+                  child 0, element: string
+          child 3, value: string
+          child 4, between: list<element: double>
+              child 0, element: double
+          child 5, side: string
+sources: list<element: struct<property: string, dataset: string, license: string, record_id: string, update_t (... 118 chars omitted)
+  child 0, element: struct<property: string, dataset: string, license: string, record_id: string, update_time: string, c (... 103 chars omitted)
+      child 0, property: string
+      child 1, dataset: string
+      child 2, license: string
+      child 3, record_id: string
+      child 4, update_time: string
+      child 5, confidence: double
+      child 6, between: list<element: double>
+          child 0, element: double
+      child 7, provider: string
+      child 8, resource: string
+      child 9, version: string
+level: int32
+height: double
+min_height: double
+is_underground: bool
+num_floors: int32
+num_floors_underground: int32
+min_floor: int32
+subtype: string
+class: string
+facade_color: string
+facade_material: string
+roof_material: string
+roof_shape: string
+roof_direction: double
+roof_orientation: string
+roof_color: string
+roof_height: double
+geometry: binary
+  -- field metadata --
+  ARROW:extension:name: 'geoarrow.wkb'
+has_parts: bool
+version: int32
+bbox: struct<xmin: double, xmax: double, ymin: double, ymax: double>
+  child 0, xmin: double
+  child 1, xmax: double
+  child 2, ymin: double
+  child 3, ymax: double
+-- schema metadata --
+geo: '{"version": "1.1.0", "primary_column": "geometry", "columns": {"geo' + 281
+schema_versions: '{"overture-schema-system": "2.0.0.post1+main.e6b120a", ' + 35
+{"type": "building", "bbox_rows_seen": 11929, "municipality_rows_saved": 0, "elapsed_s": 154.1}
+{"type": "building", "bbox_rows_seen": 32358, "municipality_rows_saved": 0, "elapsed_s": 154.4}
+{"type": "building", "bbox_rows_seen": 65076, "municipality_rows_saved": 0, "elapsed_s": 154.8}
+{"type": "building", "bbox_rows_seen": 101782, "municipality_rows_saved": 14474, "elapsed_s": 171.1}
+{"type": "building", "bbox_rows_seen": 102187, "municipality_rows_saved": 14474, "elapsed_s": 171.1}
+{"type": "building", "bbox_rows_seen": 102642, "municipality_rows_saved": 14474, "elapsed_s": 171.1}
+{"type": "building", "bbox_rows_seen": 141424, "municipality_rows_saved": 30160, "elapsed_s": 171.5}
+{"type": "building", "bbox_rows_seen": 187064, "municipality_rows_saved": 70401, "elapsed_s": 171.7}
+{"type": "building", "bbox_rows_seen": 227880, "municipality_rows_saved": 70401, "elapsed_s": 172.2}
+{"type": "building", "bbox_rows_seen": 259373, "municipality_rows_saved": 74891, "elapsed_s": 182.0}
+{"type": "building", "bbox_rows_seen": 283091, "municipality_rows_saved": 85083, "elapsed_s": 182.2}
+{"type": "building", "bbox_rows_seen": 302360, "municipality_rows_saved": 97513, "elapsed_s": 182.3}
+{"type": "building", "bbox_rows_seen": 346048, "municipality_rows_saved": 141201, "elapsed_s": 182.5}
+{"type": "building", "bbox_rows_seen": 385579, "municipality_rows_saved": 180732, "elapsed_s": 182.6}
+{"type": "building", "bbox_rows_seen": 413314, "municipality_rows_saved": 208174, "elapsed_s": 182.7}
+{"type": "building", "bbox_rows_seen": 450976, "municipality_rows_saved": 245834, "elapsed_s": 182.9}
+{"type": "building", "bbox_rows_seen": 489500, "municipality_rows_saved": 284358, "elapsed_s": 183.0}
+{"type": "building", "bbox_rows_seen": 541122, "municipality_rows_saved": 335980, "elapsed_s": 183.2}
+{"type": "building", "bbox_rows_seen": 571322, "municipality_rows_saved": 366180, "elapsed_s": 183.3}
+{"type": "building", "bbox_rows_seen": 612097, "municipality_rows_saved": 406955, "elapsed_s": 183.5}
+{"type": "building", "bbox_rows_seen": 656631, "municipality_rows_saved": 445996, "elapsed_s": 183.7}
+{"type": "building", "bbox_rows_seen": 695258, "municipality_rows_saved": 484623, "elapsed_s": 183.9}
+{"type": "building", "bbox_rows_seen": 738284, "municipality_rows_saved": 527649, "elapsed_s": 184.0}
+{"type": "building", "bbox_rows_seen": 774750, "municipality_rows_saved": 564115, "elapsed_s": 184.2}
+{"type": "building", "bbox_rows_seen": 814657, "municipality_rows_saved": 604022, "elapsed_s": 184.3}
+{"type": "building", "bbox_rows_seen": 851706, "municipality_rows_saved": 641071, "elapsed_s": 184.5}
+{"type": "building", "bbox_rows_seen": 896494, "municipality_rows_saved": 685859, "elapsed_s": 184.6}
+{"type": "building", "bbox_rows_seen": 934333, "municipality_rows_saved": 723698, "elapsed_s": 184.7}
+{"type": "building", "bbox_rows_seen": 968280, "municipality_rows_saved": 757645, "elapsed_s": 184.9}
+{"type": "building", "bbox_rows_seen": 1005669, "municipality_rows_saved": 795034, "elapsed_s": 185.0}
+{"type": "building", "bbox_rows_seen": 1037791, "municipality_rows_saved": 827156, "elapsed_s": 185.1}
+{"type": "building", "bbox_rows_seen": 1072814, "municipality_rows_saved": 862179, "elapsed_s": 185.2}
+{"type": "building", "bbox_rows_seen": 1108926, "municipality_rows_saved": 898291, "elapsed_s": 185.4}
+{"type": "building", "bbox_rows_seen": 1139578, "municipality_rows_saved": 928943, "elapsed_s": 185.5}
+{"type": "building", "bbox_rows_seen": 1180017, "municipality_rows_saved": 969382, "elapsed_s": 185.6}
+{"type": "building", "bbox_rows_seen": 1222163, "municipality_rows_saved": 1011528, "elapsed_s": 185.8}
+{"type": "building", "bbox_rows_seen": 1255636, "municipality_rows_saved": 1045001, "elapsed_s": 185.9}
+{"type": "building", "bbox_rows_seen": 1291088, "municipality_rows_saved": 1080453, "elapsed_s": 186.1}
+{"type": "building", "bbox_rows_seen": 1331121, "municipality_rows_saved": 1120486, "elapsed_s": 186.2}
+{"type": "building", "bbox_rows_seen": 1371800, "municipality_rows_saved": 1161165, "elapsed_s": 186.4}
+{"type": "building", "bbox_rows_seen": 1416933, "municipality_rows_saved": 1206298, "elapsed_s": 186.5}
+{"type": "building", "bbox_rows_seen": 1456142, "municipality_rows_saved": 1245507, "elapsed_s": 186.7}
+{"type": "building", "bbox_rows_seen": 1463174, "municipality_rows_saved": 1245507, "elapsed_s": 186.8}
+{"type": "building", "bbox_rows_seen": 1475805, "municipality_rows_saved": 1245507, "elapsed_s": 186.9}
+{"type": "building", "bbox_rows_seen": 1494281, "municipality_rows_saved": 1245507, "elapsed_s": 187.1}
+{"type": "building", "bbox_rows_seen": 1511664, "municipality_rows_saved": 1245507, "elapsed_s": 187.3}
+{"type": "building", "bbox_rows_seen": 1530387, "municipality_rows_saved": 1245507, "elapsed_s": 187.6}
+{"type": "building", "bbox_rows_seen": 1537627, "municipality_rows_saved": 1245507, "elapsed_s": 187.6}
+{"type": "building", "bbox_rows_seen": 1554502, "municipality_rows_saved": 1245507, "elapsed_s": 187.8}
+{"type": "building", "bbox_rows_seen": 1571146, "municipality_rows_saved": 1245507, "elapsed_s": 188.0}
+{"type": "building", "bbox_rows_seen": 1575837, "municipality_rows_saved": 1245507, "elapsed_s": 188.0}
+{"type": "building", "bbox_rows_seen": 1584268, "municipality_rows_saved": 1245507, "elapsed_s": 188.0}
+{"type": "building", "bbox_rows_seen": 1604706, "municipality_rows_saved": 1245507, "elapsed_s": 188.1}
+{"type": "building", "bbox_rows_seen": 1622287, "municipality_rows_saved": 1245507, "elapsed_s": 188.1}
+{"type": "building", "bbox_rows_seen": 1623582, "municipality_rows_saved": 1245507, "elapsed_s": 188.1}
+{"type": "building", "bbox_rows_seen": 1627805, "municipality_rows_saved": 1245507, "elapsed_s": 188.1}
+{"type": "building", "bbox_rows_seen": 1648570, "municipality_rows_saved": 1245507, "elapsed_s": 188.2}
+{"type": "building", "bbox_rows_seen": 1672403, "municipality_rows_saved": 1245507, "elapsed_s": 188.2}
+{"type": "building", "bbox_rows_seen": 1691633, "municipality_rows_saved": 1260308, "elapsed_s": 188.3}
+{"type": "building", "bbox_rows_seen": 1711222, "municipality_rows_saved": 1275750, "elapsed_s": 188.4}
+{"type": "building", "bbox_rows_seen": 1732057, "municipality_rows_saved": 1296585, "elapsed_s": 188.5}
+{"type": "building", "bbox_rows_seen": 1751865, "municipality_rows_saved": 1316393, "elapsed_s": 188.6}
+{"type": "building", "bbox_rows_seen": 1772965, "municipality_rows_saved": 1331553, "elapsed_s": 188.7}
+{"type": "building", "bbox_rows_seen": 1796453, "municipality_rows_saved": 1339270, "elapsed_s": 188.9}
+{"type": "building", "bbox_rows_seen": 1811622, "municipality_rows_saved": 1354439, "elapsed_s": 189.0}
+{"type": "building", "bbox_rows_seen": 1834421, "municipality_rows_saved": 1377238, "elapsed_s": 189.1}
+{"type": "building", "bbox_rows_seen": 1856143, "municipality_rows_saved": 1398960, "elapsed_s": 189.1}
+{"type": "building", "bbox_rows_seen": 1876389, "municipality_rows_saved": 1419206, "elapsed_s": 189.2}
+{"type": "building", "bbox_rows_seen": 1894783, "municipality_rows_saved": 1437600, "elapsed_s": 189.3}
+{"type": "building", "bbox_rows_seen": 1909101, "municipality_rows_saved": 1451918, "elapsed_s": 189.3}
+{"type": "building", "bbox_rows_seen": 1925658, "municipality_rows_saved": 1468475, "elapsed_s": 189.4}
+{"type": "building", "bbox_rows_seen": 1945190, "municipality_rows_saved": 1488006, "elapsed_s": 189.4}
+{"type": "building", "bbox_rows_seen": 1961436, "municipality_rows_saved": 1504252, "elapsed_s": 189.5}
+{"type": "building", "bbox_rows_seen": 1977967, "municipality_rows_saved": 1520783, "elapsed_s": 189.6}
+{"type": "building", "bbox_rows_seen": 1993842, "municipality_rows_saved": 1520910, "elapsed_s": 189.8}
+{"type": "building", "bbox_rows_seen": 2014530, "municipality_rows_saved": 1520910, "elapsed_s": 189.8}
+{"type": "building", "bbox_rows_seen": 2031339, "municipality_rows_saved": 1532746, "elapsed_s": 189.9}
+{"type": "building", "bbox_rows_seen": 2048148, "municipality_rows_saved": 1532878, "elapsed_s": 190.0}
+{"type": "building", "bbox_rows_seen": 2069196, "municipality_rows_saved": 1533728, "elapsed_s": 190.1}
+{"type": "building", "bbox_rows_seen": 2087880, "municipality_rows_saved": 1542827, "elapsed_s": 190.2}
+{"type": "building", "bbox_rows_seen": 2111256, "municipality_rows_saved": 1566203, "elapsed_s": 190.3}
+{"type": "building", "bbox_rows_seen": 2128699, "municipality_rows_saved": 1583646, "elapsed_s": 190.4}
+{"type": "building", "bbox_rows_seen": 2145453, "municipality_rows_saved": 1600400, "elapsed_s": 190.5}
+{"type": "building", "bbox_rows_seen": 2165996, "municipality_rows_saved": 1620943, "elapsed_s": 190.6}
+{"type": "building", "bbox_rows_seen": 2185033, "municipality_rows_saved": 1639980, "elapsed_s": 190.7}
+{"type": "building", "bbox_rows_seen": 2205684, "municipality_rows_saved": 1660631, "elapsed_s": 190.8}
+{"type": "building", "bbox_rows_seen": 2223249, "municipality_rows_saved": 1678196, "elapsed_s": 190.8}
+{"type": "building", "bbox_rows_seen": 2246718, "municipality_rows_saved": 1701659, "elapsed_s": 190.9}
+{"type": "building", "bbox_rows_seen": 2263296, "municipality_rows_saved": 1718237, "elapsed_s": 191.0}
+{"type": "building", "bbox_rows_seen": 2289914, "municipality_rows_saved": 1744592, "elapsed_s": 191.2}
+{"type": "building", "bbox_rows_seen": 2299120, "municipality_rows_saved": 1744592, "elapsed_s": 191.3}
+{"type": "building", "bbox_rows_seen": 2300445, "municipality_rows_saved": 1744592, "elapsed_s": 191.3}
+{"type": "building", "bbox_rows_seen": 2323256, "municipality_rows_saved": 1744598, "elapsed_s": 191.4}
+{"type": "building", "bbox_rows_seen": 2326798, "municipality_rows_saved": 1744598, "elapsed_s": 191.4}
+{"type": "building", "bbox_rows_seen": 2345873, "municipality_rows_saved": 1763673, "elapsed_s": 191.5}
+{"type": "building", "bbox_rows_seen": 2359989, "municipality_rows_saved": 1775840, "elapsed_s": 191.6}
+{"type": "building", "bbox_rows_seen": 2382173, "municipality_rows_saved": 1793744, "elapsed_s": 191.7}
+{"type": "building", "bbox_rows_seen": 2398320, "municipality_rows_saved": 1793749, "elapsed_s": 191.8}
+{"type": "building", "bbox_rows_seen": 2414199, "municipality_rows_saved": 1793755, "elapsed_s": 191.9}
+{"type": "building", "bbox_rows_seen": 2427605, "municipality_rows_saved": 1793755, "elapsed_s": 191.9}
+{"type": "building", "bbox_rows_seen": 2427658, "municipality_rows_saved": 1793808, "elapsed_s": 191.9}
+{"type": "building", "bbox_rows_seen": 2427702, "municipality_rows_saved": 1793830, "elapsed_s": 191.9}
+DONE {"source": "Overture Maps", "release": "2026-10-21.0", "type": "building", "source_uri": "s3://overturemaps-us-west-2/release/2026-10-21.0/theme=buildings/type=building/", "bbox_wgs84": [120.8526123, 30.6777973, 122.2429167, 31.8746329], "selection": "geometry intersects union of 16 WGS84 Shanghai districts; original geometries retained", "bbox_rows": 2427702, "municipality_rows": 1793830, "bytes": 187976067, "sha256": "022854b858a83cc6fa2c3b5b7f70db332d46f1697ced08ae5bbbf77f8f84b6b8", "elapsed_s": 194.0, "acquired_at_utc": "2026-10-27T02:44:28Z", "file": "building-shanghai-2026-10-21.0.parquet"}

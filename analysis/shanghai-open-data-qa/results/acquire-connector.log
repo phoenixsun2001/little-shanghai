@@ -1,0 +1,37 @@
+ACQUIRE connector 2026-10-21.0 bbox [120.8526123, 30.6777973, 122.2429167, 31.8746329]
+Error reading STAC index at https://stac.overturemaps.org/2026-10-21.0/collections.parquet: HTTP Error 403: Forbidden
+SCHEMA id: string
+sources: list<element: struct<property: string, dataset: string, license: string, record_id: string, update_t (... 118 chars omitted)
+  child 0, element: struct<property: string, dataset: string, license: string, record_id: string, update_time: string, c (... 103 chars omitted)
+      child 0, property: string
+      child 1, dataset: string
+      child 2, license: string
+      child 3, record_id: string
+      child 4, update_time: string
+      child 5, confidence: double
+      child 6, between: list<element: double>
+          child 0, element: double
+      child 7, provider: string
+      child 8, resource: string
+      child 9, version: string
+geometry: binary
+  -- field metadata --
+  ARROW:extension:name: 'geoarrow.wkb'
+version: int32
+bbox: struct<xmin: double, xmax: double, ymin: double, ymax: double>
+  child 0, xmin: double
+  child 1, xmax: double
+  child 2, ymin: double
+  child 3, ymax: double
+-- schema metadata --
+geo: '{"version": "1.1.0", "primary_column": "geometry", "columns": {"geo' + 263
+schema_versions: '{"overture-schema-system": "2.0.0.post1+main.e6b120a", ' + 54
+{"type": "connector", "bbox_rows_seen": 27322, "municipality_rows_saved": 18205, "elapsed_s": 19.3}
+{"type": "connector", "bbox_rows_seen": 50021, "municipality_rows_saved": 21896, "elapsed_s": 19.7}
+{"type": "connector", "bbox_rows_seen": 55847, "municipality_rows_saved": 21896, "elapsed_s": 23.2}
+{"type": "connector", "bbox_rows_seen": 103838, "municipality_rows_saved": 69178, "elapsed_s": 23.3}
+{"type": "connector", "bbox_rows_seen": 138782, "municipality_rows_saved": 103533, "elapsed_s": 23.4}
+{"type": "connector", "bbox_rows_seen": 195854, "municipality_rows_saved": 160593, "elapsed_s": 23.6}
+{"type": "connector", "bbox_rows_seen": 246452, "municipality_rows_saved": 211189, "elapsed_s": 23.7}
+{"type": "connector", "bbox_rows_seen": 288642, "municipality_rows_saved": 241431, "elapsed_s": 23.8}
+DONE {"source": "Overture Maps", "release": "2026-10-21.0", "type": "connector", "source_uri": "s3://overturemaps-us-west-2/release/2026-10-21.0/theme=transportation/type=connector/", "bbox_wgs84": [120.8526123, 30.6777973, 122.2429167, 31.8746329], "selection": "geometry intersects union of 16 WGS84 Shanghai districts; original geometries retained", "bbox_rows": 288642, "municipality_rows": 241431, "bytes": 14048854, "sha256": "2e38f8a14888dfa5bc8579b6cfc55404f7342a07748e8cecb31bd143df329a4e", "elapsed_s": 23.8, "acquired_at_utc": "2026-10-27T02:42:00Z", "file": "connector-shanghai-2026-10-21.0.parquet"}

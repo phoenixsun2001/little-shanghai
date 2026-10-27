@@ -1,0 +1,129 @@
+{
+  "metric_crs": "EPSG:32651",
+  "input_crs": "EPSG:4326",
+  "aoi_version": "2026-10-27-v2-pudong-only-lujiazui",
+  "hongqiao_assumption": "User confirmed Hongqiao transport hub and business district",
+  "areas": [
+    {
+      "id": "lujiazui",
+      "name": "陆家嘴",
+      "bbox": [
+        121.483,
+        31.225,
+        121.518,
+        31.252
+      ],
+      "meaning": "陆家嘴金融核心区：矩形与浦东新区相交，排除黄浦江对岸外滩",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              121.518,
+              31.225
+            ],
+            [
+              121.5024030556325,
+              31.225
+            ],
+            [
+              121.5023186,
+              31.2251473
+            ],
+            [
+              121.497574,
+              31.2300297
+            ],
+            [
+              121.491281,
+              31.2349676
+            ],
+            [
+              121.4890197,
+              31.2381325
+            ],
+            [
+              121.4890193,
+              31.2421437
+            ],
+            [
+              121.4903589,
+              31.2441937
+            ],
+            [
+              121.4955633,
+              31.246987
+            ],
+            [
+              121.5024561,
+              31.248492
+            ],
+            [
+              121.5120987,
+              31.2489996
+            ],
+            [
+              121.518,
+              31.249175327552766
+            ],
+            [
+              121.518,
+              31.225
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "id": "nanjing-west",
+      "name": "南京西路",
+      "bbox": [
+        121.437,
+        31.22,
+        121.474,
+        31.241
+      ],
+      "meaning": "静安寺至人民广场方向的南京西路商业轴线及邻近街区"
+    },
+    {
+      "id": "xintiandi",
+      "name": "新天地",
+      "bbox": [
+        121.463,
+        31.211,
+        121.484,
+        31.229
+      ],
+      "meaning": "新天地、石库门街区及邻近老城厢"
+    },
+    {
+      "id": "hongqiao",
+      "name": "虹桥",
+      "bbox": [
+        121.285,
+        31.175,
+        121.345,
+        31.22
+      ],
+      "meaning": "虹桥交通枢纽及商务区，包含机场航站楼和站前路网"
+    }
+  ],
+  "building_match_thresholds": {
+    "iou": 0.5,
+    "iou_sensitivity": [
+      0.25,
+      0.5,
+      0.75
+    ],
+    "min_area_m2": 10,
+    "exclude_aoi_edge_m": 5
+  },
+  "road_scope": "motor-vehicle-network, exclude paths, footways, cycleways, steps, pedestrian, bridleways, construction and proposed",
+  "road_topology_thresholds": {
+    "near_miss_m": 3,
+    "aoi_edge_exclusion_m": 30,
+    "short_segment_m": 1,
+    "crossing_tolerance_m": 1,
+    "connector_line_tolerance_m": 1
+  }
+}

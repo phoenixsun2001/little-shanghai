@@ -1,0 +1,7 @@
+area,source,issue,feature_id,other_id,distance_m,status
+南京西路,Overture,interior_deadend_near_other_road_within_3m,1093a8e3-9506-4e45-bb81-1e50fb3ca050,4b5dd526-17ec-4f1f-9ad1-fbb02528b5f2,1.7380893882844535,candidate_manual_review
+南京西路,Overture,interior_deadend_near_other_road_within_3m,2bfb34f0-b759-4d31-9d41-058debe29e70,4b5dd526-17ec-4f1f-9ad1-fbb02528b5f2,1.5811949233333376,candidate_manual_review
+南京西路,Geofabrik,interior_deadend_near_other_road_within_3m,8941505988,w39838919,1.7380893882844535,candidate_manual_review
+南京西路,Geofabrik,interior_deadend_near_other_road_within_3m,8941505989,w39838919,1.5811949233333376,candidate_manual_review
+虹桥,Overture,interior_deadend_near_other_road_within_3m,9b3cd0db-d16f-48da-a1a8-7ddd35b00e49,106d01d1-ef3c-461a-975e-76058fb8606d,0.0163045167729033,candidate_manual_review
+虹桥,Geofabrik,interior_deadend_near_other_road_within_3m,10270859651,w1152690600,0.0163045167729033,candidate_manual_review
